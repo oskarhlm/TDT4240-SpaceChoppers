@@ -22,9 +22,14 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
+    - name: Change to SpaceChoppers directory
+      run: cd SpaceChoppers
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+      working-directory: SpaceChoppers
 
     - name: Build and test with Gradle
       run: ./gradlew build test
+      working-directory: SpaceChoppers
 
