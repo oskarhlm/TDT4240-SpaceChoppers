@@ -1,6 +1,10 @@
 pipeline {
     agent any
     
+    triggers {
+        githubPush()
+    }
+    
     environment {
         ANDROID_HOME = '/usr/lib/android-sdk'
     }
