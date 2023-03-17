@@ -17,8 +17,7 @@ pipeline {
         stage('Build with Gradle') {
             steps {
                 dir('SpaceChoppers') {
-                    sh 'ls -la' // just for verification, remove if not 
-needed
+                    sh 'ls -la'
                     sh 'chmod +x gradlew'
                     sh './gradlew build -x test'
                 }
