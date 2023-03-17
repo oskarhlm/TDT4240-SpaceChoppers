@@ -8,12 +8,10 @@ eclipse.project.name = appName + "-core"
 
 // Add this block to your build.gradle file
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    testImplementation 'io.mockk:mockk:1.12.0'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 // Configure the test task to use JUnit 5
-test {
-    useJUnitPlatform()
-}
+//test {
+//    useJUnitPlatform()
+//}

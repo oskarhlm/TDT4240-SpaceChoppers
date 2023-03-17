@@ -1,8 +1,7 @@
 package com.mygdx.spacechoppers
 
-import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Disabled
-import org.junit.jupiter.api.Test
+import org.junit.Assert.assertTrue
+import org.junit.Test
 
 class WorkingTest {
     @Test
@@ -10,8 +9,8 @@ class WorkingTest {
         assertTrue(true)
     }
 
-    @Test
-    @Disabled
-    fun thisIsIgnored() {
-    }
+//    @Test
+//    @Disabled
+//    fun thisIsIgnored() {
+//    }
 }
