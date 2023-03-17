@@ -6,7 +6,7 @@ import org.junit.Test
 class WorkingTest {
     @Test
     fun thisAlwaysPasses() {
-        assertTrue(true)
+        assertTrue(false)
     }
 
 //    @Test
