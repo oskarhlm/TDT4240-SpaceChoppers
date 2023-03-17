@@ -12,13 +12,7 @@ pipeline {
 'https://github.com/oskarhlm/TDT4240-SpaceChoppers.git'
             }
         }
-        
-        // stage('Setup Android SDK') {
-        //     steps {
-        //         sh 'yes | /usr/lib/android-sdk/tools/bin/sdkmanager 
---licenses'
-        //     }
-        // }
+ 
         
         stage('Build with Gradle') {
             steps {
