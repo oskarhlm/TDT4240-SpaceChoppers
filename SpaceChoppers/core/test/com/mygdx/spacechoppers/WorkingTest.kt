@@ -6,11 +6,6 @@ import org.junit.Test
 class WorkingTest {
     @Test
     fun thisAlwaysPasses() {
-        assertTrue(false)
+        assertTrue(true)
     }
-
-//    @Test
-//    @Disabled
-//    fun thisIsIgnored() {
-//    }
 }

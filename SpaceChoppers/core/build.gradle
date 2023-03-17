@@ -1,3 +1,8 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+}
+
 sourceCompatibility = 1.7
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
@@ -9,6 +14,29 @@ eclipse.project.name = appName + "-core"
 // Add this block to your build.gradle file
 dependencies {
     testImplementation 'junit:junit:4.13.2'
+    testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+    testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+    testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+test {
+    useJUnit()
+}
+
+tasks.withType(Test) {
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
 }
 
 // Configure the test task to use JUnit 5
