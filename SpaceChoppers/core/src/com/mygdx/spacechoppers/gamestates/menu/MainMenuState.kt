@@ -1,6 +1,7 @@
 package com.mygdx.spacechoppers.gamestates.menu
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Table
@@ -14,6 +15,7 @@ import com.mygdx.spacechoppers.gamestates.menu.utils.MenuCommon
 
 class MainMenuState(gsm: GameStateManager) : GameState(gsm) {
     private val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
+    private val skin = MenuCommon.skin
     private val style = MenuCommon.style
 
     init {
@@ -21,6 +23,7 @@ class MainMenuState(gsm: GameStateManager) : GameState(gsm) {
 
         // Create Table
         val mainTable = Table()
+        mainTable.debug = true
 
         // Set table to fill stage
         mainTable.setFillParent(true)
@@ -29,14 +32,19 @@ class MainMenuState(gsm: GameStateManager) : GameState(gsm) {
         mainTable.center()
 
         // Create buttons
-        val playButton = TextButton("Play", style)
-        val settingsButton = TextButton("Options", style)
-        val exitButton = TextButton("Exit", style)
+        val playButton = TextButton("Play", skin)
+        val settingsButton = TextButton("Options", skin)
+        val exitButton = TextButton("Exit", skin)
 
         // Add listeners to buttons
         playButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
                 gsm.set(PlayState(gsm))
+            }
+        })
+        settingsButton.addListener(object : ClickListener() {
+            override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                gsm.set(OptionsState(gsm))
             }
         })
         exitButton.addListener(object : ClickListener() {
@@ -47,7 +55,7 @@ class MainMenuState(gsm: GameStateManager) : GameState(gsm) {
 
         // Add buttons to table
         mainTable.add(playButton)
-        mainTable.row()
+        mainTable.row().fillX().uniformX()
         mainTable.add(settingsButton)
         mainTable.row()
         mainTable.add(exitButton)
@@ -59,6 +67,8 @@ class MainMenuState(gsm: GameStateManager) : GameState(gsm) {
     override fun update(dt: Float) {}
 
     override fun render() {
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+        stage.act(Gdx.graphics.deltaTime)
         stage.draw()
     }
 }
