@@ -1,55 +1,81 @@
-class GameHandler {
-  createLobby(lobbyDetails) {
-    return new Promise((resolve, reject) => {
-      // Simulate an asynchronous operation, like a network request or database query
-        setTimeout(() => {
-          // Replace this condition with your own logic for successful lobby creation
-          const isLobbyCreated = true;
+import shortUUID from "short-uuid";
+import ServerMessage from './messages/ServerMessage.js'
+import { MessageActions } from "./messages/MessageActions.js";
 
-          if (isLobbyCreated) {
-            const response = new ServerMessage(MessageActions.LOBBY_CREATED, "");
-            resolve(response);
-          } else {
-            const response = new ServerMessage(MessageActions.LOBBY_CREATE_FAILED, "");
-            reject(response);
-          }
-        }, 1000); // Simulate a 1 second delay
+export default class GameHandler {
+
+  constructor(dbHandler) {
+    this.dbHandler = dbHandler;
+  }
+
+  // create lobby:
+  // 1. lager en ID server-side, lager dokument med lobbyID i realtime, lagrer nickname og score i realtime
+
+  // join lobby
+  // 1. nickname og ID, lagrer nickname og score under lobbyID i realtime
+
+  // update score
+  // 1. player sender score hvert sekund, med lobbyID, lagrer under nickname i realtime
+
+  // player leaves lobby
+  // 1. hent ut sscore og nick og last opp i firestore
+  // 2. hvis player[] == 0, slett
+
+  createLobby(username) {
+    return new Promise((resolve, reject) => {
+
+      // Create UUID
+      const lobbyID = shortUUID.generate();
+
+      // Create lobby in DB
+      this.dbHandler.writeToDB(lobbyID, username, 0)
+      .then(() => {
+        // Data saved successfully!
+        const response = new ServerMessage(MessageActions.LOBBY_CREATED, "");
+        resolve(response);
+      })
+      .catch((error) => {
+        // The write failed...
+        const response = new ServerMessage(MessageActions.LOBBY_CREATE_FAILED, "");
+        reject(response);
+      });
     });
   }
 
-  joinLobby(username, lobbyID) {
+  joinLobby(lobbyID, username) {
     return new Promise((resolve, reject) => {
-      // Simulate an asynchronous operation, like a network request or database query
-      setTimeout(() => {
-        // Replace this condition with your own logic for successful lobby joining
-        const isLobbyJoined = true;
-
-        if (isLobbyJoined) {
-          const response = new ServerMessage(MessageActions.LOBBY_JOINED, "");
-          resolve(response);
-        } else {
-          const response = new ServerMessage(MessageActions.LOBBY_JOIN_FAILED, "");
-          reject(response);
-        }
-      }, 1000); // Simulate a 1 second delay
+      
+      // Create lobby in DB
+      this.dbHandler.writeToDB(lobbyID, username, 0)
+      .then(() => {
+        // Data saved successfully!
+        const response = new ServerMessage(MessageActions.LOBBY_JOINED, "");
+        resolve(response);
+      })
+      .catch((error) => {
+        // The write failed...
+        const response = new ServerMessage(MessageActions.LOBBY_JOIN_FAILED, "");
+        reject(response);
+      });
+    
     });
   }
 
-  leaveLobby(username, lobbyID) {
+  leaveLobby(lobbyID, username) {
     return new Promise((resolve, reject) => {
       // Simulate an asynchronous operation, like a network request or database query
-      setTimeout(() => {
-        // Replace this condition with your own logic for successful lobby joining
-        const hasLeftLobby = true;
+    
+      // Replace this condition with your own logic for successful lobby joining
+      const hasLeftLobby = true;
 
-        if (hasLeftLobby) {
-          const response = new ServerMessage(MessageActions.LOBBY_JOINED, "");
-          resolve(response);
-        } else {
-          const response = new ServerMessage(MessageActions.LOBBY_JOIN_FAILED, "");
-          reject(response);
-        }
-      }, 1000); // Simulate a 1 second delay
+      if (hasLeftLobby) {
+        const response = new ServerMessage(MessageActions.LOBBY_JOINED, "");
+        resolve(response);
+      } else {
+        const response = new ServerMessage(MessageActions.LOBBY_JOIN_FAILED, "");
+        reject(response);
+      }
+
     });
   }
 

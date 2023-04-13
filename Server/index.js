@@ -28,7 +28,7 @@ ws.on('message', function message(data) {
     // Join lobby
     } else if (message.action === MessageActions.JOIN_LOBBY) {
 
-      gameHandler.joinLobby(message.username, message.payload.lobbyID)
+      gameHandler.joinLobby(message.payload.lobbyID, message.username)
       .then((result) => {
         ws.send(result);
       })

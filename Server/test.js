@@ -1,3 +1,4 @@
-import { isLobbyEmpty } from './database/DBHandler.js';
+import DBHandler from './database/DBHandler.js';
+const dbHandler = new DBHandler();
 
-isLobbyEmpty('hjkj54353');
+dbHandler.writeToDB('hjkj54353', 'Lærs', 3)

@@ -1,4 +1,4 @@
-const MessageActions = {
+export const MessageActions = {
   // From client
   CREATE_LOBBY: 'createLobby',
   JOIN_LOBBY: 'joinLobby',
