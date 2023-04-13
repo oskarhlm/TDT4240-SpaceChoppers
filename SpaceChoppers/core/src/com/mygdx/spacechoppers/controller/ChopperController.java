@@ -3,7 +3,6 @@ package com.mygdx.spacechoppers.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.spacechoppers.model.ChopperModel;
 
 public class ChopperController {
@@ -12,18 +11,24 @@ public class ChopperController {
 
     private Touchpad touchpad;
     private Skin skin;
-    private float scaler;
+    private float movementVector;
+
+    private final int speedScaler = 5;
 
     public ChopperController(ChopperModel model, Touchpad touchpad){
         this.model = model;
         this.skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
         this.touchpad = touchpad;
-        this.scaler = 0;
+        this.movementVector = 0;
     }
 
     public void moveChopper() {
-        scaler = (float) (Math.sqrt((touchpad.getKnobPercentX() * touchpad.getKnobPercentX()) + (touchpad.getKnobPercentY() * touchpad.getKnobPercentY())) * 5);
-        //TODO: Fix location update
+        float deltaX = touchpad.getKnobPercentX();
+        float deltaY = touchpad.getKnobPercentY();
+        movementVector = (float) Math.sqrt(Math.pow(deltaX, 2) + Math.pow(2, deltaY)) * speedScaler;
+
+        model.getLocation().x += deltaX * movementVector;
+        model.getLocation().y += deltaY * movementVector;
     }
 
 }

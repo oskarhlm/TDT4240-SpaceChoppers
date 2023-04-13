@@ -45,6 +45,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     override fun render() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+        /*
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
@@ -52,9 +53,10 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         circleX = (circleX + touchpad.knobPercentX * scaler).toFloat()
         circleY = (circleY + touchpad.knobPercentY * scaler).toFloat()
 
-        shapeRenderer.circle(circleX, circleY, 32f);
+        shapeRenderer.circle(circleX, circleY, 32f)
         shapeRenderer.end();
-
+        */
+        chopperController.moveChopper()
         sb.begin()
         //sb.draw(chopper.chopperSprite, chopper.location.x, chopper.location.y)
         chopperView.draw(sb)
