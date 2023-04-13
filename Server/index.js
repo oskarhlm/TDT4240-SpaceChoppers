@@ -1,7 +1,8 @@
 import WebSocket from 'ws';
 import GameHandler from './GameHandler'
 
-const ws = new WebSocket('ws://www.host.com/path');
+const ws = new WebSocket('ws://localhost:6969');
+const gameHandler = new GameHandler();
 
 ws.on('error', console.error);
 
@@ -11,17 +12,44 @@ ws.on('open', function open() {
 
 ws.on('message', function message(data) {
     // Try to decode message data
-    const message = Message.fromJson(data);
+    const message = ClientMessage.fromJson(data);
 
     // Create lobby
     if (message.action === MessageActions.CREATE_LOBBY) {
-        GameHandler.createLobby()
+
+      gameHandler.createLobby({ username: message.username })
+      .then((result) => {
+        ws.send(result);
+      })
+      .catch((error) => {
+        ws.send(error);
+      });
+
     // Join lobby
     } else if (message.action === MessageActions.JOIN_LOBBY) {
 
+      gameHandler.joinLobby(message.username, message.payload.lobbyID)
+      .then((result) => {
+        ws.send(result);
+      })
+      .catch((error) => {
+        ws.send(error);
+      });
+
     // Leave lobby
     } else if (message.action === MessageActions.LEAVE_LOBBY) {
-        DBHandler.disbandLobby()
+      
+      gameHandler.leaveLobby(message.username, message.payload.lobbyID)
+      .then((result) => {
+        ws.send(result);
+      })
+      .catch((error) => {
+        ws.send(error);
+      });
+
+    // Receieve highscore
+    } else if (message.action === MessageActions.SEND_HIGHSCORE) {
+      gameHandler.updateScore(message.username, message.payload)
     }
 
     console.log(message);
