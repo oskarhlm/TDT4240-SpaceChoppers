@@ -4,12 +4,14 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad
 import com.badlogic.gdx.utils.viewport.FitViewport
+import com.mygdx.spacechoppers.model.Chopper
 
 
 class PlayState(gsm: GameStateManager) : GameState(gsm) {
@@ -24,6 +26,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     private var circleX = 50f
     private var circleY = 50f
+
+    private val chopper = Chopper(100, Vector3(100f,100f,0f))
+
 
     override fun update(dt: Float) {}
 
@@ -46,6 +51,10 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         shapeRenderer.circle(circleX, circleY, 32f);
         shapeRenderer.end();
+
+        sb.begin()
+        sb.draw(chopper.chopperSprite, chopper.location.x, chopper.location.y)
+        sb.end()
 
 
 
