@@ -48,6 +48,11 @@ class MainMenuState(gsm: GameStateManager) : GameState(gsm) {
                 gsm.set(PlayState(gsm))
             }
         })
+        leaderboardButton.addListener(object : ClickListener() {
+            override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                gsm.set(LeaderboardMenuState(gsm))
+            }
+        })
         settingsButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
                 gsm.set(OptionsState(gsm))
