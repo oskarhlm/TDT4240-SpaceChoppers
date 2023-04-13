@@ -45,7 +45,7 @@ export default class GameHandler {
   joinLobby(lobbyID, username) {
     return new Promise((resolve, reject) => {
       
-      // Create lobby in DB
+      // Join lobby in DB
       this.dbHandler.writeToDB(lobbyID, username, 0)
       .then(() => {
         // Data saved successfully!
@@ -63,25 +63,57 @@ export default class GameHandler {
 
   leaveLobby(lobbyID, username) {
     return new Promise((resolve, reject) => {
-      // Simulate an asynchronous operation, like a network request or database query
-    
-      // Replace this condition with your own logic for successful lobby joining
-      const hasLeftLobby = true;
-
-      if (hasLeftLobby) {
-        const response = new ServerMessage(MessageActions.LOBBY_JOINED, "");
-        resolve(response);
-      } else {
-        const response = new ServerMessage(MessageActions.LOBBY_JOIN_FAILED, "");
-        reject(response);
-      }
-
+      // Fetch score from DB
+      this.dbHandler.getScoreFromDB(lobbyID, username)
+        .then((snapshot) => {
+          
+          if (snapshot.exists()) {
+            console.log(snapshot.val());
+          } else {
+            console.log("No data available");
+          }
+          
+          //console.log(snapshot)
+          const values = snapshot.val();
+          //console.log(values);
+          const score = values[username];
+          // Data saved successfully!
+          this.dbHandler.writeToFirestore(username, score);
+  
+          // Leave lobby in DB
+          this.dbHandler.removePlayerFromLobby(lobbyID, username)
+            .then(() => {
+              // Data saved successfully!
+              const response = new ServerMessage(MessageActions.LOBBY_LEFT, "");
+              resolve(response);
+            })
+            .catch((error) => {
+              // The write failed...
+              const response = new ServerMessage(MessageActions.LOBBY_LEFT_FAILED, "");
+              reject(response);
+            });
+        })
+        .catch((error) => {
+          reject(error);
+        });
     });
   }
+  
+  
 
-  updateScore(username, payload) {
+  updateScore(lobbyID, username, score) {
     // No need for promise, dont really care if it doesnt update
-    const score = payload.score;
-    const lobbyID = payload.lobbyID;
+    
+    // Update score in DB
+    this.dbHandler.writeToDB(lobbyID, username, score)
+    .then(() => {
+      // Data saved successfully!
+      console.log("Updated score")
+    })
+    .catch((error) => {
+      // The write failed...
+      console.log("Failed to update score");
+      console.log(error);
+    });
   }
 }

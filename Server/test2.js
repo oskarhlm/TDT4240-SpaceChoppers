@@ -5,6 +5,16 @@ const dbHandler = new DBHandler();
 const gameHandler = new GameHandler(dbHandler);
 
 //gameHandler.createLobby("mathias");
-gameHandler.joinLobby("nm85EoZmhw1MLbFHRyZwQD", "larsipus")
+//gameHandler.updateScore("gzcho8xabmaMoAT5sN27aK", "mathias", 420);
+
+gameHandler
+  .leaveLobby("smAGkkjKUwFPA4vxEHRXro", "mathias")
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+
 
 //getScoreFromDB("hjkj54353", "larsipus");

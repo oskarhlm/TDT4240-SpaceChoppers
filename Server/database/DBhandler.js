@@ -1,6 +1,7 @@
 import { initializeApp }  from 'firebase/app';
-import { getFirestore, doc, updateDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, updateDoc, query, collection, orderBy, limit, getDocs } from 'firebase/firestore';
 import { getDatabase, ref, get, child, update, remove } from 'firebase/database';
+
 
 export default class DBHandler {
   static firebaseConfig = {
@@ -17,47 +18,58 @@ export default class DBHandler {
     initializeApp(DBHandler.firebaseConfig);
   }
 
-  async writeToFirestore(nickname, score) {
+  async writeToFirestore(username, score) {
     const db = getFirestore();
-    const highscoreDocRef = doc(db, 'highscores', 'Highscores');
+    const highscoreDocRef = doc(db, 'highscores', username);
 
-    await updateDoc(highscoreDocRef, {
-      [nickname]: score
+    await setDoc(highscoreDocRef, {
+      username: username,
+      score: score
     });
 
     console.log('Highscore saved to firestore.');
   }
 
-  writeToDB(lobbyID, nickname, score) {
+  writeToDB(lobbyID, username, score) {
     const db = getDatabase();
     return update(ref(db, lobbyID), {
-      [nickname]: score
+      [username]: score
     });
     //console.log('Highscore saved to database.');
   }
 
-  async getScoreFromDB(lobbyID, nickname) {
+  getScoreFromDB(lobbyID, username) {
+    console.log(lobbyID);
+    console.log(username)
     const dbRef = ref(getDatabase());
-    get(child(dbRef, lobbyID)).then((snapshot) => {
-      if (snapshot.exists()) {
-        console.log(snapshot.val());
-        const values = snapshot.val();
-        const score = values[nickname];
-        console.log("Score: " + score);
-      } else {
-        console.log("No data available");
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
+    return get(child(dbRef, lobbyID));
   }
 
-  async removePlayerFromLobby(lobbyID, nickname) {
+  removePlayerFromLobby(lobbyID, username) {
     const db = getDatabase();
 
     // create DatabaseReference
-    const dbRef = ref(db, lobbyID + "/" + nickname);
+    const dbRef = ref(db, lobbyID + "/" + username);
 
-    remove(dbRef).then(() => console.log("Deleted"))
+    return remove(dbRef);
+  }
+
+  async getHighscores() {
+    const db = getFirestore();
+    const q = query(collection(db, 'highscores'), orderBy('score', 'desc'), limit(10));
+    const querySnapshot = await getDocs(q);
+    const highscores = [];
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const highscore = {
+        username: doc.id,
+        score: data.score,
+      }
+      highscores.push(highscore);
+    });
+
+
+    return highscores;
   }
 }
