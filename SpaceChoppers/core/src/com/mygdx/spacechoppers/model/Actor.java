@@ -10,7 +10,6 @@ public class Actor implements IActor{
     protected Direction direction;
     public Touchpad tp;
 
-
     public int getHP() {
         return HP;
     }
@@ -23,7 +22,6 @@ public class Actor implements IActor{
         this.HP = HP;
         this.location = location;
     }
-
 
     @Override
     public void takeDamage() {
