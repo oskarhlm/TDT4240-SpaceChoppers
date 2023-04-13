@@ -4,8 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.ScreenUtils
-import com.mygdx.spacechoppers.gamestates.MenuState
-import com.mygdx.spacechoppers.gamestates.PlayState
+import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
 
 class SpaceChoppersGame : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
@@ -22,7 +21,7 @@ class SpaceChoppersGame : ApplicationAdapter() {
     override fun create() {
         sb = SpriteBatch()
         gsm = GameStateManager(this)
-        gsm.push(MenuState(gsm))
+        gsm.push(MainMenuState(gsm))
     }
 
     override fun render() {
