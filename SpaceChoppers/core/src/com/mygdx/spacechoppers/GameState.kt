@@ -20,4 +20,6 @@ abstract class GameState(protected var gsm: GameStateManager) {
         cam = OrthographicCamera()
         cam.setToOrtho(false, viewportWidth, viewportHeight)
     }
+
+
 }
