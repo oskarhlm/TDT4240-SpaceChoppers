@@ -22,6 +22,7 @@ class SpaceChoppersGame : ApplicationAdapter() {
         sb = SpriteBatch()
         gsm = GameStateManager(this)
         gsm.push(MainMenuState(gsm))
+//        gsm.push(TestMenuState(gsm))
     }
 
     override fun render() {
