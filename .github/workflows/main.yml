@@ -1,0 +1,59 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+
+    - name: Change to SpaceChoppers directory
+      run: cd SpaceChoppers
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      working-directory: SpaceChoppers
+
+    - name: Build and test with Gradle
+      run: ./gradlew build
+      working-directory: SpaceChoppers
+
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+
+    - name: Change to SpaceChoppers directory
+      run: cd SpaceChoppers
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      working-directory: SpaceChoppers
+
+    - name: Build and test with Gradle
+      run: ./gradlew core:test
+      working-directory: SpaceChoppers
