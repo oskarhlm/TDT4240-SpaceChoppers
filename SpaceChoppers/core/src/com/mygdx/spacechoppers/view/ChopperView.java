@@ -8,26 +8,22 @@ import com.mygdx.spacechoppers.model.ChopperModel;
 
 public class ChopperView implements Disposable {
 
-    private Sprite chopperSprite;
-    private Texture chopperTexture;
+    private Sprite sprite;
+    private Texture texture;
     private ChopperModel model;
 
     public ChopperView(ChopperModel model){
         this.model = model;
-        this.chopperTexture = new Texture("helicopter_1.png");
-        this.chopperSprite = new Sprite(chopperTexture);
-    }
-
-    public Sprite getChopperSprite() {
-        return chopperSprite;
+        this.texture = new Texture("helicopter_1.png");
+        this.sprite = new Sprite(texture);
     }
 
     public void draw(SpriteBatch sb){
-        sb.draw(chopperSprite, model.getLocation().x, model.getLocation().y);
+        sb.draw(sprite, model.getLocation().x, model.getLocation().y);
     }
 
     @Override
     public void dispose() {
-        chopperTexture.dispose();
+        texture.dispose();
     }
 }

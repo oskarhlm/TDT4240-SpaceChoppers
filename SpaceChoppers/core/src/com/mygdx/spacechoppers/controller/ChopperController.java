@@ -8,16 +8,12 @@ import com.mygdx.spacechoppers.model.ChopperModel;
 public class ChopperController {
 
     private final ChopperModel model;
-
     private Touchpad touchpad;
-    private Skin skin;
     private float movementVector;
-
     private final int speedScaler = 5;
 
     public ChopperController(ChopperModel model, Touchpad touchpad){
         this.model = model;
-        this.skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
         this.touchpad = touchpad;
         this.movementVector = 0;
     }
