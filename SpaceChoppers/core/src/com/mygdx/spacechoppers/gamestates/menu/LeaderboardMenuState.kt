@@ -92,30 +92,14 @@ class LeaderboardMenuState(gsm: GameStateManager) : GameState(gsm) {
         container.setFillParent(true)
 
         val table = Table()
-
         val scroll = ScrollPane(table, skin)
-
-        val stopTouchDown: InputListener = object : InputListener() {
-            override fun touchDown(
-                event: InputEvent, x: Float, y: Float, pointer: Int, button: Int
-            ): Boolean {
-                event.stop()
-                return false
-            }
-        }
-
-        fun scaledLabel(lbl: String, scl: Float): Label {
-            val scaledLbl = Label(lbl, skin)
-            scaledLbl.setFontScale(scl)
-            return scaledLbl
-        }
 
         val headerScl = 3f
         table.add(scaledLabel("", headerScl))
         table.add(scaledLabel("Username", headerScl)).expandX().fillX()
         table.add(scaledLabel("Score", headerScl))
 
-        table.pad(10f).defaults().expandX().space(4f)
+        table.pad(10f).defaults().expandX().space(8f)
         val scoresScl = 2f
         leaderboard.forEachIndexed { index, name ->
             table.row()
@@ -126,9 +110,6 @@ class LeaderboardMenuState(gsm: GameStateManager) : GameState(gsm) {
             table.add(scaledLabel("$score", scoresScl))
         }
 
-        container.add(scroll).expand().fill().colspan(3)
-        container.row().space(10f).pad(20f, 0f, 20f, 0f)
-
         val backButton = TextButton("Back", skin)
         backButton.label.setFontScale(4f)
         backButton.addListener(object : ClickListener() {
@@ -136,16 +117,24 @@ class LeaderboardMenuState(gsm: GameStateManager) : GameState(gsm) {
                 gsm.set(MainMenuState(gsm))
             }
         })
+
+        container.add(scroll).expand().fill().colspan(3)
+        container.row().space(10f).pad(20f, 0f, 20f, 0f)
         container.add(backButton).expandX().center()
     }
 
-    override fun update(dt: Float) {
-    }
+    override fun update(dt: Float) {}
 
     override fun render() {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         stage.act(Math.min(Gdx.graphics.deltaTime, 1 / 30f))
         stage.draw()
+    }
+
+    fun scaledLabel(lbl: String, scl: Float): Label {
+        val scaledLbl = Label(lbl, skin)
+        scaledLbl.setFontScale(scl)
+        return scaledLbl
     }
 }
