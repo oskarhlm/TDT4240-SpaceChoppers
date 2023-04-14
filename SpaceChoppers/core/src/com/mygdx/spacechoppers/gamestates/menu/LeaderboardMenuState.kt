@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
-import com.mygdx.spacechoppers.gamestates.menu.utils.MenuCommon
+import com.mygdx.spacechoppers.gamestates.menu.utils.MenuCommon.scaledLabel
 
 
 class LeaderboardMenuState(gsm: GameStateManager) : MenuBase(gsm) {
@@ -119,9 +119,5 @@ class LeaderboardMenuState(gsm: GameStateManager) : MenuBase(gsm) {
         container.add(backButton).expandX().center()
     }
 
-    fun scaledLabel(lbl: String, scl: Float): Label {
-        val scaledLbl = Label(lbl, skin)
-        scaledLbl.setFontScale(scl)
-        return scaledLbl
-    }
+
 }

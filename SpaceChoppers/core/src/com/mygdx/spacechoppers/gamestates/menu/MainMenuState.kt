@@ -36,19 +36,27 @@ class MainMenuState(gsm: GameStateManager) : MenuBase(gsm) {
         welcomeLabel.setAlignment(Align.center)
 
         // Create buttons
-        val playButton = TextButton("Play", skin)
-        playButton.label.setFontScale(4f)
+        val buttonFontScale = 4f
+        val createButton = TextButton("Create", skin)
+        createButton.label.setFontScale(buttonFontScale)
+        val joinButton = TextButton("Join", skin)
+        joinButton.label.setFontScale(buttonFontScale)
         val leaderboardButton = TextButton("Leaderboard", skin)
-        leaderboardButton.label.setFontScale(4f)
+        leaderboardButton.label.setFontScale(buttonFontScale)
         val settingsButton = TextButton("Options", skin)
-        settingsButton.label.setFontScale(4f)
+        settingsButton.label.setFontScale(buttonFontScale)
         val exitButton = TextButton("Exit", skin)
-        exitButton.label.setFontScale(4f)
+        exitButton.label.setFontScale(buttonFontScale)
 
         // Add listeners to buttons
-        playButton.addListener(object : ClickListener() {
+        createButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
-                gsm.set(PlayState(gsm))
+                gsm.set(CreateLobbyState(gsm))
+            }
+        })
+        joinButton.addListener(object : ClickListener() {
+            override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                gsm.set(JoinLobbyState(gsm))
             }
         })
         leaderboardButton.addListener(object : ClickListener() {
@@ -71,7 +79,8 @@ class MainMenuState(gsm: GameStateManager) : MenuBase(gsm) {
         // Add buttons to table
         mainTable.columnDefaults(0).expandX().fillX()
         Preferences.username?.let { mainTable.add(welcomeLabel).center().row() }
-        mainTable.add(playButton).row()
+        mainTable.add(createButton).row()
+        mainTable.add(joinButton).row()
         mainTable.add(leaderboardButton).row()
         mainTable.add(settingsButton).row()
         mainTable.add(exitButton).row()

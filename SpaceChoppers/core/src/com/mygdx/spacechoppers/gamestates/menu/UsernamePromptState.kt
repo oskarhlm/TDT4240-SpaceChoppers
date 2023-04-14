@@ -1,5 +1,6 @@
 package com.mygdx.spacechoppers.gamestates.menu
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
@@ -16,11 +17,11 @@ class UsernamePromptState(gsm: GameStateManager) : MenuBase(gsm) {
         table.setFillParent(true)
         table.center().pad(20f).defaults().space(10f)
 
-        val usernamePromptLabel = Label("Set username", skin)
+        val usernamePromptLabel = Label("Set username:", skin)
         usernamePromptLabel.setFontScale(4f)
 
         val usernameField = TextField(null, skin)
-        usernameField.style.font.data.scale(2f)
+        usernameField.style.font.data.setScale(2f)
 
         val confirmButton = TextButton("Confirm", skin)
         confirmButton.label.setFontScale(4f)
@@ -28,6 +29,7 @@ class UsernamePromptState(gsm: GameStateManager) : MenuBase(gsm) {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
                 usernameField.text.isNotBlank().let {
                     Preferences.username = usernameField.text
+                    Gdx.input.setOnscreenKeyboardVisible(false)
                     gsm.set(MainMenuState(gsm))
                 }
             }
