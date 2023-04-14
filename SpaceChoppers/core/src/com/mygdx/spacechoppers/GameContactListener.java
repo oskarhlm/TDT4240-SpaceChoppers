@@ -5,6 +5,9 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.mygdx.spacechoppers.gamestates.PlayState;
+import com.mygdx.spacechoppers.helper.ContactType;
+
 public class GameContactListener implements ContactListener {
 
 
@@ -16,8 +19,15 @@ public class GameContactListener implements ContactListener {
         if(a == null || b == null) return;
         if(a.getUserData() == null || b.getUserData() == null) return;
 
+        if(a.getUserData() == ContactType.ASTEROID || b.getUserData() == ContactType.ASTEROID){
+            if(a.getUserData() == ContactType.CHOPPER || b.getUserData() == ContactType.CHOPPER){
+                // do something with chopper through controller
+                // hp-- asteroid.explode() if hp==0 chopper.explode()
+            }
+            }
 
     }
+        
 
     @Override
     public void endContact(Contact contact) {
