@@ -1,5 +1,6 @@
 package com.mygdx.spacechoppers.gamestates
 
+import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
