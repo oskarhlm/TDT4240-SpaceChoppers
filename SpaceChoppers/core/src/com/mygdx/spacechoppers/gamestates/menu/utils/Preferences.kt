@@ -9,6 +9,7 @@ object Preferences {
     private const val PREF_MUSIC_ENABLED = "music.enabled"
     private const val PREF_SOUND_VOL = "sound"
     private const val PREF_SOUND_ENABLED = "sound.enabled"
+    private const val PREF_USERNAME = "username"
 
     private const val PREFS_NAME = "appPreferences"
     private val prefs get() = Gdx.app.getPreferences(PREFS_NAME)
@@ -28,4 +29,8 @@ object Preferences {
     var soundEnabled
         get() = prefs.getBoolean(PREF_SOUND_ENABLED, true)
         set(value) = prefs.putBoolean(PREF_SOUND_ENABLED, value).flush()
+
+    var username: String?
+        get() = prefs.getString(PREF_USERNAME, null)
+        set(value) = prefs.putString(PREF_USERNAME, value).flush()
 }

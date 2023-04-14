@@ -17,9 +17,7 @@ import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.gamestates.menu.utils.MenuCommon
 
 
-class LeaderboardMenuState(gsm: GameStateManager) : GameState(gsm) {
-    private val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
-    private val skin = MenuCommon.skin
+class LeaderboardMenuState(gsm: GameStateManager) : MenuBase(gsm) {
     var leaderboard = listOf(
         "jan",
         "banan",
@@ -85,8 +83,6 @@ class LeaderboardMenuState(gsm: GameStateManager) : GameState(gsm) {
     val score = 69
 
     init {
-        Gdx.input.inputProcessor = stage
-
         val container = Table()
         stage.addActor(container)
         container.setFillParent(true)
@@ -121,15 +117,6 @@ class LeaderboardMenuState(gsm: GameStateManager) : GameState(gsm) {
         container.add(scroll).expand().fill().colspan(3)
         container.row().space(10f).pad(20f, 0f, 20f, 0f)
         container.add(backButton).expandX().center()
-    }
-
-    override fun update(dt: Float) {}
-
-    override fun render() {
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-        stage.act(Math.min(Gdx.graphics.deltaTime, 1 / 30f))
-        stage.draw()
     }
 
     fun scaledLabel(lbl: String, scl: Float): Label {

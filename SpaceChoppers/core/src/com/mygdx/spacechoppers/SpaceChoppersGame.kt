@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.ScreenUtils
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
+import com.mygdx.spacechoppers.gamestates.menu.UsernamePromptState
+import com.mygdx.spacechoppers.gamestates.menu.utils.Preferences
 
 class SpaceChoppersGame : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
@@ -21,7 +23,8 @@ class SpaceChoppersGame : ApplicationAdapter() {
     override fun create() {
         sb = SpriteBatch()
         gsm = GameStateManager(this)
-        gsm.push(MainMenuState(gsm))
+        Preferences.username?.let { gsm.push(MainMenuState(gsm)) }
+            ?: run { gsm.push(UsernamePromptState(gsm)) }
     }
 
     override fun render() {
