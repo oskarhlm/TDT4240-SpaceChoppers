@@ -24,7 +24,8 @@ public class ChopperController {
         float deltaY = touchpad.getKnobPercentY();
         movementVector = (float) Math.sqrt(Math.pow(deltaX, 2) + Math.pow(2, deltaY)) * speedScaler;
 
-        model.setCurrentVector(new Vector2(deltaX, deltaY));
+        if (deltaX != 0 && deltaY != 0)
+            model.setCurrentVector(new Vector2(deltaX, deltaY));
         model.getLocation().x += deltaX * movementVector;
         model.getLocation().y += deltaY * movementVector;
     }
