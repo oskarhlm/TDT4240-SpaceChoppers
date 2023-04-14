@@ -1,40 +1,37 @@
-import http from 'http'
-import DBHandler from './database/DBHandler.js'
+import http from 'http';
+import DBHandler from './database/DBHandler.js';
 
 const hostname = 'localhost';
 const port = 3000;
 
-const dbHandler = new DBHandler();
+const dbHandler = new DBHandler;
 
 const server = http.createServer((req, res) => {
   if (req.url === '/highscores') {
     if (req.method === 'GET') {
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-
       dbHandler.getHighscores()
       .then((data) => {
-        console.log(data);
-        const parsedData = JSON.stringify(data);
-        res.end(parsedData);
+        sendResponse(200, 'application/json', JSON.stringify(data), res);
       })
       .catch((error) => {
         console.log(error);
-      })
-
+        sendResponse(500, 'application/json', JSON.stringify({ error: error.message }), res);
+      });
     } else {
-      res.statusCode = 405;
-      res.setHeader('Content-Type', 'text/plain');
       res.setHeader('Allow', 'GET');
-      res.end('Method not allowed');
+      sendResponse(405, 'text/plain', 'Method not allowed', res);
     }
   } else {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello World\n');
+    sendResponse(404, 'text/plain', 'Not Found', res);
   }
 });
 
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+function sendResponse(statusCode, contentType, data, res) {
+  res.statusCode = statusCode;
+  res.setHeader('Content-Type', contentType);
+  res.end(data);
+}

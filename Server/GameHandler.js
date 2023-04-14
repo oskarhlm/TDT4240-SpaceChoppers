@@ -1,4 +1,3 @@
-import shortUUID from "short-uuid";
 import ServerMessage from './messages/ServerMessage.js'
 import { MessageActions } from "./messages/MessageActions.js";
 
@@ -9,10 +8,10 @@ export default class GameHandler {
   }
 
   // create lobby:
-  // 1. lager en ID server-side, lager dokument med lobbyID i realtime, lagrer nickname og score i realtime
+  // 1. generer en 4-digit pin code server-side, lager dokument med lobbyID i realtime, lagrer nickname og score i realtime
 
   // join lobby
-  // 1. nickname og ID, lagrer nickname og score under lobbyID i realtime
+  // 1. username og pin code, lagrer nickname og score under lobbyID i realtime
 
   // update score
   // 1. player sender score hvert sekund, med lobbyID, lagrer under nickname i realtime
@@ -24,19 +23,19 @@ export default class GameHandler {
   createLobby(username) {
     return new Promise((resolve, reject) => {
 
-      // Create UUID
-      const lobbyID = shortUUID.generate();
+      // Generate 4-digit pin code
+      const lobbyID = Math.floor(1000 + Math.random() * 9000).toString();
 
       // Create lobby in DB
       this.dbHandler.writeToDB(lobbyID, username, 0)
       .then(() => {
         // Data saved successfully!
-        const response = new ServerMessage(MessageActions.LOBBY_CREATED, "");
+        const response = new ServerMessage(MessageActions.LOBBY_CREATED, {'lobbyID': lobbyID});
         resolve(response);
       })
       .catch((error) => {
         // The write failed...
-        const response = new ServerMessage(MessageActions.LOBBY_CREATE_FAILED, "");
+        const response = new ServerMessage(MessageActions.LOBBY_CREATE_FAILED, `Failed to create lobby: ${error}`);
         reject(response);
       });
     });
@@ -49,12 +48,12 @@ export default class GameHandler {
       this.dbHandler.writeToDB(lobbyID, username, 0)
       .then(() => {
         // Data saved successfully!
-        const response = new ServerMessage(MessageActions.LOBBY_JOINED, "");
+        const response = new ServerMessage(MessageActions.LOBBY_JOINED, "Lobby joined successfully");
         resolve(response);
       })
       .catch((error) => {
         // The write failed...
-        const response = new ServerMessage(MessageActions.LOBBY_JOIN_FAILED, "");
+        const response = new ServerMessage(MessageActions.LOBBY_JOIN_FAILED, `Failed to join lobby: ${error}`);
         reject(response);
       });
     
@@ -73,9 +72,7 @@ export default class GameHandler {
             console.log("No data available");
           }
           
-          //console.log(snapshot)
           const values = snapshot.val();
-          //console.log(values);
           const score = values[username];
           // Data saved successfully!
           this.dbHandler.writeToFirestore(username, score);
@@ -84,22 +81,21 @@ export default class GameHandler {
           this.dbHandler.removePlayerFromLobby(lobbyID, username)
             .then(() => {
               // Data saved successfully!
-              const response = new ServerMessage(MessageActions.LOBBY_LEFT, "");
+              const response = new ServerMessage(MessageActions.LOBBY_LEFT, "Lobby left successfully");
               resolve(response);
             })
             .catch((error) => {
               // The write failed...
-              const response = new ServerMessage(MessageActions.LOBBY_LEFT_FAILED, "");
+              const response = new ServerMessage(MessageActions.LOBBY_LEFT_FAILED, `Failed to leave lobby: ${error}`);
               reject(response);
             });
         })
         .catch((error) => {
+          console.log('Leave game error')
           reject(error);
         });
     });
   }
-  
-  
 
   updateScore(lobbyID, username, score) {
     // No need for promise, dont really care if it doesnt update
@@ -112,8 +108,40 @@ export default class GameHandler {
     })
     .catch((error) => {
       // The write failed...
-      console.log("Failed to update score");
-      console.log(error);
+      console.log(`Failed to update score: ${error}`);
     });
+  }
+    
+  startGame(lobbyID, username) {
+    return new Promise((resolve, reject) => {
+      this.dbHandler.startGame(lobbyID)
+      .then(() => {
+        // Game started successfully!
+        const response = new ServerMessage(MessageActions.GAME_STARTED, "Game started successfully");
+        resolve(response);
+      })
+      .catch((error) => {
+        // The start game failed...
+        const response = new ServerMessage(MessageActions.GAME_START_FAILED, `Failed to start game: ${error}`);
+        reject(response);
+      });
+    })
+  }
+
+  getScores(lobbyID) {
+    return new Promise((resolve, reject) => {
+      this.dbHandler.getScores(lobbyID)
+      .then((scores) => {
+        // Scores sent!
+        const scoresJson = JSON.stringify(scores);
+        const response = new ServerMessage(MessageActions.SCORES_SENT, scoresJson);
+        resolve(response);
+      })
+      .catch((error) => {
+        // The start game failed...
+        const response = new ServerMessage(MessageActions.SCORES_SENT_FAILED, `Failed to send scores ${error}`);
+        reject(response);
+      });
+    })
   }
 }

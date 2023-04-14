@@ -1,5 +1,5 @@
 import { initializeApp }  from 'firebase/app';
-import { getFirestore, doc, setDoc, updateDoc, query, collection, orderBy, limit, getDocs } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, query, collection, orderBy, limit, getDocs } from 'firebase/firestore';
 import { getDatabase, ref, get, child, update, remove } from 'firebase/database';
 
 
@@ -26,30 +26,26 @@ export default class DBHandler {
       username: username,
       score: score
     });
-
-    console.log('Highscore saved to firestore.');
   }
 
   writeToDB(lobbyID, username, score) {
     const db = getDatabase();
-    return update(ref(db, lobbyID), {
-      [username]: score
+    return update(ref(db, String(lobbyID)), {
+      [String(username)]: score
     });
-    //console.log('Highscore saved to database.');
-  }
+  }  
 
   getScoreFromDB(lobbyID, username) {
     console.log(lobbyID);
     console.log(username)
     const dbRef = ref(getDatabase());
-    return get(child(dbRef, lobbyID));
+    return get(child(dbRef, String(lobbyID)));
   }
 
   removePlayerFromLobby(lobbyID, username) {
     const db = getDatabase();
 
-    // create DatabaseReference
-    const dbRef = ref(db, lobbyID + "/" + username);
+    const dbRef = ref(db, String(lobbyID) + "/" + String(username));
 
     return remove(dbRef);
   }
@@ -71,5 +67,17 @@ export default class DBHandler {
 
 
     return highscores;
+  }
+
+  async getScores(lobbyID) {
+    const db = getDatabase();
+    const lobbyRef = ref(db, String(lobbyID));
+    const snapshot = await get(lobbyRef);
+  
+    if (snapshot.exists()) {
+      return snapshot.val();
+    } else {
+      throw new Error(`No scores found for lobbyID: ${lobbyID}`);
+    }
   }
 }

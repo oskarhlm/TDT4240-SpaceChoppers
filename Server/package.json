@@ -12,6 +12,7 @@
   "dependencies": {
     "firebase": "^9.19.1",
     "firebase-admin": "^11.6.0",
-    "short-uuid": "^4.2.2"
+    "short-uuid": "^4.2.2",
+    "ws": "^8.13.0"
   }
 }
