@@ -3,6 +3,8 @@ package com.mygdx.spacechoppers.gamestates
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -12,8 +14,11 @@ import com.mygdx.spacechoppers.GameStateManager
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.controller.ChopperController
+import com.mygdx.spacechoppers.model.AsteroidModel
+import com.mygdx.spacechoppers.model.AsteroidTextures
 import com.mygdx.spacechoppers.model.ChopperModel
 import com.mygdx.spacechoppers.model.Joystick
+import com.mygdx.spacechoppers.view.AsteroidView
 import com.mygdx.spacechoppers.view.ChopperView
 
 
@@ -24,6 +29,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val chopperModel = ChopperModel(100, Vector3(100f, 100f, 0f))
     private val chopperView = ChopperView(chopperModel)
     private val chopperController = ChopperController(chopperModel, joystick.touchpad)
+
+
 
     init {
         Gdx.input.inputProcessor = stage
@@ -39,6 +46,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         sb.begin()
         chopperView.draw(sb)
+        //asteroidView.draw(sb)
+
         sb.end()
 
         stage.act(Gdx.graphics.deltaTime)

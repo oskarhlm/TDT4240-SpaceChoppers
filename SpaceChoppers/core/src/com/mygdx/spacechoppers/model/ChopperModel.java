@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class ChopperModel extends Actor{
-
     private Vector2 currentVector;
 
     public ChopperModel(int HP, Vector3 Location) {
