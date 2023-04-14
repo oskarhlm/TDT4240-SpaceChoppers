@@ -16,12 +16,13 @@ public class AsteroidView implements Disposable {
 
     public AsteroidView(AsteroidModel model, AsteroidTextures textures){
         this.model = model;
-        this.texture = textures.getRandomAsteroidTexture().getTexture();
+        //this.texture = textures.getRandomAsteroidTexture().getTexture();
+        this.texture = new Texture("asteroid.png");
         this.sprite = new Sprite(texture);
     }
 
     public void draw(SpriteBatch sb){
-        sb.draw(sprite, model.getLocation().x, model.getLocation().y );
+        sb.draw(sprite, model.getLocation().x, model.getLocation().y, 100, 100 );
     }
 
     @Override

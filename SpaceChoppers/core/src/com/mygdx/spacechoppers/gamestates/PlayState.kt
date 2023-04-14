@@ -26,10 +26,15 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
     private val joystick = Joystick(cam.viewportWidth)
 
+    // Chopper
     private val chopperModel = ChopperModel(100, Vector3(100f, 100f, 0f))
     private val chopperView = ChopperView(chopperModel)
     private val chopperController = ChopperController(chopperModel, joystick.touchpad)
 
+    //Asteroid
+    private val asteroidModel = AsteroidModel(10,Vector3(0F,0F, 0F))
+    private val asteroidTextures = AsteroidTextures()
+    private val asteroidView = AsteroidView(asteroidModel, asteroidTextures)
 
 
     init {
@@ -39,6 +44,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     override fun update(dt: Float) {
         chopperController.moveChopper()
+        asteroidModel.moveAsteroid()
     }
 
     override fun render() {
@@ -46,6 +52,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         sb.begin()
         chopperView.draw(sb)
+        asteroidView.draw(sb)
         //asteroidView.draw(sb)
 
         sb.end()

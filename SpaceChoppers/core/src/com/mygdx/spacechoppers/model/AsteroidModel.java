@@ -17,7 +17,7 @@ public class AsteroidModel extends Actor {
     }
 
     public void moveAsteroid(){
-
+        location.add((float)0.4, 1, 0);
     }
 }
 
