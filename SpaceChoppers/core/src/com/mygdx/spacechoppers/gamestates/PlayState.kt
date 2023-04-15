@@ -46,14 +46,13 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     )
 
     // Chopper
-    private val chopperModel = ChopperModel(100, Vector3(100f, 100f, 0f))
-    private val chopperView = ChopperView(chopperModel)
+    private val chopperModel = ChopperModel(100, Vector3(100f, 100f, 0f), chopperTextureSize, world)
+    private val chopperView = ChopperView(chopperModel, chopperTexture)
     private val chopperController = ChopperController(chopperModel, joystick.touchpad)
 
     //Asteroid
-    private val asteroidModel = AsteroidModel(10,Vector3(0F,0F, 0F))
-    private val asteroidTextures = AsteroidTextures()
-    private val asteroidView = AsteroidView(asteroidModel, asteroidTextures)
+    private val asteroidModel = AsteroidModel(10, Vector3(0F,0F, 0F), asteroidTextureSize, world)
+    private val asteroidView = AsteroidView(asteroidModel, asteroidTexture)
 
 
     init {
