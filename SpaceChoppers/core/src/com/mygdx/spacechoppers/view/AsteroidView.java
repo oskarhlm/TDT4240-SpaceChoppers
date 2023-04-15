@@ -14,10 +14,10 @@ public class AsteroidView implements Disposable {
     private Texture texture;
     private Sprite sprite;
 
-    public AsteroidView(AsteroidModel model, AsteroidTextures textures){
+    public AsteroidView(AsteroidModel model, Texture texture){
         this.model = model;
         //this.texture = textures.getRandomAsteroidTexture().getTexture();
-        this.texture = new Texture("asteroid.png");
+        this.texture = texture;
         this.sprite = new Sprite(texture);
     }
 

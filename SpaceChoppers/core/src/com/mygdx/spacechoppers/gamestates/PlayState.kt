@@ -33,6 +33,18 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
     private val joystick = Joystick(cam.viewportWidth)
 
+    // Load Chopper texture and obtain its size
+    private val chopperTexture = Texture(ChopperModel.TEXTURE_PATH)
+    private val chopperTextureSize = Vector2(chopperTexture.width.toFloat(),
+        chopperTexture.height.toFloat()
+    )
+
+    // Load Asteroid texture and obtain its size
+    private val asteroidTexture = Texture(AsteroidModel.TEXTURE_PATH)
+    private val asteroidTextureSize = Vector2(asteroidTexture.width.toFloat(),
+        asteroidTexture.height.toFloat()
+    )
+
     // Chopper
     private val chopperModel = ChopperModel(100, Vector3(100f, 100f, 0f))
     private val chopperView = ChopperView(chopperModel)

@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class ChopperModel extends Actor{
+    public static final String TEXTURE_PATH = "chopper/1.png";
     private Vector2 currentVector;
 
     public ChopperModel(int HP, Vector3 Location) {
