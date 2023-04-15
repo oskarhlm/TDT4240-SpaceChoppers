@@ -28,6 +28,10 @@ public class ChopperView implements Disposable {
 
     }
 
+    public Vector2 getTextureSize() {
+        return new Vector2(sprite.getWidth(), sprite.getHeight());
+    }
+
     @Override
     public void dispose() {
         texture.dispose();

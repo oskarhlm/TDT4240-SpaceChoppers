@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 
 public class ChopperModel extends Actor{
+    public static final String TEXTURE_PATH = "chopper/1.png";
     private Vector2 currentVector;
     private Touchpad touchpad;
     private float movementVector;

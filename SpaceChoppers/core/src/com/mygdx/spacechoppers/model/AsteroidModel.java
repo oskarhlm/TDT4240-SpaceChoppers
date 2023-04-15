@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class AsteroidModel extends Actor {
 
+    public static final String TEXTURE_PATH = "asteroid/1.png";
     private int speed;
     private int directionY, directionX;
 
