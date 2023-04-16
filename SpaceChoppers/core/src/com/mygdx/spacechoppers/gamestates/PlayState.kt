@@ -18,6 +18,7 @@ import com.mygdx.spacechoppers.helper.Const.PIXELS_TO_METERS
 import com.mygdx.spacechoppers.model.AsteroidModel
 import com.mygdx.spacechoppers.model.ChopperModel
 import com.mygdx.spacechoppers.model.Joystick
+import com.mygdx.spacechoppers.textures.ChopperTextures
 import com.mygdx.spacechoppers.view.AsteroidView
 import com.mygdx.spacechoppers.view.ChopperView
 
@@ -31,10 +32,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val joystick = Joystick(cam.viewportWidth)
 
     // Load Chopper texture and obtain its size
-    private val chopperTexture = Texture(ChopperModel.TEXTURE_PATH)
-    private val chopperTextureSize = Vector2(chopperTexture.width.toFloat(),
-        chopperTexture.height.toFloat()
-    )
+    private val chopperTextures = ChopperTextures()
 
     // Load Asteroid texture and obtain its size
     private val asteroidTexture = Texture(AsteroidModel.TEXTURE_PATH)
@@ -43,8 +41,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     )
 
     // Chopper
-    private val chopperModel = ChopperModel(100, Vector3(100f, 100f, 0f), chopperTextureSize, world)
-    private val chopperView = ChopperView(chopperModel, chopperTexture)
+    private val chopperModel = ChopperModel(100, Vector3(100f, 100f, 0f), chopperTextures.chopperTextureSize, world)
+    private val chopperView = ChopperView(chopperModel, chopperTextures)
     private val chopperController = ChopperController(chopperModel, joystick.touchpad)
 
     //Asteroid
