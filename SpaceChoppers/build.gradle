@@ -66,5 +66,8 @@ project(":core") {
         implementation 'org.java-websocket:Java-WebSocket:1.5.3'
         implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
         implementation 'com.google.code.gson:gson:2.8.9'
+        implementation 'com.fasterxml.jackson.core:jackson-core:2.13.0'
+        implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+        implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.0'
     }
 }

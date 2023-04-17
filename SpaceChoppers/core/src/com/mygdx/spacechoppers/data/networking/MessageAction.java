@@ -2,11 +2,14 @@ package com.mygdx.spacechoppers.data.networking;
 
 public enum MessageAction {
 
-    CREATE_LOBBY("createLobby"),
-    JOIN_LOBBY("joinLobby"),
-    LEAVE_LOBBY("leaveLobby"),
-    SEND_SCORE("sendScore"),
-    GET_SCORES("getScores");
+    CREATE_LOBBY("CREATE_LOBBY"),
+    JOIN_LOBBY("JOIN_LOBBY"),
+    LEAVE_LOBBY("LEAVE_LOBBY"),
+    SEND_SCORE("SEND_SCORE"),
+    RECEIVE_SCORES("RECEIVE_SCORES"),
+
+    GET_HIGHSCORES("GET_HIGHSCORES"),
+    RECEIVE_HIGHSCORES("RECEIVE_HIGHSCORES");
 
     private final String action;
 

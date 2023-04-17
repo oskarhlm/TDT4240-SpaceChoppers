@@ -17,10 +17,14 @@ import com.mygdx.spacechoppers.SpaceChoppersGame
 import com.mygdx.spacechoppers.gamestates.PlayState
 import com.mygdx.spacechoppers.gamestates.menu.utils.MenuCommon
 import com.mygdx.spacechoppers.gamestates.menu.utils.Preferences
+import com.mygdx.spacechoppers.networking.NetworkClient
 
 
 class MainMenuState(gsm: GameStateManager) : MenuBase(gsm) {
     init {
+        // Create network client
+        val networkClient = NetworkClient.getInstance()
+
         // Create Table
         val mainTable = Table()
 //        mainTable.debug = true
@@ -51,6 +55,8 @@ class MainMenuState(gsm: GameStateManager) : MenuBase(gsm) {
         // Add listeners to buttons
         createButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                // Tell network client to start game
+                networkClient.createLobby(Preferences.username)
                 gsm.set(CreateLobbyState(gsm))
             }
         })

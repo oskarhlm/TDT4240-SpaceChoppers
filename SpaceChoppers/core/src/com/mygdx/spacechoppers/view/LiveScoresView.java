@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.spacechoppers.data.networking.Score;
 import com.mygdx.spacechoppers.gamestates.menu.utils.Preferences;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class LiveScoresView implements Disposable {
 
@@ -21,18 +23,19 @@ public class LiveScoresView implements Disposable {
 
     }
 
-    public void draw(SpriteBatch sb, HashMap<String, Integer> liveScores, Vector2 position){
+    public void draw(SpriteBatch sb, List<Score> liveScores, Vector2 position){
         // Draw each username and score here
         float x = position.x;
         float y = position.y;
         String username = Preferences.INSTANCE.getUsername();
-        for (HashMap.Entry<String, Integer> entry : liveScores.entrySet()) {
-            if (entry.getKey().equals(username)) {
+
+        for (Score userScore : liveScores) {
+            if (userScore.getUsername().equals(username)) {
                 font.setColor(Color.LIME);
             } else {
                 font.setColor(Color.WHITE);
             }
-            String text = entry.getKey() + ": " + entry.getValue();
+            String text = userScore.getUsername() + ": " + userScore.getScore();
 
             font.draw(sb, text, x, y);
             y -= 60;
