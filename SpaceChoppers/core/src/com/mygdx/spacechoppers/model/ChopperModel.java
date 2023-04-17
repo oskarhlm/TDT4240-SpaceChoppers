@@ -3,16 +3,19 @@ package com.mygdx.spacechoppers.model;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.spacechoppers.helper.ContactType;
 
 public class ChopperModel extends Actor{
     public static final String TEXTURE_PATH = "chopper/1.png";
+
     private Vector2 currentVector;
     private Touchpad touchpad;
     private float movementVector;
     private final int speedScaler = 5;
 
-    public ChopperModel(int HP, Vector3 Location, Touchpad touchpad) {
-        super(HP, Location);
+    public ChopperModel(int HP, Vector3 Location, Touchpad touchpad, Vector2 textureSize, World world) {
+        super(HP, LocationtextureSize.x, textureSize.y, world, ContactType.CHOPPER);
         currentVector = new Vector2(0,0);
         this.touchpad = touchpad;
         this.movementVector = 0;
