@@ -1,19 +1,17 @@
 package com.mygdx.spacechoppers.controller;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.mygdx.spacechoppers.model.ChopperModel;
+import com.mygdx.spacechoppers.model.Chopper;
 
 public class ChopperController {
 
-    private final ChopperModel model;
+    private final Chopper model;
     private Touchpad touchpad;
     private float movementVector;
     private final int speedScaler = 5;
 
-    public ChopperController(ChopperModel model, Touchpad touchpad){
+    public ChopperController(Chopper model, Touchpad touchpad){
         this.model = model;
         this.touchpad = touchpad;
         this.movementVector = 0;

@@ -1,22 +1,16 @@
 package com.mygdx.spacechoppers.gamestates
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.controller.ChopperController
-import com.mygdx.spacechoppers.model.AsteroidModel
+import com.mygdx.spacechoppers.model.Asteroid
 import com.mygdx.spacechoppers.model.AsteroidTextures
-import com.mygdx.spacechoppers.model.ChopperModel
+import com.mygdx.spacechoppers.model.Chopper
 import com.mygdx.spacechoppers.model.Joystick
 import com.mygdx.spacechoppers.view.AsteroidView
 import com.mygdx.spacechoppers.view.ChopperView
@@ -27,14 +21,20 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val joystick = Joystick(cam.viewportWidth)
 
     // Chopper
-    private val chopperModel = ChopperModel(100, Vector3(100f, 100f, 0f))
-    private val chopperView = ChopperView(chopperModel)
-    private val chopperController = ChopperController(chopperModel, joystick.touchpad)
+    private val chopper = Chopper(100, Vector3(100f, 100f, 0f))
+    private val chopperView = ChopperView(chopper)
+    private val chopperController = ChopperController(chopper, joystick.touchpad)
 
-    //Asteroid
-    private val asteroidModel = AsteroidModel(10,Vector3(0F,0F, 0F))
+    // Asteroid resource(s)
     private val asteroidTextures = AsteroidTextures()
-    private val asteroidView = AsteroidView(asteroidModel, asteroidTextures)
+
+    // Asteroids
+    // TODO: Create single class for this logic (MVC)
+    private val asteroid = Asteroid(10, Vector3(40F, 40F, 0F))
+    private val asteroidView = AsteroidView(asteroid, asteroidTextures)
+
+    private val asteroid1 = Asteroid(10, Vector3(50F, 50F, 0F))
+    private val asteroidView1 = AsteroidView(asteroid1, asteroidTextures)
 
 
     init {
@@ -44,7 +44,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     override fun update(dt: Float) {
         chopperController.moveChopper()
-        asteroidModel.moveAsteroid()
+        asteroid.moveAsteroid()
     }
 
     override fun render() {
@@ -53,6 +53,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         sb.begin()
         chopperView.draw(sb)
         asteroidView.draw(sb)
+        asteroidView1.draw(sb)
         //asteroidView.draw(sb)
 
         sb.end()

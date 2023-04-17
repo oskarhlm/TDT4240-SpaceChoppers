@@ -5,15 +5,15 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
-import com.mygdx.spacechoppers.model.ChopperModel;
+import com.mygdx.spacechoppers.model.Chopper;
 
 public class ChopperView implements Disposable {
 
-    private Sprite sprite;
-    private Texture texture;
-    private ChopperModel model;
+    private final Sprite sprite;
+    private final Texture texture;
+    private final Chopper model;
 
-    public ChopperView(ChopperModel model){
+    public ChopperView(Chopper model){
         this.model = model;
         this.texture = new Texture("helicopter_1.png");
         this.sprite = new Sprite(texture);
