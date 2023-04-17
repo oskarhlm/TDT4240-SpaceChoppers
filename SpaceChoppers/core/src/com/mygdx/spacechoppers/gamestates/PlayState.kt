@@ -56,11 +56,13 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     init {
         Gdx.input.inputProcessor = stage
         stage.addActor(joystick.touchpad)
+        world.setContactListener(gameContactListener)
     }
 
     override fun update(dt: Float) {
         chopperController.moveChopper()
         asteroidController.moveAsteroid()
+        world.step(dt, 6, 2);
     }
 
     override fun render() {
