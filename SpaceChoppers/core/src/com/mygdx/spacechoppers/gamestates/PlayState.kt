@@ -10,10 +10,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.controller.ChopperController
 import com.mygdx.spacechoppers.model.Asteroid
 import com.mygdx.spacechoppers.model.AsteroidTextures
-import com.mygdx.spacechoppers.model.Chopper
 import com.mygdx.spacechoppers.model.Joystick
 import com.mygdx.spacechoppers.view.AsteroidView
-import com.mygdx.spacechoppers.view.ChopperView
 
 
 class PlayState(gsm: GameStateManager) : GameState(gsm) {
@@ -21,9 +19,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val joystick = Joystick(cam.viewportWidth)
 
     // Chopper
-    private val chopper = Chopper(100, Vector3(100f, 100f, 0f))
-    private val chopperView = ChopperView(chopper)
-    private val chopperController = ChopperController(chopper, joystick.touchpad)
+    private val chopperController = ChopperController(sb, joystick.touchpad)
 
     // Asteroid resource(s)
     private val asteroidTextures = AsteroidTextures()
@@ -51,7 +47,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         sb.begin()
-        chopperView.draw(sb)
+        chopperController.draw()
         asteroidView.draw(sb)
         asteroidView1.draw(sb)
         //asteroidView.draw(sb)
