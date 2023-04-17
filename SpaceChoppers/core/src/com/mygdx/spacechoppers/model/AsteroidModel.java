@@ -1,23 +1,26 @@
 package com.mygdx.spacechoppers.model;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-
-import java.util.Random;
 
 public class AsteroidModel extends Actor {
 
+    private final float size;
     private int speed;
-    private int directionY, directionX;
+    private final Vector2 direction;
 
-    public AsteroidModel(int HP, Vector3 location) {
+    public AsteroidModel(int HP, Vector3 location, Vector2 direction, float size) {
         super(HP, location);
-        this.speed = 5;
-        Random r = new Random();
+        this.direction = direction;
+        this.size = size;
     }
 
     public void moveAsteroid(){
-        //TODO: Fix this
-        location.add((float)0.4, 1, 0);
+        location.add(direction.x, direction.y, 0);
+    }
+
+    public float getSize() {
+        return size;
     }
 }
 

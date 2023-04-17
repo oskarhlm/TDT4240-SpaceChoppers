@@ -15,8 +15,12 @@ public class AsteroidController {
 
     public AsteroidController(SpriteBatch sb, AsteroidConfiguration config) {
         this.sb = sb;
-        this.model = new AsteroidModel(config.HP, config.location);
+        this.model = new AsteroidModel(config.HP, config.location, config.direction, config.size);
         this.view = new AsteroidView(config.texture);
+    }
+
+    public AsteroidModel getModel(){
+        return model;
     }
 
     public void moveAsteroid(){
@@ -24,7 +28,7 @@ public class AsteroidController {
     }
 
     public void draw(){
-        view.draw(sb, model.getLocation());
+        view.draw(sb, model.getLocation(), model.getSize(), model.getSize());
     }
 
 }

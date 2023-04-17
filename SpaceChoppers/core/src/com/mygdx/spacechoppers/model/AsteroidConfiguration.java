@@ -10,11 +10,13 @@ public class AsteroidConfiguration {
     public int HP;
     public Vector3 location;
     public Vector2 direction;
+    public float size;
 
-    public AsteroidConfiguration(TextureRegion texture, int HP, Vector3 location, Vector2 direction){
+    public AsteroidConfiguration(TextureRegion texture, int HP, Vector3 location, Vector2 direction, int size){
         this.HP = HP;
         this.texture = texture;
         this.location = location;
         this.direction = direction;
+        this.size = size;
     }
 }

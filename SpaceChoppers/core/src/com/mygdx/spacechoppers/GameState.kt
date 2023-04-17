@@ -4,8 +4,9 @@ import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.utils.Disposable
 
-abstract class GameState(protected var gsm: GameStateManager) {
+abstract class GameState(protected var gsm: GameStateManager) : Disposable {
     protected val game: SpaceChoppersGame = gsm.game
     protected val sb: SpriteBatch = gsm.game.sb
     protected lateinit var cam: OrthographicCamera
@@ -21,6 +22,5 @@ abstract class GameState(protected var gsm: GameStateManager) {
         cam = OrthographicCamera()
         cam.setToOrtho(false, viewportWidth, viewportHeight)
     }
-
 
 }

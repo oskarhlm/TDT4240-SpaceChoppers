@@ -119,5 +119,9 @@ class LeaderboardMenuState(gsm: GameStateManager) : MenuBase(gsm) {
         container.add(backButton).expandX().center()
     }
 
+    override fun dispose() {
+        println("Dispose leaderboard-lobby")
+    }
+
 
 }

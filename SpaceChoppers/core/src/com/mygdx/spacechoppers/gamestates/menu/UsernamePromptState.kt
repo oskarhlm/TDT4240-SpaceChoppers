@@ -41,4 +41,8 @@ class UsernamePromptState(gsm: GameStateManager) : MenuBase(gsm) {
 
         stage.addActor(table)
     }
+
+    override fun dispose() {
+        println("Dispose username prompt")
+    }
 }

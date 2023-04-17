@@ -18,12 +18,13 @@ public class AsteroidView implements Disposable {
         this.sprite = new Sprite(texture);
     }
 
-    public void draw(SpriteBatch sb, Vector3 location){
-        sb.draw(sprite, location.x, location.y);
+    public void draw(SpriteBatch sb, Vector3 location, float width, float height){
+        sb.draw(sprite, location.x, location.y, width, height);
     }
 
     @Override
     public void dispose() {
-        //texture.dispose();
+        //System.out.println("dispose asteroids");
+        //texture.getTexture().dispose();
     }
 }

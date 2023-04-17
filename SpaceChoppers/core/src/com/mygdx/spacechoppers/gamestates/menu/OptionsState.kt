@@ -72,4 +72,8 @@ class OptionsState(gsm: GameStateManager) : GameState(gsm) {
         stage.act(Gdx.graphics.deltaTime)
         stage.draw()
     }
+
+    override fun dispose() {
+        println("Dispose options")
+    }
 }

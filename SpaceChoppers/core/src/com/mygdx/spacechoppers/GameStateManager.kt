@@ -17,7 +17,8 @@ class GameStateManager(var game: SpaceChoppersGame) {
     }
 
     fun set(state: GameState) {
-        gameStates.pop()
+        var old = gameStates.pop()
+        old.dispose()
         gameStates.push(state)
     }
 
