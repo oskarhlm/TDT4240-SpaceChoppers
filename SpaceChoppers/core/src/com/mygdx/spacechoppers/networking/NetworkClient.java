@@ -1,7 +1,7 @@
 package com.mygdx.spacechoppers.networking;
 
-import com.mygdx.spacechoppers.networking.messages.MessageAction;
-import com.mygdx.spacechoppers.networking.messages.MessageFactory;
+import com.mygdx.spacechoppers.data.networking.MessageAction;
+import com.mygdx.spacechoppers.data.networking.MessageFactory;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.concurrent.CountDownLatch;
@@ -15,7 +15,7 @@ public class NetworkClient {
 
     public NetworkClient() throws URISyntaxException {
         latch = new CountDownLatch(1);
-        websocketURI = new URI("ws://192.168.50.92:6969");
+        websocketURI = new URI("ws://sc.hjelmtvedt.io:6968");
         handler = new NetworkHandler(websocketURI, latch);
         handler.connect();
     }

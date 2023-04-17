@@ -1,4 +1,4 @@
-package com.mygdx.spacechoppers.networking.messages;
+package com.mygdx.spacechoppers.data.networking;
 
 public enum MessageAction {
 

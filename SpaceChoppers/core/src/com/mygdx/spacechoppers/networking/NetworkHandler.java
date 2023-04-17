@@ -11,6 +11,7 @@ public class NetworkHandler extends WebSocketClient {
     private boolean connected = false;
     private CountDownLatch latch;
 
+
     public NetworkHandler(java.net.URI serverUri, CountDownLatch latch) {
         super(serverUri);
         this.latch = latch;
@@ -31,6 +32,11 @@ public class NetworkHandler extends WebSocketClient {
     public void onMessage(java.lang.String message) {
         System.out.println("--- RECEIVED MESSAGE BELOW");
         System.out.println(message);
+        // Parse scores if received
+        if (message.contains("scoresSent")) {
+            ScoreHandler scoreHandler = ScoreHandler.getInstance();
+            scoreHandler.updateLiveScores(message);
+        }
     }
 
     @java.lang.Override
