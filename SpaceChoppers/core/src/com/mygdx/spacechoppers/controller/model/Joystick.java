@@ -1,16 +1,17 @@
-package com.mygdx.spacechoppers.model;
+package com.mygdx.spacechoppers.controller.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 
 public class Joystick {
-
-    private float width = 300;
-    private float height = 300;
-    private float x, y;
+    private final float width = 300;
+    private final float height = 300;
+    private final float x;
+    private final float y;
     private final Touchpad touchpad;
-    private Skin skin;
+    private final Skin skin;
+
     public Joystick(float camWidth){
         this.x = camWidth / 2 - width / 2;
         this.y = 100;
