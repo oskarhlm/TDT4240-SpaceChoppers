@@ -3,31 +3,28 @@ package com.mygdx.spacechoppers.view;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
-import com.mygdx.spacechoppers.model.ChopperModel;
 
 public class ChopperView implements Disposable {
 
-    private Sprite sprite;
-    private Texture texture;
-    private ChopperModel model;
+    private final Sprite sprite;
+    private final Texture texture;
 
-    public ChopperView(ChopperModel model){
-        this.model = model;
+    public ChopperView(){
         this.texture = new Texture("helicopter_1.png");
         this.sprite = new Sprite(texture);
     }
 
-    public void draw(SpriteBatch sb){
+    public void draw(SpriteBatch sb, Vector3 location, float angle){
 
-        sb.draw(sprite, model.getLocation().x, model.getLocation().y,
-                model.getLocation().x + sprite.getWidth() / 2,
-                model.getLocation().y + sprite.getHeight() / 2,
+        sb.draw(sprite, location.x, location.y,
+                location.x + sprite.getWidth() / 2,
+                location.y + sprite.getHeight() / 2,
                 SpaceChoppersGame.Companion.getWidth(),
                 SpaceChoppersGame.Companion.getHeight(),
-                (float) 0.25,(float) 0.04,
-                model.getCurrentAngle());
+                (float) 0.25,(float) 0.04, angle);
 
     }
 
