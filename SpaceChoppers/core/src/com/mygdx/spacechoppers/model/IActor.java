@@ -1,4 +1,4 @@
-package com.mygdx.spacechoppers.controller.model;
+package com.mygdx.spacechoppers.model;
 
 public interface IActor {
     void takeDamage();

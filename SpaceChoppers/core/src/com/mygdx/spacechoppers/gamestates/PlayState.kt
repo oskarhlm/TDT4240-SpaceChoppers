@@ -7,10 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.badlogic.gdx.utils.viewport.FitViewport
+import com.mygdx.spacechoppers.controller.AsteroidController
 import com.mygdx.spacechoppers.controller.ChopperController
-import com.mygdx.spacechoppers.controller.model.Asteroid
-import com.mygdx.spacechoppers.controller.model.AsteroidTextures
-import com.mygdx.spacechoppers.controller.model.Joystick
+import com.mygdx.spacechoppers.model.AsteroidModel
+import com.mygdx.spacechoppers.model.AsteroidTextures
+import com.mygdx.spacechoppers.model.Joystick
 import com.mygdx.spacechoppers.view.AsteroidView
 
 
@@ -25,13 +26,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val asteroidTextures = AsteroidTextures()
 
     // Asteroids
-    // TODO: Create single class for this logic (MVC)
-    private val asteroid = Asteroid(10, Vector3(40F, 40F, 0F))
-    private val asteroidView = AsteroidView(asteroid, asteroidTextures)
-
-    private val asteroid1 = Asteroid(10, Vector3(50F, 50F, 0F))
-    private val asteroidView1 = AsteroidView(asteroid1, asteroidTextures)
-
+    private val asteroidController = AsteroidController(sb, asteroidTextures)
 
     init {
         Gdx.input.inputProcessor = stage
@@ -40,7 +35,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     override fun update(dt: Float) {
         chopperController.moveChopper()
-        asteroid.moveAsteroid()
+        asteroidController.moveAsteroid()
     }
 
     override fun render() {
@@ -48,9 +43,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         sb.begin()
         chopperController.draw()
-        asteroidView.draw(sb)
-        asteroidView1.draw(sb)
-        //asteroidView.draw(sb)
+        asteroidController.draw()
 
         sb.end()
 

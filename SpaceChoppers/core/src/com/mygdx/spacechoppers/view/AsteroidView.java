@@ -3,23 +3,23 @@ package com.mygdx.spacechoppers.view;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
-import com.mygdx.spacechoppers.controller.model.Asteroid;
-import com.mygdx.spacechoppers.controller.model.AsteroidTextures;
+import com.mygdx.spacechoppers.model.AsteroidModel;
+import com.mygdx.spacechoppers.model.AsteroidTextures;
 
 public class AsteroidView implements Disposable {
-    private final Asteroid model;
+
     private final TextureRegion texture;
     private final Sprite sprite;
 
-    public AsteroidView(Asteroid model, AsteroidTextures textures){
-        this.model = model;
+    public AsteroidView(AsteroidTextures textures){
         this.texture = textures.getRandomAsteroidTexture();
         this.sprite = new Sprite(texture);
     }
 
-    public void draw(SpriteBatch sb){
-        sb.draw(sprite, model.getLocation().x, model.getLocation().y);
+    public void draw(SpriteBatch sb, Vector3 location){
+        sb.draw(sprite, location.x, location.y);
     }
 
     @Override
