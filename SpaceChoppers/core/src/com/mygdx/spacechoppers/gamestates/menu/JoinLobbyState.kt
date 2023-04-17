@@ -9,9 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.gamestates.PlayState
+import com.mygdx.spacechoppers.networking.NetworkClient
+import com.mygdx.spacechoppers.gamestates.menu.utils.Preferences
 
 class JoinLobbyState(gsm: GameStateManager) : MenuBase(gsm) {
     init {
+        val networkClient = NetworkClient.getInstance()
+
         val table = Table()
         table.setFillParent(true)
         table.center().pad(20f).defaults().space(10f)
@@ -36,6 +40,7 @@ class JoinLobbyState(gsm: GameStateManager) : MenuBase(gsm) {
         joinButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
                 Gdx.input.setOnscreenKeyboardVisible(false)
+                networkClient.joinLobby(Integer.parseInt(gamePinField.text), Preferences.username);
                 gsm.set(PlayState(gsm))
             }
         })

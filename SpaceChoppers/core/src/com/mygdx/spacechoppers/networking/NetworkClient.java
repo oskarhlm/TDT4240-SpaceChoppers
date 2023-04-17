@@ -1,7 +1,8 @@
 package com.mygdx.spacechoppers.networking;
 
-import com.mygdx.spacechoppers.networking.messages.MessageAction;
-import com.mygdx.spacechoppers.networking.messages.MessageFactory;
+import com.mygdx.spacechoppers.data.networking.Message;
+import com.mygdx.spacechoppers.data.networking.MessageAction;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.concurrent.CountDownLatch;
@@ -9,67 +10,81 @@ import java.util.concurrent.CountDownLatch;
 
 public class NetworkClient {
 
+    private static NetworkClient instance = null;
     private final NetworkHandler handler;
     private final CountDownLatch latch;
     private URI websocketURI;
 
-    public NetworkClient() throws URISyntaxException {
+    private NetworkClient() throws URISyntaxException {
         latch = new CountDownLatch(1);
-        websocketURI = new URI("ws://192.168.50.92:6969");
+        websocketURI = new URI("ws://sc.hjelmtvedt.io:6968");
         handler = new NetworkHandler(websocketURI, latch);
         handler.connect();
     }
 
+    public static NetworkClient getInstance() throws URISyntaxException {
+        if (instance == null) {
+            instance = new NetworkClient();
+        }
+        return instance;
+    }
+
     public void createLobby(String username) throws InterruptedException {
-        String createLobby = MessageFactory.create()
-                .action(MessageAction.CREATE_LOBBY.getAction())
+        String createLobby = new Message.Builder()
+                .action(MessageAction.CREATE_LOBBY)
                 .username(username)
-                .toJson();
+                .toJsonString();
+
         // wait for the WebSocket connection to be established
         latch.await();
         handler.send(createLobby);
     }
 
     public void joinLobby(int lobbyID, String username) throws InterruptedException {
-        String joinLobby = MessageFactory.create()
-                .action(MessageAction.JOIN_LOBBY.getAction())
+        String joinLobby = new Message.Builder()
+                .action(MessageAction.JOIN_LOBBY)
                 .username(username)
                 .lobbyID(lobbyID)
-                .toJson();
+                .toJsonString();
+
+        // wait for the WebSocket connection to be established
         latch.await();
-        System.out.println(joinLobby);
         handler.send(joinLobby);
     }
 
     public void leaveLobby(int lobbyID, String username) throws InterruptedException {
-        String leaveLobby = MessageFactory.create()
-                .action(MessageAction.LEAVE_LOBBY.getAction())
+        String leaveLobby = new Message.Builder()
+                .action(MessageAction.LEAVE_LOBBY)
                 .username(username)
                 .lobbyID(lobbyID)
-                .toJson();
+                .toJsonString();
+
+        // wait for the WebSocket connection to be established
         latch.await();
         handler.send(leaveLobby);
         handler.close();
     }
 
     public void sendScore(int lobbyID, String username, int score) throws InterruptedException {
-        String sendScore = MessageFactory.create()
-                .action(MessageAction.SEND_SCORE.getAction())
+        String sendScore = new Message.Builder()
+                .action(MessageAction.SEND_SCORE)
                 .username(username)
                 .lobbyID(lobbyID)
                 .score(score)
-                .toJson();
+                .toJsonString();
+
+        // wait for the WebSocket connection to be established
         latch.await();
         handler.send(sendScore);
     }
 
-    public void getScores(int lobbyID) throws InterruptedException {
-        String getScores = MessageFactory.create()
-                .action(MessageAction.GET_SCORES.getAction())
-                .lobbyID(lobbyID)
-                .toJson();
+    public void getHighscores() throws InterruptedException {
+        String getHighscores = new Message.Builder()
+                .action(MessageAction.GET_HIGHSCORES)
+                .toJsonString();
 
+        // wait for the WebSocket connection to be established
         latch.await();
-        handler.send(getScores);
+        handler.send(getHighscores);
     }
 }

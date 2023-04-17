@@ -8,9 +8,15 @@ import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.controller.ChopperController
+import com.mygdx.spacechoppers.controller.LiveScoresController
+import com.mygdx.spacechoppers.model.AsteroidModel
+import com.mygdx.spacechoppers.model.AsteroidTextures
+import com.mygdx.spacechoppers.model.ChopperModel
+import com.mygdx.spacechoppers.model.Joystick
 import com.mygdx.spacechoppers.controller.model.Asteroid
 import com.mygdx.spacechoppers.controller.model.AsteroidTextures
 import com.mygdx.spacechoppers.controller.model.Joystick
+
 import com.mygdx.spacechoppers.view.AsteroidView
 
 
@@ -32,6 +38,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val asteroid1 = Asteroid(10, Vector3(50F, 50F, 0F))
     private val asteroidView1 = AsteroidView(asteroid1, asteroidTextures)
 
+    // Scores
+    private val liveScoresController = LiveScoresController();
+
 
     init {
         Gdx.input.inputProcessor = stage
@@ -49,8 +58,12 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         sb.begin()
         chopperController.draw()
         asteroidView.draw(sb)
+        liveScoresController.renderScores(sb)
+        println(chopperModel.location)
+        println(liveScoresController.position)
         asteroidView1.draw(sb)
         //asteroidView.draw(sb)
+
 
         sb.end()
 

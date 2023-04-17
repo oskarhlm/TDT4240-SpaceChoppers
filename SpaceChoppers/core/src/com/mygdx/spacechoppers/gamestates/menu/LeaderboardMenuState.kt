@@ -1,86 +1,17 @@
 package com.mygdx.spacechoppers.gamestates.menu
 
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.scenes.scene2d.InputEvent
-import com.badlogic.gdx.scenes.scene2d.InputListener
-import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
-import com.badlogic.gdx.utils.viewport.FitViewport
-import com.mygdx.spacechoppers.GameState
+
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.gamestates.menu.utils.MenuCommon.scaledLabel
+import com.mygdx.spacechoppers.networking.MessageReceiver
 
 
 class LeaderboardMenuState(gsm: GameStateManager) : MenuBase(gsm) {
-    var leaderboard = listOf(
-        "jan",
-        "banan",
-        "ththththththehehehehthhehhthe",
-        "tang",
-        "stang",
-        "bangbang",
-        "js bach",
-        "thinghitng thign",
-        "ehehehehe",
-        "yazpllplp",
-        "jan",
-        "banan",
-        "ththththththehehehehthhehhthe",
-        "tang",
-        "stang",
-        "bangbang",
-        "js bach",
-        "thinghitng thign",
-        "ehehehehe",
-        "yazpllplp",
-        "jan",
-        "banan",
-        "ththththththehehehehthhehhthe",
-        "tang",
-        "stang",
-        "bangbang",
-        "js bach",
-        "thinghitng thign",
-        "ehehehehe",
-        "yazpllplp",
-        "jan",
-        "banan",
-        "ththththththehehehehthhehhthe",
-        "tang",
-        "stang",
-        "bangbang",
-        "js bach",
-        "thinghitng thign",
-        "ehehehehe",
-        "yazpllplp",
-        "jan",
-        "banan",
-        "ththththththehehehehthhehhthe",
-        "tang",
-        "stang",
-        "bangbang",
-        "js bach",
-        "thinghitng thign",
-        "ehehehehe",
-        "yazpllplp",
-        "jan",
-        "banan",
-        "ththththththehehehehthhehhthe",
-        "tang",
-        "stang",
-        "bangbang",
-        "js bach",
-        "thinghitng thign",
-        "ehehehehe",
-        "yazpllplp"
-    )
-    val score = 69
 
     init {
         val container = Table()
@@ -97,14 +28,23 @@ class LeaderboardMenuState(gsm: GameStateManager) : MenuBase(gsm) {
 
         table.pad(10f).defaults().expandX().space(8f)
         val scoresScl = 2f
-        leaderboard.forEachIndexed { index, name ->
+        // Set leaderboard data
+        val messageReceiver = MessageReceiver.getInstance()
+
+        var index = 0;
+
+        messageReceiver.highScores.forEach { score ->
             table.row()
             table.add(scaledLabel("${index + 1}", scoresScl))
-            val usernameLabel = scaledLabel(name, scoresScl)
+            val usernameLabel = scaledLabel(score.username, scoresScl)
             usernameLabel.wrap = true
             table.add(usernameLabel).expandX().fillX()
-            table.add(scaledLabel("$score", scoresScl))
+            table.add(scaledLabel("${score.score}", scoresScl))
+            index++;
         }
+
+
+
 
         val backButton = TextButton("Back", skin)
         backButton.label.setFontScale(4f)
