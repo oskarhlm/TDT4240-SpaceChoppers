@@ -1,4 +1,4 @@
-package com.mygdx.spacechoppers.model;
+package com.mygdx.spacechoppers.controller.model;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;

@@ -1,6 +1,5 @@
 package com.mygdx.spacechoppers.gamestates
 
-import com.badlogic.gdx.Screen
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.math.Vector3
@@ -9,9 +8,9 @@ import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.controller.ChopperController
-import com.mygdx.spacechoppers.model.Asteroid
-import com.mygdx.spacechoppers.model.AsteroidTextures
-import com.mygdx.spacechoppers.model.Joystick
+import com.mygdx.spacechoppers.controller.model.Asteroid
+import com.mygdx.spacechoppers.controller.model.AsteroidTextures
+import com.mygdx.spacechoppers.controller.model.Joystick
 import com.mygdx.spacechoppers.view.AsteroidView
 
 
