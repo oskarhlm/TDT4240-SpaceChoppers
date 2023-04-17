@@ -4,19 +4,23 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.spacechoppers.helper.Const;
 import com.mygdx.spacechoppers.helper.ContactType;
 
+import java.awt.Point;
+
 public class ChopperModel extends Actor{
-    public static final String TEXTURE_PATH = "chopper/1.png";
 
     private Vector2 currentVector;
+    private Vector2 textureSize;
     private Touchpad touchpad;
     private float movementVector;
     private final int speedScaler = 5;
 
     public ChopperModel(int HP, Vector3 Location, Touchpad touchpad, Vector2 textureSize, World world) {
-        super(HP, LocationtextureSize.x, textureSize.y, world, ContactType.CHOPPER);
-        currentVector = new Vector2(0,0);
+        super(HP, Location, textureSize.x, textureSize.y, world, ContactType.CHOPPER);
+        this.currentVector = new Vector2(0,0);
+        this.textureSize = textureSize;
         this.touchpad = touchpad;
         this.movementVector = 0;
     }
@@ -28,8 +32,14 @@ public class ChopperModel extends Actor{
 
         if (deltaX != 0 && deltaY != 0)
             currentVector = new Vector2(deltaX, deltaY);
-        getLocation().x += deltaX * movementVector;
-        getLocation().y += deltaY * movementVector;
+        float newX = body.getPosition().x + deltaX * movementVector / Const.PIXELS_TO_METERS;
+        float newY = body.getPosition().y + deltaY * movementVector / Const.PIXELS_TO_METERS;
+        body.setTransform(newX, newY, body.getAngle());
+    }
+
+    public void updatePosition() {
+        location.x = body.getPosition().x * Const.PIXELS_TO_METERS - textureSize.x / 2;
+        location.y = body.getPosition().y * Const.PIXELS_TO_METERS - textureSize.y / 2;
     }
 
     public float getCurrentAngle(){

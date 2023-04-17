@@ -2,6 +2,7 @@ package com.mygdx.spacechoppers.model;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 
 import java.util.ArrayList;
@@ -37,6 +38,10 @@ public class AsteroidTextures implements Disposable {
     public TextureRegion getRandomAsteroidTexture(){
         int randomId = random.nextInt(numColumns * numRows);
         return asteroids.get(randomId);
+    }
+
+    public Vector2 getTextureSize(){
+        return new Vector2(getRandomAsteroidTexture().getRegionWidth(),getRandomAsteroidTexture().getRegionHeight());
     }
 
     @Override

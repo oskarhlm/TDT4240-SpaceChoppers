@@ -11,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.controller.AsteroidController
-import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.GameContactListener
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
@@ -20,8 +19,10 @@ import com.mygdx.spacechoppers.helper.Const.PIXELS_TO_METERS
 import com.mygdx.spacechoppers.model.AsteroidModel
 import com.mygdx.spacechoppers.model.AsteroidTextures
 import com.mygdx.spacechoppers.model.ChopperModel
+import com.mygdx.spacechoppers.model.ChopperTextures
 import com.mygdx.spacechoppers.model.Joystick
 import com.mygdx.spacechoppers.view.AsteroidView
+import com.mygdx.spacechoppers.view.ChopperView
 
 
 class PlayState(gsm: GameStateManager) : GameState(gsm) {
@@ -32,26 +33,17 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
     private val joystick = Joystick(cam.viewportWidth)
 
-    // Load Chopper texture and obtain its size
-    private val chopperTexture = Texture(ChopperModel.TEXTURE_PATH)
-    private val chopperTextureSize = Vector2(chopperTexture.width.toFloat(),
-        chopperTexture.height.toFloat()
-    )
-
-    // Load Asteroid texture and obtain its size
-    private val asteroidTexture = Texture(AsteroidModel.TEXTURE_PATH)
-    private val asteroidTextureSize = Vector2(asteroidTexture.width.toFloat(),
-        asteroidTexture.height.toFloat()
-    )
+    // Chopper resource(s)
+    private val chopperTextures = ChopperTextures()
 
     // Chopper
-    private val chopperController = ChopperController(sb, joystick.touchpad)
+    private val chopperController = ChopperController(sb, joystick.touchpad, chopperTextures, world)
 
     // Asteroid resource(s)
     private val asteroidTextures = AsteroidTextures()
 
     // Asteroids
-    private val asteroidController = AsteroidController(sb, asteroidTextures)
+    private val asteroidController = AsteroidController(sb, asteroidTextures, world)
 
     init {
         Gdx.input.inputProcessor = stage
@@ -62,6 +54,10 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     override fun update(dt: Float) {
         chopperController.moveChopper()
         asteroidController.moveAsteroid()
+        chopperController.updatePosition()
+        asteroidController.updatePosition()
+        println("Chopper location: " + chopperController.model.location)
+        println("Asteroid location: " + asteroidController.model.location);
         world.step(dt, 6, 2);
     }
 
