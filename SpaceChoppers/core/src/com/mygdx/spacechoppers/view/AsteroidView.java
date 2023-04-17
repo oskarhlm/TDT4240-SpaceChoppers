@@ -13,8 +13,8 @@ public class AsteroidView implements Disposable {
     private final TextureRegion texture;
     private final Sprite sprite;
 
-    public AsteroidView(AsteroidTextures textures){
-        this.texture = textures.getRandomAsteroidTexture();
+    public AsteroidView(TextureRegion texture){
+        this.texture = texture;
         this.sprite = new Sprite(texture);
     }
 

@@ -9,6 +9,7 @@ import com.mygdx.spacechoppers.GameStateManager
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.controller.AsteroidController
 import com.mygdx.spacechoppers.controller.ChopperController
+import com.mygdx.spacechoppers.factories.AsteroidFactory
 import com.mygdx.spacechoppers.model.AsteroidModel
 import com.mygdx.spacechoppers.model.AsteroidTextures
 import com.mygdx.spacechoppers.model.Joystick
@@ -26,16 +27,29 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val asteroidTextures = AsteroidTextures()
 
     // Asteroids
-    private val asteroidController = AsteroidController(sb, asteroidTextures)
+    //private val asteroidController = AsteroidController(sb, asteroidTextures)
+    private val asteroidFactory = AsteroidFactory(sb, asteroidTextures)
+    private val asteroidList = ArrayList<AsteroidController>()
+    private val asteroid = asteroidFactory.create();
 
     init {
         Gdx.input.inputProcessor = stage
         stage.addActor(joystick.touchpad)
+
+        /*
+        asteroidList.add(asteroidFactory.create())
+        asteroidList.add(asteroidFactory.create())
+        asteroidList.add(asteroidFactory.create())
+        asteroidList.add(asteroidFactory.create())
+        asteroidList.add(asteroidFactory.create())
+
+         */
     }
 
     override fun update(dt: Float) {
         chopperController.moveChopper()
-        asteroidController.moveAsteroid()
+        asteroid.moveAsteroid()
+        //asteroidList.forEach {asteroidController: AsteroidController -> asteroidController.moveAsteroid() }
     }
 
     override fun render() {
@@ -43,7 +57,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         sb.begin()
         chopperController.draw()
-        asteroidController.draw()
+        asteroid.draw()
+        //asteroidList.forEach{asteroidController: AsteroidController -> asteroidController.draw() }
 
         sb.end()
 
