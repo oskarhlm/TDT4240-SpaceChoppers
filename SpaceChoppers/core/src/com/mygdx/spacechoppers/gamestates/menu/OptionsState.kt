@@ -53,31 +53,12 @@ class OptionsState(gsm: GameStateManager) : GameState(gsm) {
         stage.addActor(table)
     }
 
-    override fun update(dt: Float) {}
-    override fun show() {
-        TODO("Not yet implemented")
+    override fun update(dt: Float) {
+
     }
 
-    override fun resize(width: Int, height: Int) {
+    override fun render(delta: Float) {
         TODO("Not yet implemented")
-    }
-
-    override fun pause() {
-        TODO("Not yet implemented")
-    }
-
-    override fun resume() {
-        TODO("Not yet implemented")
-    }
-
-    override fun hide() {
-        TODO("Not yet implemented")
-    }
-
-    override fun render(dt: Float) {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-        stage.act(dt)
-        stage.draw()
     }
 
     override fun dispose() {

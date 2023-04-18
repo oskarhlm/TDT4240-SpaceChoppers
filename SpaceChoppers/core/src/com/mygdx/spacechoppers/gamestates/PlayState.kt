@@ -71,26 +71,6 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         stage.draw()
     }
 
-    override fun show() {
-        TODO("Not yet implemented")
-    }
-
-    override fun resize(width: Int, height: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun pause() {
-        TODO("Not yet implemented")
-    }
-
-    override fun resume() {
-        TODO("Not yet implemented")
-    }
-
-    override fun hide() {
-        TODO("Not yet implemented")
-    }
-
     override fun dispose() {
         TODO("Not yet implemented")
     }

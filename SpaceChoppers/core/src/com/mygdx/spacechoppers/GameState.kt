@@ -22,4 +22,24 @@ abstract class GameState(protected var gsm: GameStateManager) : Screen {
         cam.setToOrtho(false, viewportWidth, viewportHeight)
     }
 
+    override fun show() {
+        TODO("Not yet implemented")
+    }
+
+    override fun resize(width: Int, height: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun pause() {
+        TODO("Not yet implemented")
+    }
+
+    override fun resume() {
+        TODO("Not yet implemented")
+    }
+
+    override fun hide() {
+        TODO("Not yet implemented")
+    }
+
 }
