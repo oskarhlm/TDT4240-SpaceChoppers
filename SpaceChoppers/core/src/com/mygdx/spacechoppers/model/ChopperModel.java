@@ -5,14 +5,14 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 
 public class ChopperModel extends Actor{
-    private Vector2 currentVector;
+    private Vector2 currentAngle;
     private Touchpad touchpad;
     private float movementVector;
     private final int speedScaler = 5;
 
     public ChopperModel(int HP, Vector3 Location, Touchpad touchpad) {
         super(HP, Location);
-        currentVector = new Vector2(0,0);
+        currentAngle = new Vector2(0,0);
         this.touchpad = touchpad;
         this.movementVector = 0;
     }
@@ -23,12 +23,12 @@ public class ChopperModel extends Actor{
         movementVector = (float) Math.sqrt(Math.pow(deltaX, 2) + Math.pow(2, deltaY)) * speedScaler;
 
         if (deltaX != 0 && deltaY != 0)
-            currentVector = new Vector2(deltaX, deltaY);
+            currentAngle = new Vector2(deltaX, deltaY);
         getLocation().x += deltaX * movementVector;
         getLocation().y += deltaY * movementVector;
     }
 
     public float getCurrentAngle(){
-        return currentVector.angleDeg();
+        return currentAngle.angleDeg();
     }
 }

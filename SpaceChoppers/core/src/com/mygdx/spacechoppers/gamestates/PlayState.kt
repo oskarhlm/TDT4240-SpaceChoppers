@@ -2,12 +2,14 @@ package com.mygdx.spacechoppers.gamestates
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.SpaceChoppersGame
 import com.mygdx.spacechoppers.controller.AsteroidController
+import com.mygdx.spacechoppers.controller.BackgroundController
 import com.mygdx.spacechoppers.controller.ChopperController
 import com.mygdx.spacechoppers.controller.LaserController
 import com.mygdx.spacechoppers.controller.LiveScoresController
@@ -38,6 +40,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     // Asteroids
     private val asteroidFactory = AsteroidFactory(sb, AsteroidTextures())
     private val asteroids = ArrayList<AsteroidController>()
+
+    // Background
+    private val background = BackgroundController(stage);
 
     init {
         Gdx.input.inputProcessor = stage
@@ -75,6 +80,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         sb.begin()
+        background.draw(sb)
         chopperController.draw()
 
         lasersController.draw(sb)
@@ -82,7 +88,10 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         liveScoresController.renderScores(sb)
         asteroids.forEach{ asteroidController: AsteroidController -> asteroidController.draw() }
- 
+
+
+
+
         sb.end()
 
         stage.act(Gdx.graphics.deltaTime)
