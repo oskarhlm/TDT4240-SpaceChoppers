@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.Align
 import com.mygdx.spacechoppers.GameStateManager
-import com.mygdx.spacechoppers.gamestates.menu.utils.Preferences
+import com.mygdx.spacechoppers.utils.Preferences
 
 class UsernamePromptState(gsm: GameStateManager) : MenuBase(gsm) {
     init {
