@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.SpaceChoppersGame
 import com.mygdx.spacechoppers.controller.AsteroidController
 import com.mygdx.spacechoppers.controller.ChopperController
+import com.mygdx.spacechoppers.controller.LaserController
 import com.mygdx.spacechoppers.controller.LiveScoresController
 import com.mygdx.spacechoppers.model.AsteroidTextures
 import com.mygdx.spacechoppers.model.Joystick
@@ -23,6 +24,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     // Chopper
     private val chopperController = ChopperController(sb, joystick.touchpad)
+
+    // Laser
+    private val lasersController = LaserController();
 
     // Asteroid resource(s)
     private val asteroidTextures =
@@ -56,6 +60,10 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         // Get chopper movement
         chopperController.moveChopper()
 
+        asteroid.moveAsteroid()
+        lasersController.fireLasers(dt, chopperController.position, chopperController.angle)
+
+
         // Check if asteroids are out of bounds
         if (asteroids.all{ a : AsteroidController -> a.model.isOutOfBounds }){
             asteroids.clear()
@@ -64,6 +72,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         asteroids.forEach { asteroidController: AsteroidController -> asteroidController.moveAsteroid() }
 
+
     }
 
     override fun render(delta: Float) {
@@ -71,9 +80,17 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         sb.begin()
         chopperController.draw()
+
+        lasersController.draw(sb)
+        asteroidView.draw(sb)
+        liveScoresController.renderScores(sb)
+        asteroidView1.draw(sb)
+
+
         liveScoresController.renderScores(sb)
         println(liveScoresController.position)
         asteroids.forEach{ asteroidController: AsteroidController -> asteroidController.draw() }
+ 
         sb.end()
 
         stage.act(Gdx.graphics.deltaTime)

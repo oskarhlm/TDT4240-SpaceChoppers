@@ -1,6 +1,7 @@
 package com.mygdx.spacechoppers.controller;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.mygdx.spacechoppers.model.ChopperModel;
@@ -19,12 +20,21 @@ public class ChopperController {
         this.sb = sb;
     }
 
+    public Vector3 getPosition() {
+        return model.getLocation();
+    }
+
     public void moveChopper(){
         model.moveChopper();
     }
 
+
+    public float getAngle() {
+        return model.getCurrentAngle();
+
     public Vector3 getLocation(){
         return model.getLocation();
+
     }
 
     public void draw(){
