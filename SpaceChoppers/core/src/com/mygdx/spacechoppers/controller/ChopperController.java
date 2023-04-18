@@ -21,8 +21,8 @@ public class ChopperController {
         this.model = new ChopperModel(
                 100,
                 new Vector3(
-                        SpaceChoppersGame.Companion.getWidth() / 2,
-                        SpaceChoppersGame.Companion.getHeight() / 2,
+                        100,
+                        100,
                         0
                 ));
         this.view = new ChopperView();
@@ -41,8 +41,6 @@ public class ChopperController {
             model.getLocation().x += movementNormalizedX * movementSpeed;
             model.getLocation().y += movementNormalizedY * movementSpeed;
         }
-
-        view.incrementSpriteChangeTime(dt);
     }
 
     public ChopperModel getModel() {
