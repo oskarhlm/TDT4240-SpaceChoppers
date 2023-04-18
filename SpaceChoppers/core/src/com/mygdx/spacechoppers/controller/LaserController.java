@@ -1,8 +1,10 @@
 package com.mygdx.spacechoppers.controller;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.spacechoppers.AssetManager;
 import com.mygdx.spacechoppers.model.Laser;
 import com.mygdx.spacechoppers.view.LaserView;
 
@@ -13,6 +15,7 @@ public class LaserController {
 
     private final HashMap<Laser, LaserView> laserAndViews;
     private float dt;
+
 
     public LaserController() {
         laserAndViews = new HashMap<>();
@@ -27,6 +30,9 @@ public class LaserController {
             Laser laser = new Laser(new Vector2(chopperPos.x, chopperPos.y), chopperRotation, chopperRotation);
             LaserView view = new LaserView();
             laserAndViews.put(laser, view);
+            // Play laser sound here
+            AssetManager.INSTANCE.playLaserSound();
+
         }
         // We want to move the laser anyways
         moveAllLasers();
