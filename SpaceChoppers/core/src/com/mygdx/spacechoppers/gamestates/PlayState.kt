@@ -81,7 +81,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     override fun render(delta: Float) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
-
+        cam.update()
+        sb.projectionMatrix = cam.combined
 
         sb.begin()
         background.draw(sb)
@@ -97,9 +98,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         stage.act(Gdx.graphics.deltaTime)
         stage.draw()
-
-        cam.update()
-        sb.projectionMatrix = cam.combined
+        
     }
 
     override fun dispose() {
