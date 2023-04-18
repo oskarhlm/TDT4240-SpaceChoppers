@@ -3,7 +3,6 @@ package com.mygdx.spacechoppers.model;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.spacechoppers.data.networking.Score;
 import com.mygdx.spacechoppers.networking.MessageReceiver;
-
 import java.util.List;
 
 public class LiveScoresModel {

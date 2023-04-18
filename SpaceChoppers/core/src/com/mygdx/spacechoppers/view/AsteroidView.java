@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Disposable;
-import com.mygdx.spacechoppers.controller.model.Asteroid;
-import com.mygdx.spacechoppers.controller.model.AsteroidTextures;
+import com.mygdx.spacechoppers.model.Asteroid;
+import com.mygdx.spacechoppers.model.AsteroidTextures;
 
 public class AsteroidView implements Disposable {
     private final Asteroid model;

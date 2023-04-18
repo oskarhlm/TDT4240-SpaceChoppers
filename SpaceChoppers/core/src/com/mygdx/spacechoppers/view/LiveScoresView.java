@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.spacechoppers.data.networking.Score;
-import com.mygdx.spacechoppers.gamestates.menu.utils.Preferences;
+import com.mygdx.spacechoppers.utils.Preferences;
 
 import java.util.HashMap;
 import java.util.List;

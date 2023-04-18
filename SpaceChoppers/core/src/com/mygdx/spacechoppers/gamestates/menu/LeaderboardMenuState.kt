@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 
 import com.mygdx.spacechoppers.GameStateManager
-import com.mygdx.spacechoppers.gamestates.menu.utils.MenuCommon.scaledLabel
+import com.mygdx.spacechoppers.utils.MenuCommon.scaledLabel
 import com.mygdx.spacechoppers.networking.MessageReceiver
 
 

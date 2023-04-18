@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
-import com.mygdx.spacechoppers.gamestates.menu.utils.MenuCommon
+import com.mygdx.spacechoppers.utils.MenuCommon
 
 abstract class MenuBase(gsm: GameStateManager) : GameState(gsm) {
     protected val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)

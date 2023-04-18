@@ -15,8 +15,8 @@ import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.SpaceChoppersGame
 import com.mygdx.spacechoppers.gamestates.PlayState
-import com.mygdx.spacechoppers.gamestates.menu.utils.MenuCommon
-import com.mygdx.spacechoppers.gamestates.menu.utils.Preferences
+import com.mygdx.spacechoppers.utils.MenuCommon
+import com.mygdx.spacechoppers.utils.Preferences
 import com.mygdx.spacechoppers.networking.NetworkClient
 
 

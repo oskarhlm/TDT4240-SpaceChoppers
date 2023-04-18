@@ -6,8 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.ScreenUtils
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
 import com.mygdx.spacechoppers.gamestates.menu.UsernamePromptState
-import com.mygdx.spacechoppers.gamestates.menu.utils.Preferences
+import com.mygdx.spacechoppers.utils.Preferences
 import com.mygdx.spacechoppers.networking.NetworkClient
+import com.mygdx.spacechoppers.utils.AssetManager
 
 class SpaceChoppersGame : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
@@ -27,8 +28,12 @@ class SpaceChoppersGame : ApplicationAdapter() {
         Preferences.username?.let { gsm.push(MainMenuState(gsm)) }
             ?: run { gsm.push(UsernamePromptState(gsm)) }
         // Create network handler and fetch highscores
-        val networkClient = NetworkClient.getInstance();
+        val networkClient = NetworkClient.getInstance()
         networkClient.getHighscores();
+
+        // Create asset manager and start playing music
+        val assMan = AssetManager.getInstance()
+        assMan.playBackgroundMusic()
     }
 
     override fun render() {
