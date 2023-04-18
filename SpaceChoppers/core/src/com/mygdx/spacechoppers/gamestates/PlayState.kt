@@ -46,18 +46,18 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     }
 
-    private fun createAsteroids(num : Int)  {
-        for (i in 0..num){
+    private fun createAsteroids(num: Int) {
+        for (i in 0..num) {
             asteroids.add(asteroidFactory.create())
         }
     }
 
     override fun update(delta: Float) {
         // Get chopper movement
-        chopperController.moveChopper()
+        chopperController.moveChopper(delta)
 
         // Check if asteroids are out of bounds
-        if (asteroids.all{ a : AsteroidController -> a.model.isOutOfBounds }){
+        if (asteroids.all { a: AsteroidController -> a.model.isOutOfBounds }) {
             asteroids.clear()
             createAsteroids(Random.nextInt(5)) // TODO: Dynamic number
         }
@@ -72,8 +72,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         sb.begin()
         chopperController.draw()
         liveScoresController.renderScores(sb)
-        println(liveScoresController.position)
-        asteroids.forEach{ asteroidController: AsteroidController -> asteroidController.draw() }
+        asteroids.forEach { asteroidController: AsteroidController -> asteroidController.draw() }
         sb.end()
 
         stage.act(Gdx.graphics.deltaTime)

@@ -27,13 +27,10 @@ class SpaceChoppersGame : ApplicationAdapter() {
         gsm = GameStateManager(this)
         Preferences.username?.let { gsm.push(MainMenuState(gsm)) }
             ?: run { gsm.push(UsernamePromptState(gsm)) }
+
         // Create network handler and fetch highscores
         val networkClient = NetworkClient.getInstance()
         networkClient.getHighscores();
-
-        // Create asset manager and start playing music
-//        val assMan = AssetManager.getInstance()
-//        assMan.playBackgroundMusic()
     }
 
     override fun render() {

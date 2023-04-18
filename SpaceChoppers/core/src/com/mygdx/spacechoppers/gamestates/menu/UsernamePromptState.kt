@@ -48,7 +48,6 @@ class UsernamePromptState(gsm: GameStateManager) : MenuBase(gsm) {
         table.add(usernameField).height(80f).expandX().fill().padBottom(80f).colspan(2).row()
         table.add(backButton).fill().uniformX().expandX()
         table.add(confirmButton).fill().uniformX().expandX()
-//        table.add(joinButton).fill().uniformX().expandX()
 
         stage.addActor(table)
     }
