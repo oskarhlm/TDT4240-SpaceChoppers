@@ -3,6 +3,7 @@ package com.mygdx.spacechoppers
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 
 object AssetManager {
     val manager = com.badlogic.gdx.assets.AssetManager()
@@ -20,6 +21,7 @@ object AssetManager {
         manager.load("heli_img/Chopper_4.png", Texture::class.java)
         manager.load("menu_bg.png", Texture::class.java)
         manager.load("menu_bg_clean.png", Texture::class.java)
+        manager.load("explosion.png", Texture::class.java)
         manager.finishLoading()
     }
 

@@ -15,14 +15,14 @@ import com.mygdx.spacechoppers.controller.LaserController
 import com.mygdx.spacechoppers.controller.LiveScoresController
 import com.mygdx.spacechoppers.factories.AsteroidFactory
 import com.mygdx.spacechoppers.model.AsteroidTextures
+import com.mygdx.spacechoppers.model.Explosion
 import com.mygdx.spacechoppers.model.Joystick
 import kotlin.random.Random
 
 
 class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
-    private val joystick =
-        Joystick(cam.viewportWidth)
+    private val joystick = Joystick(cam.viewportWidth)
 
     // Chopper
     private val chopperController = ChopperController(joystick.touchpad)
@@ -37,6 +37,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val asteroidFactory = AsteroidFactory(sb, AsteroidTextures())
     private val asteroids = ArrayList<AsteroidController>()
 
+    // Explosions
+    private val explosions = ArrayList<Explosion>()
+
     // Background
     private val background = BackgroundController(stage);
 
@@ -46,9 +49,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         createAsteroids(3)
 
-        println("Width: " + SpaceChoppersGame.width)
-        println("Height: " + SpaceChoppersGame.height)
-
+        explosions.add(Explosion(100f, 100f, 0f))
+        explosions.add(Explosion(100f, 800f, 0f))
     }
 
     private fun createAsteroids(num: Int) {
@@ -64,7 +66,6 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         cam.position.set(chopperController.model.location)
         lasersController.fireLasers(delta, chopperController.model.location, chopperController.model.currentAngle)
 
-
         // Check if asteroids are out of bounds
         if (asteroids.all { a: AsteroidController -> a.model.isOutOfBounds }) {
             asteroids.clear()
@@ -72,6 +73,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         }
 
         asteroids.forEach { asteroidController: AsteroidController -> asteroidController.moveAsteroid() }
+
+        explosions.forEach { exp : Explosion -> exp.update(delta) }
+
     }
 
     override fun render(delta: Float) {
@@ -89,6 +93,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         liveScoresController.renderScores(sb)
         asteroids.forEach{ asteroidController: AsteroidController -> asteroidController.draw() }
+        explosions.forEach { explosion: Explosion -> explosion.render(sb) }
 
         sb.end()
 
