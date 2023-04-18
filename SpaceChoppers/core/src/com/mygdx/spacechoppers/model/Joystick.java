@@ -23,4 +23,8 @@ public class Joystick {
     public Touchpad getTouchpad(){
         return touchpad;
     }
+
+    public void dispose() {
+        skin.dispose();
+    }
 }

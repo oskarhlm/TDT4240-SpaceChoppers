@@ -25,7 +25,6 @@ class MainMenuState(gsm: GameStateManager) : MenuBase(gsm) {
     init {
         // Create Table
         val mainTable = Table()
-//        mainTable.debug = true
 
         // Set table to fill stage
         mainTable.setFillParent(true)
@@ -90,9 +89,4 @@ class MainMenuState(gsm: GameStateManager) : MenuBase(gsm) {
         // Add table to
         stage.addActor(mainTable)
     }
-
-    override fun dispose() {
-        println("Dispose main menu")
-    }
-
 }

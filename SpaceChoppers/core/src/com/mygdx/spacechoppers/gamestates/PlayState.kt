@@ -72,8 +72,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     }
 
     override fun dispose() {
-        TODO("Not yet implemented")
+        stage.dispose()
+        joystick.dispose()
     }
-
-
 }

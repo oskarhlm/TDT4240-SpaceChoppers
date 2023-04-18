@@ -12,18 +12,18 @@ import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.gamestates.menu.utils.Preferences
 
 class UsernamePromptState(gsm: GameStateManager) : MenuBase(gsm) {
+    private val table = Table()
+    private val usernamePromptLabel = Label("Set username:", skin)
+    private val usernameField = TextField(null, skin)
+    private val confirmButton = TextButton("Confirm", skin)
+
     init {
-        val table = Table()
         table.setFillParent(true)
         table.center().pad(20f).defaults().space(10f)
 
-        val usernamePromptLabel = Label("Set username:", skin)
         usernamePromptLabel.setFontScale(4f)
-
-        val usernameField = TextField(null, skin)
         usernameField.style.font.data.setScale(2f)
 
-        val confirmButton = TextButton("Confirm", skin)
         confirmButton.label.setFontScale(4f)
         confirmButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
@@ -41,9 +41,4 @@ class UsernamePromptState(gsm: GameStateManager) : MenuBase(gsm) {
 
         stage.addActor(table)
     }
-
-    override fun dispose() {
-        TODO("Not yet implemented")
-    }
-
 }

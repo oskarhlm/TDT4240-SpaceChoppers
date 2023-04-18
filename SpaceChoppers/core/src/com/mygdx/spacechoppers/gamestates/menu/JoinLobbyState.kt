@@ -47,8 +47,4 @@ class JoinLobbyState(gsm: GameStateManager) : MenuBase(gsm) {
 
         stage.addActor(table)
     }
-
-    override fun dispose() {
-        println("Dispose join-lobby")
-    }
 }

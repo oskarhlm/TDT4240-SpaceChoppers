@@ -70,8 +70,4 @@ class CreateLobbyState(gsm: GameStateManager) : MenuBase(gsm) {
         container.add(backButton).fill().uniformX().expandX()
         container.add(startButton).fill().uniformX().expandX()
     }
-
-    override fun dispose() {
-        println("Dispose create-lobby")
-    }
 }

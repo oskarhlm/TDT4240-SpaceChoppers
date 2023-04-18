@@ -118,10 +118,4 @@ class LeaderboardMenuState(gsm: GameStateManager) : MenuBase(gsm) {
         container.row().space(10f).pad(20f, 0f, 20f, 0f)
         container.add(backButton).expandX().center()
     }
-
-    override fun dispose() {
-        println("Dispose leaderboard-lobby")
-    }
-
-
 }

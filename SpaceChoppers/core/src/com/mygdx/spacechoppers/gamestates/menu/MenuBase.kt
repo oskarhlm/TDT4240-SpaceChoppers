@@ -24,4 +24,9 @@ abstract class MenuBase(gsm: GameStateManager) : GameState(gsm) {
         stage.act(Math.min(delta, 1 / 30f))
         stage.draw()
     }
+
+    override fun dispose() {
+        stage.dispose()
+        skin.dispose()
+    }
 }
