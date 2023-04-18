@@ -36,8 +36,8 @@ public class AsteroidFactory {
 
     public AsteroidConfiguration generateRandomConfiguration(){
         // util
-        int height = SpaceChoppersGame.Companion.getHeight();
-        int width = SpaceChoppersGame.Companion.getWidth();
+        int height = SpaceChoppersGame.Companion.getMapHeight() + 1000;
+        int width = SpaceChoppersGame.Companion.getMapWidth() + 1000;
         int changeX = velocityX * speedMultiplier;
         int changeY = velocityY * speedMultiplier;
 
@@ -51,11 +51,11 @@ public class AsteroidFactory {
         int n = rand.nextInt(8);
         switch (n){
             case 0: // LEFT-BOTTOM
-                location.add(0, rand.nextInt(height / 2), 0);
+                location.add(-1000, rand.nextInt(height / 2), 0);
                 direction.add(changeX, changeY);
                 break;
             case 1: // LEFT-TOP
-                location.add(0, rand.nextInt(height / 2) + height / 2, 0);
+                location.add(-1000, rand.nextInt(height / 2) + height / 2, 0);
                 direction.add(changeX, -changeY);
                 break;
             case 2: // TOP-LEFT
@@ -78,12 +78,10 @@ public class AsteroidFactory {
                 direction.add(-changeX, changeY);
                 break;
             case 7: // BOTTOM-LEFT
-                location.add(rand.nextInt(width /2), 0, 0);
+                location.add(rand.nextInt(width /2), -1000, 0);
                 direction.add(changeX, changeY);
         }
 
         return new AsteroidConfiguration(texture, hitPoints, location, direction, size);
     }
-
-
 }

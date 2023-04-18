@@ -49,6 +49,12 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         println("Width: " + SpaceChoppersGame.width)
         println("Height: " + SpaceChoppersGame.height)
 
+        SpaceChoppersGame.mapWidth = background.mapWidth
+        SpaceChoppersGame.mapHeight = background.mapHeight
+
+        println("--- HER KOMMER DET -----")
+        println("Width: " + SpaceChoppersGame.mapWidth)
+        println("Height: " + SpaceChoppersGame.mapHeight)
     }
 
     private fun createAsteroids(num: Int) {

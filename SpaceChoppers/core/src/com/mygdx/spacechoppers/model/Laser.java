@@ -2,6 +2,7 @@ package com.mygdx.spacechoppers.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.spacechoppers.SpaceChoppersGame;
 
 public class Laser {
 
@@ -37,10 +38,9 @@ public class Laser {
     }
 
     public boolean isLaserOutsideOfCamera() {
-        // TODO: outside camera, not width
-        if (position.x < 0 || position.x > Gdx.graphics.getWidth()) {
+        if (position.x < -1000 || position.x > SpaceChoppersGame.Companion.getMapWidth() + 1000) {
             return true;
-        } else if (position.y < 0 || position.y > Gdx.graphics.getHeight()) {
+        } else if (position.y < -1000 || position.y > SpaceChoppersGame.Companion.getMapHeight() + 1000) {
             return true;
         }
         return false;
