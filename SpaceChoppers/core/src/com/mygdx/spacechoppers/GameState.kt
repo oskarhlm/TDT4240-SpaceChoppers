@@ -6,13 +6,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Disposable
 
-abstract class GameState(protected var gsm: GameStateManager) : Disposable {
+abstract class GameState(protected var gsm: GameStateManager) : Screen {
     protected val game: SpaceChoppersGame = gsm.game
     protected val sb: SpriteBatch = gsm.game.sb
     protected lateinit var cam: OrthographicCamera
 
     abstract fun update(dt: Float)
-    abstract fun render()
 
     init {
         setupCamera(SpaceChoppersGame.width.toFloat(), SpaceChoppersGame.height.toFloat())

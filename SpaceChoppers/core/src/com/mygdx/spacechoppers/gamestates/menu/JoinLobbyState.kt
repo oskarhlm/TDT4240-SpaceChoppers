@@ -48,6 +48,26 @@ class JoinLobbyState(gsm: GameStateManager) : MenuBase(gsm) {
         stage.addActor(table)
     }
 
+    override fun show() {
+        TODO("Not yet implemented")
+    }
+
+    override fun resize(width: Int, height: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun pause() {
+        TODO("Not yet implemented")
+    }
+
+    override fun resume() {
+        TODO("Not yet implemented")
+    }
+
+    override fun hide() {
+        TODO("Not yet implemented")
+    }
+
     override fun dispose() {
         println("Dispose join-lobby")
     }

@@ -39,7 +39,7 @@ class SpaceChoppersGame : ApplicationAdapter() {
     override fun render() {
         ScreenUtils.clear(0f, 0f, 0f, 1f)
         gsm.update(Gdx.graphics.deltaTime)
-        gsm.render()
+        gsm.render(Gdx.graphics.deltaTime)
     }
 
     override fun dispose() {

@@ -18,10 +18,10 @@ abstract class MenuBase(gsm: GameStateManager) : GameState(gsm) {
 
     override fun update(dt: Float) {}
 
-    override fun render() {
+    override fun render(delta: Float) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-        stage.act(Math.min(Gdx.graphics.deltaTime, 1 / 30f))
+        stage.act(Math.min(delta, 1 / 30f))
         stage.draw()
     }
 }

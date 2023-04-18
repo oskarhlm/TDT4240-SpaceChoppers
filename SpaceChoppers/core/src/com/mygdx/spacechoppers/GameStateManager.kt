@@ -12,8 +12,8 @@ class GameStateManager(var game: SpaceChoppersGame) {
         gameStates.peek().update(dt)
     }
 
-    fun render() {
-        gameStates.peek().render()
+    fun render(dt: Float) {
+        gameStates.peek().render(dt)
     }
 
     fun set(state: GameState) {

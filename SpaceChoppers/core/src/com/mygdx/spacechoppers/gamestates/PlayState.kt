@@ -43,7 +43,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         }
     }
 
-    override fun update(dt: Float) {
+    override fun update(delta: Float) {
         // Get chopper movement
         chopperController.moveChopper()
 
@@ -54,9 +54,10 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         }
 
         asteroids.forEach { asteroidController: AsteroidController -> asteroidController.moveAsteroid() }
+
     }
 
-    override fun render() {
+    override fun render(delta: Float) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         sb.begin()
@@ -70,8 +71,29 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         stage.draw()
     }
 
-    override fun dispose() {
-        println("Dispose play-lobby")
+    override fun show() {
+        TODO("Not yet implemented")
     }
+
+    override fun resize(width: Int, height: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun pause() {
+        TODO("Not yet implemented")
+    }
+
+    override fun resume() {
+        TODO("Not yet implemented")
+    }
+
+    override fun hide() {
+        TODO("Not yet implemented")
+    }
+
+    override fun dispose() {
+        TODO("Not yet implemented")
+    }
+
 
 }
