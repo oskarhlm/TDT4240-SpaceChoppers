@@ -20,15 +20,13 @@ public class LaserView implements Disposable {
     }
 
     public void draw(SpriteBatch sb, Vector2 position, float angle) {
-        /*
-        sb.draw(sprite, position.x, position.y, position.x + sprite.getWidth() / 2,
-                position.y + sprite.getHeight() / 2,
-                SpaceChoppersGame.Companion.getWidth(),
-                SpaceChoppersGame.Companion.getHeight(),
-                (float) 0.25,(float) 0.04, angle);
+        sb.draw(sprite, position.x, position.y,
+                sprite.getOriginX(),
+                sprite.getOriginY(),
+                sprite.getWidth(),
+                sprite.getHeight(),
+                (float) 0.2, (float) 0.2, angle);
 
-         */
-        sb.draw(sprite, position.x, position.y);
     }
 
     @Override

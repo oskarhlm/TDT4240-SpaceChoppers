@@ -19,24 +19,12 @@ public class ChopperView implements Disposable {
     }
 
     public void draw(SpriteBatch sb, Vector3 location, float angle) {
-
-
         sb.draw(sprite, location.x, location.y,
-                location.x + sprite.getWidth() / 2,
-                location.y + sprite.getHeight() / 2,
-                SpaceChoppersGame.Companion.getWidth(),
-                SpaceChoppersGame.Companion.getHeight(),
-                (float) 0.25, (float) 0.04, angle);
-
-
-
-
-//        sb.draw(sprite, location.x, location.y, location.x + sprite.getWidth() / 2,
-//                location.y + sprite.getHeight() / 2)
-//        sprite.setPosition(location.x - sprite.getWidth() / 2, location.y - sprite.getHeight() / 2);
-//        sprite.setRotation(angle);
-//
-//        sb.draw(sprite, location.x, location.y);
+                sprite.getOriginX(),
+                sprite.getOriginY(),
+                sprite.getWidth(),
+                sprite.getHeight(),
+                (float) 3, (float) 3, angle);
     }
 
     public Sprite getSprite(){
