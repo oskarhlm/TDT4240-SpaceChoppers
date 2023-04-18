@@ -25,14 +25,10 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         Joystick(cam.viewportWidth)
 
     // Chopper
-    private val chopperController = ChopperController(sb, joystick.touchpad)
+    private val chopperController = ChopperController(joystick.touchpad)
 
     // Laser
     private val lasersController = LaserController();
-
-    // Asteroid resource(s)
-    private val asteroidTextures =
-        AsteroidTextures()
 
     // Scores
     private val liveScoresController = LiveScoresController();
@@ -55,22 +51,22 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     }
 
-    private fun createAsteroids(num : Int)  {
-        for (i in 0..num){
+    private fun createAsteroids(num: Int) {
+        for (i in 0..num) {
             asteroids.add(asteroidFactory.create())
         }
     }
 
     override fun update(delta: Float) {
         // Get chopper movement
-        chopperController.moveChopper()
+        chopperController.moveChopper(delta)
 
-        cam.position.set(chopperController.position)
+        cam.position.set(chopperController.model.location)
+        lasersController.fireLasers(delta, chopperController.model.location, chopperController.model.currentAngle)
 
-        lasersController.fireLasers(delta, chopperController.position, chopperController.angle)
 
         // Check if asteroids are out of bounds
-        if (asteroids.all{ a : AsteroidController -> a.model.isOutOfBounds }){
+        if (asteroids.all { a: AsteroidController -> a.model.isOutOfBounds }) {
             asteroids.clear()
             createAsteroids(Random.nextInt(5)) // TODO: Dynamic number
         }
@@ -86,8 +82,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         sb.begin()
         background.draw(sb)
-        chopperController.draw()
 
+        chopperController.draw(sb)
         lasersController.draw(sb)
         liveScoresController.renderScores(sb)
 
