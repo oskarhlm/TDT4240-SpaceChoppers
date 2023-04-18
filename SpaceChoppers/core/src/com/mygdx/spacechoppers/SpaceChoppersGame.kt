@@ -33,11 +33,8 @@ class SpaceChoppersGame : ApplicationAdapter() {
         val networkClient = NetworkClient.getInstance()
         networkClient.getHighscores();
 
-        // Create asset manager and start playing music
-
-//        val assMan = AssetManager.getInstance()
-//        assMan.playBackgroundMusic()
-
+        // Create music
+        AssetManager.setUpMusic()
     }
 
     override fun render() {

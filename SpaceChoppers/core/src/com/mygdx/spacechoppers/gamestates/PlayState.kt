@@ -60,9 +60,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         // Get chopper movement
         chopperController.moveChopper()
 
-        asteroid.moveAsteroid()
-        lasersController.fireLasers(dt, chopperController.position, chopperController.angle)
-
+        lasersController.fireLasers(delta, chopperController.position, chopperController.angle)
 
         // Check if asteroids are out of bounds
         if (asteroids.all{ a : AsteroidController -> a.model.isOutOfBounds }){
@@ -71,8 +69,6 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         }
 
         asteroids.forEach { asteroidController: AsteroidController -> asteroidController.moveAsteroid() }
-
-
     }
 
     override fun render(delta: Float) {
@@ -82,13 +78,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         chopperController.draw()
 
         lasersController.draw(sb)
-        asteroidView.draw(sb)
         liveScoresController.renderScores(sb)
-        asteroidView1.draw(sb)
-
 
         liveScoresController.renderScores(sb)
-        println(liveScoresController.position)
         asteroids.forEach{ asteroidController: AsteroidController -> asteroidController.draw() }
  
         sb.end()

@@ -31,10 +31,6 @@ public class ChopperController {
 
     public float getAngle() {
         return model.getCurrentAngle();
-
-    public Vector3 getLocation(){
-        return model.getLocation();
-
     }
 
     public void draw(){
