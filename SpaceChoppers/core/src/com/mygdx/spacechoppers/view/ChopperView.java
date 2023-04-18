@@ -20,14 +20,22 @@ public class ChopperView implements Disposable {
 
     public void draw(SpriteBatch sb, Vector3 location, float angle) {
 
+        /*
         sb.draw(sprite, location.x, location.y,
                 location.x + sprite.getWidth() / 2,
                 location.y + sprite.getHeight() / 2,
                 SpaceChoppersGame.Companion.getWidth(),
                 SpaceChoppersGame.Companion.getHeight(),
                 (float) 0.25, (float) 0.04, angle);
+
+
+         */
+        sb.draw(sprite, location.x, location.y);
     }
 
+    public Sprite getSprite(){
+        return sprite;
+    }
     @Override
     public void dispose() {
 //        System.err.println("chopper dispose");
