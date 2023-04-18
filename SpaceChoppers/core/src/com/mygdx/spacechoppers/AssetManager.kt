@@ -22,6 +22,7 @@ object AssetManager {
         manager.load("menu_bg.png", Texture::class.java)
         manager.load("menu_bg_clean.png", Texture::class.java)
         manager.load("explosion.png", Texture::class.java)
+        manager.load("blank.png", Texture::class.java)
         manager.finishLoading()
     }
 

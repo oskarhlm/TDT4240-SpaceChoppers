@@ -1,10 +1,13 @@
 package com.mygdx.spacechoppers.gamestates
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
+import com.mygdx.spacechoppers.AssetManager
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.SpaceChoppersGame
@@ -23,6 +26,8 @@ import kotlin.random.Random
 class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
     private val joystick = Joystick(cam.viewportWidth)
+    // health bar
+    private val blank : Texture = AssetManager.manager.get("blank.png", Texture::class.java);
 
     // Chopper
     private val chopperController = ChopperController(joystick.touchpad)
@@ -42,6 +47,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     // Background
     private val background = BackgroundController(stage);
+
+
 
     init {
         Gdx.input.inputProcessor = stage
@@ -94,6 +101,20 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         liveScoresController.renderScores(sb)
         asteroids.forEach{ asteroidController: AsteroidController -> asteroidController.draw() }
         explosions.forEach { explosion: Explosion -> explosion.render(sb) }
+
+        // Health Bar
+
+        if (chopperController.model.hitPoints > 75){
+            sb.setColor(Color.GREEN);
+        }
+        else if(chopperController.model.hitPoints > 25){
+            sb.setColor(Color.ORANGE);
+        } else {
+            sb.setColor(Color.RED);
+        }
+
+        sb.draw(blank, 0F, 0F, SpaceChoppersGame.width * (chopperController.model.hitPoints / 100f), 10F)
+        sb.setColor(Color.WHITE);
 
         sb.end()
 
