@@ -23,16 +23,6 @@ public class ChopperController {
                 SpaceChoppersGame.Companion.getWidth() / 2 - view.getSprite().getWidth() / 2,
                 SpaceChoppersGame.Companion.getHeight() / 2 - view.getSprite().getHeight() / 2,
                 100));
-
-    // public ChopperController(Touchpad touchpad) {
-    //     this.touchpad = touchpad;
-    //     this.model = new ChopperModel(
-    //             100,
-    //             new Vector3(
-    //                     100,
-    //                     100,
-    //                     0
-    //             ));
     }
 
     public void moveChopper(float dt) {
@@ -45,8 +35,16 @@ public class ChopperController {
             float movementNormalizedY = deltaY / movementMagnitude;
             float movementSpeed = movementMagnitude * speedScaler;
             model.setVelocityVector(new Vector2(deltaX * movementSpeed, deltaY * movementSpeed));
-            model.getLocation().x += movementNormalizedX * movementSpeed;
-            model.getLocation().y += movementNormalizedY * movementSpeed;
+
+            float nextXPosition = model.getLocation().x + movementNormalizedX * movementSpeed;
+            float nextYPosition = model.getLocation().y + movementNormalizedY * movementSpeed;
+
+            if (nextXPosition >= 0 && nextXPosition <= SpaceChoppersGame.Companion.getMapWidth() - 150) {
+                model.getLocation().x = nextXPosition;
+            }
+            if (nextYPosition >= 0 && nextYPosition <= SpaceChoppersGame.Companion.getMapHeight() - 150) {
+                model.getLocation().y = nextYPosition;
+            }
         }
     }
 

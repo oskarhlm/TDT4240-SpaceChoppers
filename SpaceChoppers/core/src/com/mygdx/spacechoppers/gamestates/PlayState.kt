@@ -69,6 +69,12 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         })
         stage.addActor(quitButton)
 
+        SpaceChoppersGame.mapWidth = background.mapWidth
+        SpaceChoppersGame.mapHeight = background.mapHeight
+
+        println("--- HER KOMMER DET -----")
+        println("Width: " + SpaceChoppersGame.mapWidth)
+        println("Height: " + SpaceChoppersGame.mapHeight)
     }
 
     private fun createAsteroids(num: Int) {
