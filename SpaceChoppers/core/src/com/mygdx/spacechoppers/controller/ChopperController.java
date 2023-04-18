@@ -23,10 +23,12 @@ public class ChopperController {
         model.moveChopper();
     }
 
+    public Vector3 getLocation(){
+        return model.getLocation();
+    }
+
     public void draw(){
         view.draw(sb, model.getLocation(), model.getCurrentAngle());
     }
-
-
 
 }

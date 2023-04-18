@@ -42,5 +42,10 @@ public class AsteroidTextures implements Disposable {
     @Override
     public void dispose() {
         allAsteroidsTexture.dispose();
+
+        for(TextureRegion tr : asteroids){
+            tr.getTexture().dispose();
+        }
+
     }
 }

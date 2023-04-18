@@ -30,6 +30,7 @@ public class ChopperView implements Disposable {
 
     @Override
     public void dispose() {
+        System.err.println("chopper dispose");
         texture.dispose();
     }
 }

@@ -18,8 +18,6 @@ import com.mygdx.spacechoppers.utils.MenuCommon
 class OptionsState(gsm: GameStateManager) : GameState(gsm) {
     private val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
     private val skin = MenuCommon.skin
-    private val style = MenuCommon.style
-
     init {
         Gdx.input.inputProcessor = stage
 
@@ -30,16 +28,6 @@ class OptionsState(gsm: GameStateManager) : GameState(gsm) {
         val soundVolumeSlider = Slider(0f, 1f, 0.1f, false, skin)
         soundVolumeSlider.setSize(soundVolumeSlider.width * 4f, soundVolumeSlider.height * 4f)
         val backButton = TextButton("Back", skin)
-
-        val slider = Slider(0f, 1f, 0.1f, false, skin)
-//        val background = slider.style.background
-//        val knob = slider.style.knob
-//
-//        val scale = 4f // Scale factor
-//        background.setMinWidth(background.getMinWidth() * scale)
-//        background.setMinHeight(background.getMinHeight() * scale)
-//        knob.setMinWidth(knob.getMinWidth() * scale)
-//        knob.setMinHeight(knob.getMinHeight() * scale)
 
         backButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
@@ -65,11 +53,15 @@ class OptionsState(gsm: GameStateManager) : GameState(gsm) {
         stage.addActor(table)
     }
 
-    override fun update(dt: Float) {}
+    override fun update(dt: Float) {
 
-    override fun render() {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-        stage.act(Gdx.graphics.deltaTime)
-        stage.draw()
+    }
+
+    override fun render(delta: Float) {
+        TODO("Not yet implemented")
+    }
+
+    override fun dispose() {
+        println("Dispose options")
     }
 }
