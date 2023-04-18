@@ -8,7 +8,7 @@ public class Laser {
     private Vector2 position;
     private Vector2 velocity;
     private float initialRotation;
-    private final float BASE_VELOCITY = 5;
+    private final float BASE_VELOCITY = 10;
 
     public Laser(Vector2 position, float chopperRotation, float rotation) {
 

@@ -12,20 +12,27 @@ public class ChopperController {
 
     private final ChopperModel model;
     private final ChopperView view;
-    private SpriteBatch sb;
     private Touchpad touchpad;
     private final int speedScaler = 5;
 
+
     public ChopperController(Touchpad touchpad) {
-        this.touchpad = touchpad;
-        this.model = new ChopperModel(
-                100,
-                new Vector3(
-                        100,
-                        100,
-                        0
-                ));
         this.view = new ChopperView();
+        this.touchpad = touchpad;
+        this.model = new ChopperModel(100, new Vector3(
+                SpaceChoppersGame.Companion.getWidth() / 2 - view.getSprite().getWidth() / 2,
+                SpaceChoppersGame.Companion.getHeight() / 2 - view.getSprite().getHeight() / 2,
+                100));
+
+    // public ChopperController(Touchpad touchpad) {
+    //     this.touchpad = touchpad;
+    //     this.model = new ChopperModel(
+    //             100,
+    //             new Vector3(
+    //                     100,
+    //                     100,
+    //                     0
+    //             ));
     }
 
     public void moveChopper(float dt) {

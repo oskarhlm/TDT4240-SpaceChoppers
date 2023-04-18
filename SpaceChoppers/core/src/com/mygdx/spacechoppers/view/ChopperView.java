@@ -40,18 +40,22 @@ public class ChopperView implements Disposable {
 
     }
 
+
     public void draw(SpriteBatch sb, ChopperModel model) {
 
         Vector3 location = model.getLocation();
         float angle = model.getCurrentAngle();
         sb.draw(sprite, location.x, location.y,
-                location.x + sprite.getWidth() / 2,
-                location.y + sprite.getHeight() / 2,
-                SpaceChoppersGame.Companion.getWidth(),
-                SpaceChoppersGame.Companion.getHeight(),
-                (float) 0.25, (float) 0.04, angle);
+                sprite.getOriginX(),
+                sprite.getOriginY(),
+                sprite.getWidth(),
+                sprite.getHeight(),
+                (float) 1, (float) 1, angle-90);
     }
 
+    public Sprite getSprite(){
+        return sprite;
+    }
     @Override
     public void dispose() {}
 }
