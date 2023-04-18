@@ -20,7 +20,7 @@ public class ChopperController {
         this.model = new ChopperModel(100, new Vector3(
                 SpaceChoppersGame.Companion.getWidth() / 2 - view.getSprite().getWidth() / 2,
                 SpaceChoppersGame.Companion.getHeight() / 2 - view.getSprite().getHeight() / 2,
-                0), touchpad);
+                100), touchpad);
         this.sb = sb;
     }
 
