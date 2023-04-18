@@ -14,7 +14,6 @@ import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
 
 internal object MenuCommon {
     val skin = Skin(Gdx.files.internal("star-soldier/star-soldier-ui.json"))
-    val style = TextButton.TextButtonStyle()
 
     fun scaledLabel(lbl: String, scl: Float): Label {
         val scaledLbl = Label(lbl, skin)

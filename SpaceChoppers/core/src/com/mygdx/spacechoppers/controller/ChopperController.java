@@ -28,14 +28,17 @@ public class ChopperController {
         model.moveChopper();
     }
 
+
     public float getAngle() {
         return model.getCurrentAngle();
+
+    public Vector3 getLocation(){
+        return model.getLocation();
+
     }
 
     public void draw(){
         view.draw(sb, model.getLocation(), model.getCurrentAngle());
     }
-
-
 
 }

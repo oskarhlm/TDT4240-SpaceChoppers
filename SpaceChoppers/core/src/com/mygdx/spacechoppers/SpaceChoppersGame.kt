@@ -10,6 +10,9 @@ import com.mygdx.spacechoppers.gamestates.menu.UsernamePromptState
 import com.mygdx.spacechoppers.utils.Preferences
 import com.mygdx.spacechoppers.networking.NetworkClient
 
+import com.mygdx.spacechoppers.utils.MenuCommon
+
+
 class SpaceChoppersGame : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
         private set
@@ -33,15 +36,21 @@ class SpaceChoppersGame : ApplicationAdapter() {
 
         // Create asset manager and start playing music
 
+//        val assMan = AssetManager.getInstance()
+//        assMan.playBackgroundMusic()
+
     }
 
     override fun render() {
         ScreenUtils.clear(0f, 0f, 0f, 1f)
         gsm.update(Gdx.graphics.deltaTime)
-        gsm.render()
+        gsm.render(Gdx.graphics.deltaTime)
     }
 
     override fun dispose() {
+        println("Closed game")
         sb.dispose()
+        MenuCommon.skin.dispose()
+        AssetManager.manager.dispose()
     }
 }

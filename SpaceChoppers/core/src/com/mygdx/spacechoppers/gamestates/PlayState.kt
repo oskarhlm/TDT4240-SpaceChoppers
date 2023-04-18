@@ -2,19 +2,19 @@ package com.mygdx.spacechoppers.gamestates
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.badlogic.gdx.utils.viewport.FitViewport
+import com.mygdx.spacechoppers.SpaceChoppersGame
+import com.mygdx.spacechoppers.controller.AsteroidController
 import com.mygdx.spacechoppers.controller.ChopperController
 import com.mygdx.spacechoppers.controller.LaserController
 import com.mygdx.spacechoppers.controller.LiveScoresController
 import com.mygdx.spacechoppers.model.AsteroidTextures
 import com.mygdx.spacechoppers.model.Joystick
-import com.mygdx.spacechoppers.model.Asteroid
-
-import com.mygdx.spacechoppers.view.AsteroidView
+import com.mygdx.spacechoppers.factories.AsteroidFactory
+import kotlin.random.Random
 
 
 class PlayState(gsm: GameStateManager) : GameState(gsm) {
@@ -32,44 +32,73 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val asteroidTextures =
         AsteroidTextures()
 
-    // Asteroids
-    // TODO: Create single class for this logic (MVC)
-    private val asteroid =
-        Asteroid(10, Vector3(40F, 40F, 0F))
-    private val asteroidView = AsteroidView(asteroid, asteroidTextures)
-
-    private val asteroid1 =
-        Asteroid(10, Vector3(50F, 50F, 0F))
-    private val asteroidView1 = AsteroidView(asteroid1, asteroidTextures)
-
     // Scores
     private val liveScoresController = LiveScoresController();
 
+    // Asteroids
+    private val asteroidFactory = AsteroidFactory(sb, AsteroidTextures())
+    private val asteroids = ArrayList<AsteroidController>()
 
     init {
         Gdx.input.inputProcessor = stage
         stage.addActor(joystick.touchpad)
+
+        createAsteroids(3)
+
+        println("Width: " + SpaceChoppersGame.width)
+        println("Height: " + SpaceChoppersGame.height)
+
     }
 
-    override fun update(dt: Float) {
+    private fun createAsteroids(num : Int)  {
+        for (i in 0..num){
+            asteroids.add(asteroidFactory.create())
+        }
+    }
+
+    override fun update(delta: Float) {
+        // Get chopper movement
         chopperController.moveChopper()
+
         asteroid.moveAsteroid()
         lasersController.fireLasers(dt, chopperController.position, chopperController.angle)
+
+
+        // Check if asteroids are out of bounds
+        if (asteroids.all{ a : AsteroidController -> a.model.isOutOfBounds }){
+            asteroids.clear()
+            createAsteroids(Random.nextInt(5)) // TODO: Dynamic number
+        }
+
+        asteroids.forEach { asteroidController: AsteroidController -> asteroidController.moveAsteroid() }
+
+
     }
 
-    override fun render() {
+    override fun render(delta: Float) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         sb.begin()
         chopperController.draw()
+
         lasersController.draw(sb)
         asteroidView.draw(sb)
         liveScoresController.renderScores(sb)
         asteroidView1.draw(sb)
 
+
+        liveScoresController.renderScores(sb)
+        println(liveScoresController.position)
+        asteroids.forEach{ asteroidController: AsteroidController -> asteroidController.draw() }
+ 
         sb.end()
 
         stage.act(Gdx.graphics.deltaTime)
         stage.draw()
+    }
+
+    override fun dispose() {
+        stage.dispose()
+        joystick.dispose()
     }
 }

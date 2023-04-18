@@ -1,7 +1,10 @@
 package com.mygdx.spacechoppers.gamestates.menu
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Container
@@ -10,7 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.Align
+import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.utils.viewport.FitViewport
+import com.mygdx.spacechoppers.AssetManager
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.SpaceChoppersGame
@@ -27,7 +32,6 @@ class MainMenuState(gsm: GameStateManager) : MenuBase(gsm) {
 
         // Create Table
         val mainTable = Table()
-//        mainTable.debug = true
 
         // Set table to fill stage
         mainTable.setFillParent(true)
@@ -81,6 +85,12 @@ class MainMenuState(gsm: GameStateManager) : MenuBase(gsm) {
                 Gdx.app.exit()
             }
         })
+
+        // Override default background
+        background = TextureRegion(
+            AssetManager.manager.get("menu_bg.png", Texture::class.java),
+            0, 0, SpaceChoppersGame.width, SpaceChoppersGame.height
+        )
 
         // Add buttons to table
         mainTable.columnDefaults(0).expandX().fillX()
