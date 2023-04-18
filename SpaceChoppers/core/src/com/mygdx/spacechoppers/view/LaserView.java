@@ -20,7 +20,7 @@ public class LaserView implements Disposable {
     }
 
     public void draw(SpriteBatch sb, Vector2 position, float angle) {
-        sb.draw(sprite, position.x, position.y,
+        sb.draw(sprite, position.x - 100, position.y + 50,
                 sprite.getOriginX(),
                 sprite.getOriginY(),
                 sprite.getWidth(),

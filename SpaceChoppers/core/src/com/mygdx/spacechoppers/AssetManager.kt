@@ -28,4 +28,9 @@ object AssetManager {
         backgroundMusic.isLooping = true
         backgroundMusic.play()
     }
+
+    fun playLaserSound() {
+        val laserSound = manager.get("sounds/laser.mp3", Sound::class.java)
+        laserSound.play()
+    }
 }
