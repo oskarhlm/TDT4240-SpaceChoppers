@@ -2,8 +2,10 @@ package com.mygdx.spacechoppers.gamestates
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
@@ -16,13 +18,19 @@ import com.mygdx.spacechoppers.controller.LiveScoresController
 import com.mygdx.spacechoppers.factories.AsteroidFactory
 import com.mygdx.spacechoppers.model.AsteroidTextures
 import com.mygdx.spacechoppers.model.Joystick
+import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
+import com.mygdx.spacechoppers.networking.NetworkClient
+import com.mygdx.spacechoppers.utils.MenuCommon.skin
+import com.mygdx.spacechoppers.utils.Preferences
 import kotlin.random.Random
 
 
 class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
     private val joystick =
-        Joystick(cam.viewportWidth)
+            Joystick(cam.viewportWidth)
+
+    val networkClient = NetworkClient.getInstance()
 
     // Chopper
     private val chopperController = ChopperController(joystick.touchpad)
@@ -37,6 +45,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val asteroidFactory = AsteroidFactory(sb, AsteroidTextures())
     private val asteroids = ArrayList<AsteroidController>()
 
+    private val quitButton = TextButton("Quit", skin)
     // Background
     private val background = BackgroundController(stage);
 
@@ -48,6 +57,17 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         println("Width: " + SpaceChoppersGame.width)
         println("Height: " + SpaceChoppersGame.height)
+        quitButton.setPosition(20f, SpaceChoppersGame.height - quitButton.height - 60f)
+        quitButton.width = quitButton.width * 2 // increase width
+        quitButton.height = quitButton.height * 2 // increase height
+        quitButton.label.setFontScale(2f)
+        quitButton.addListener(object : ClickListener() {
+            override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                networkClient.leaveLobby(Preferences.lobbyID, Preferences.username)
+                gsm.set(MainMenuState(gsm))
+            }
+        })
+        stage.addActor(quitButton)
 
     }
 
@@ -94,7 +114,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         stage.act(Gdx.graphics.deltaTime)
         stage.draw()
-        
+
     }
 
     override fun dispose() {

@@ -16,7 +16,6 @@ import kotlin.random.Random
 
 
 class CreateLobbyState(gsm: GameStateManager) : MenuBase(gsm) {
-    private val pin: Int;
     private val readyColor = Color(0f, 1f, 0f, 1f)
     private val notReadyColor = Color(1f, 0f, 0f, 1f)
 
@@ -26,7 +25,7 @@ class CreateLobbyState(gsm: GameStateManager) : MenuBase(gsm) {
         while (messageReceiver.lobbyID == -1) {
             delay(100F)
         }
-        pin = messageReceiver.lobbyID
+        Preferences.lobbyID = messageReceiver.lobbyID
 
 
         val container = Table()
@@ -41,7 +40,7 @@ class CreateLobbyState(gsm: GameStateManager) : MenuBase(gsm) {
         val title = scaledLabel("${Preferences.username}'s game", headerScl)
         title.wrap = true
         header.add(title).expandX().fillX().row()
-        header.add(scaledLabel("PIN: $pin", headerScl))
+        header.add(scaledLabel("PIN: ${Preferences.lobbyID}", headerScl))
 
 
         val backButton = TextButton("Back", skin)
