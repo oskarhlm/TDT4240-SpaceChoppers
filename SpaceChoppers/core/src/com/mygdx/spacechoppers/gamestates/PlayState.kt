@@ -8,6 +8,7 @@ import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.controller.ChopperController
+import com.mygdx.spacechoppers.controller.LaserController
 import com.mygdx.spacechoppers.controller.LiveScoresController
 import com.mygdx.spacechoppers.model.AsteroidTextures
 import com.mygdx.spacechoppers.model.Joystick
@@ -23,6 +24,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     // Chopper
     private val chopperController = ChopperController(sb, joystick.touchpad)
+
+    // Laser
+    private val lasersController = LaserController();
 
     // Asteroid resource(s)
     private val asteroidTextures =
@@ -50,6 +54,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     override fun update(dt: Float) {
         chopperController.moveChopper()
         asteroid.moveAsteroid()
+        lasersController.fireLasers(dt, chopperController.position, chopperController.angle)
     }
 
     override fun render() {
@@ -57,12 +62,10 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         sb.begin()
         chopperController.draw()
+        lasersController.draw(sb)
         asteroidView.draw(sb)
         liveScoresController.renderScores(sb)
-        println(liveScoresController.position)
         asteroidView1.draw(sb)
-        //asteroidView.draw(sb)
-
 
         sb.end()
 
