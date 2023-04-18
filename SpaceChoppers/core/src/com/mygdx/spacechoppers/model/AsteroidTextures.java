@@ -3,6 +3,7 @@ package com.mygdx.spacechoppers.model;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.spacechoppers.AssetManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +17,9 @@ public class AsteroidTextures implements Disposable {
     private final Random random;
 
     public AsteroidTextures() {
-        this.allAsteroidsTexture = new Texture("asteroid-sheet.png");
-        this.asteroids = new ArrayList<>(numRows * numColumns);
+        this.allAsteroidsTexture = AssetManager.INSTANCE.getAssetManager()
+                .get("asteroid-sheet.png", Texture.class);
+        this.asteroids = new ArrayList(numRows * numColumns);
         this.random = new Random();
         initialize();
     }
@@ -41,11 +43,8 @@ public class AsteroidTextures implements Disposable {
 
     @Override
     public void dispose() {
-        allAsteroidsTexture.dispose();
-
         for(TextureRegion tr : asteroids){
             tr.getTexture().dispose();
         }
-
     }
 }

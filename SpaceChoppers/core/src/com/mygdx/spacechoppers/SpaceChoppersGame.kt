@@ -2,7 +2,6 @@ package com.mygdx.spacechoppers
 
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.ScreenUtils
@@ -18,17 +17,10 @@ class SpaceChoppersGame : ApplicationAdapter() {
     lateinit var gsm: GameStateManager
         private set
 
-    init {
-        assetManager.load("asteroid-sheet.png", Texture::class.java)
-        assetManager.load("helicopter_1-png", Texture::class.java)
-        assetManager.update()
-    }
-
     companion object {
         const val TITLE = "Space Choppers"
         val width get() = Gdx.graphics.width
         val height get() = Gdx.graphics.height
-        val assetManager : AssetManager = AssetManager()
     }
 
     override fun create() {
@@ -54,7 +46,7 @@ class SpaceChoppersGame : ApplicationAdapter() {
     override fun dispose() {
         println("Closed game")
         sb.dispose()
-        assetManager.dispose()
         MenuCommon.skin.dispose()
+        AssetManager.assetManager.dispose()
     }
 }
