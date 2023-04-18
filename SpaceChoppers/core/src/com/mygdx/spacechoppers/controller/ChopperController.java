@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.mygdx.spacechoppers.SpaceChoppersGame;
 import com.mygdx.spacechoppers.model.ChopperModel;
 import com.mygdx.spacechoppers.view.ChopperView;
 
@@ -15,11 +16,16 @@ public class ChopperController {
     private Touchpad touchpad;
     private final int speedScaler = 5;
 
-    public ChopperController(SpriteBatch sb, Touchpad touchpad) {
+    public ChopperController(Touchpad touchpad) {
         this.touchpad = touchpad;
-        this.model = new ChopperModel(100, new Vector3(100, 100, 0));
+        this.model = new ChopperModel(
+                100,
+                new Vector3(
+                        SpaceChoppersGame.Companion.getWidth() / 2,
+                        SpaceChoppersGame.Companion.getHeight() / 2,
+                        0
+                ));
         this.view = new ChopperView();
-        this.sb = sb;
     }
 
     public void moveChopper(float dt) {
@@ -43,7 +49,7 @@ public class ChopperController {
         return model;
     }
 
-    public void draw() {
+    public void draw(SpriteBatch sb) {
         view.draw(sb, model);
     }
 

@@ -18,7 +18,7 @@ public class ChopperView implements Disposable {
     private int spriteIndex = 0;
 
     public ChopperView() {
-        this.texture = AssetManager.INSTANCE.getManager().get("helicopter_1.png", Texture.class);
+        this.texture = AssetManager.INSTANCE.getManager().get("heli_img/Chopper_1.png", Texture.class);
         this.sprite = new Sprite(texture);
     }
 

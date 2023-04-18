@@ -22,7 +22,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         Joystick(cam.viewportWidth)
 
     // Chopper
-    private val chopperController = ChopperController(sb, joystick.touchpad)
+    private val chopperController = ChopperController(joystick.touchpad)
 
     // Asteroid resource(s)
     private val asteroidTextures =
@@ -70,7 +70,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         sb.begin()
-        chopperController.draw()
+        chopperController.draw(sb)
         liveScoresController.renderScores(sb)
         asteroids.forEach { asteroidController: AsteroidController -> asteroidController.draw() }
         sb.end()
