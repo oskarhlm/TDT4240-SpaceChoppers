@@ -2,7 +2,6 @@ package com.mygdx.spacechoppers
 
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.ScreenUtils
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
@@ -47,6 +46,6 @@ class SpaceChoppersGame : ApplicationAdapter() {
         println("Closed game")
         sb.dispose()
         MenuCommon.skin.dispose()
-        AssetManager.assetManager.dispose()
+        AssetManager.manager.dispose()
     }
 }

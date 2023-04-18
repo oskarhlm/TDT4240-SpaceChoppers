@@ -13,17 +13,26 @@ import com.mygdx.spacechoppers.utils.Preferences
 
 class UsernamePromptState(gsm: GameStateManager) : MenuBase(gsm) {
     private val table = Table()
-    private val usernamePromptLabel = Label("Set username:", skin)
-    private val usernameField = TextField(null, skin)
-    private val confirmButton = TextButton("Confirm", skin)
 
     init {
         table.setFillParent(true)
         table.center().pad(20f).defaults().space(10f)
 
+        val usernamePromptLabel = Label("Set username:", skin)
         usernamePromptLabel.setFontScale(4f)
+        val usernameField = TextField(null, skin)
         usernameField.style.font.data.setScale(2f)
 
+        val backButton = TextButton("Back", skin)
+        backButton.label.setFontScale(4f)
+        backButton.addListener(object : ClickListener() {
+            override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                Gdx.input.setOnscreenKeyboardVisible(false)
+                gsm.set(MainMenuState(gsm))
+            }
+        })
+
+        val confirmButton = TextButton("Confirm", skin)
         confirmButton.label.setFontScale(4f)
         confirmButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
@@ -35,9 +44,11 @@ class UsernamePromptState(gsm: GameStateManager) : MenuBase(gsm) {
             }
         })
 
-        table.add(usernamePromptLabel).expandX().fillX().row()
-        table.add(usernameField).height(80f).expandX().fill().padBottom(80f).row()
-        table.add(confirmButton).expandX().fillX()
+        table.add(usernamePromptLabel).expandX().fillX().colspan(2).row()
+        table.add(usernameField).height(80f).expandX().fill().padBottom(80f).colspan(2).row()
+        table.add(backButton).fill().uniformX().expandX()
+        table.add(confirmButton).fill().uniformX().expandX()
+//        table.add(joinButton).fill().uniformX().expandX()
 
         stage.addActor(table)
     }

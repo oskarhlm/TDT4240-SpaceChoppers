@@ -17,7 +17,7 @@ public class AsteroidTextures implements Disposable {
     private final Random random;
 
     public AsteroidTextures() {
-        this.allAsteroidsTexture = AssetManager.INSTANCE.getAssetManager()
+        this.allAsteroidsTexture = AssetManager.INSTANCE.getManager()
                 .get("asteroid-sheet.png", Texture.class);
         this.asteroids = new ArrayList(numRows * numColumns);
         this.random = new Random();
