@@ -2,18 +2,19 @@ package com.mygdx.spacechoppers.gamestates
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
-import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.SpaceChoppersGame
 import com.mygdx.spacechoppers.controller.AsteroidController
 import com.mygdx.spacechoppers.controller.ChopperController
 import com.mygdx.spacechoppers.controller.LaserController
 import com.mygdx.spacechoppers.controller.LiveScoresController
+import com.mygdx.spacechoppers.factories.AsteroidFactory
 import com.mygdx.spacechoppers.model.AsteroidTextures
 import com.mygdx.spacechoppers.model.Joystick
-import com.mygdx.spacechoppers.factories.AsteroidFactory
 import kotlin.random.Random
 
 
@@ -60,6 +61,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         // Get chopper movement
         chopperController.moveChopper()
 
+        cam.position.set(chopperController.position)
+
         lasersController.fireLasers(delta, chopperController.position, chopperController.angle)
 
         // Check if asteroids are out of bounds
@@ -73,6 +76,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     override fun render(delta: Float) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+
+        cam.update()
+        sb.projectionMatrix = cam.combined
 
         sb.begin()
         chopperController.draw()
