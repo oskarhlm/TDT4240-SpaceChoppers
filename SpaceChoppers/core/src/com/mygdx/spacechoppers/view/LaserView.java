@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
 
@@ -19,7 +20,7 @@ public class LaserView implements Disposable {
         this.sprite = new Sprite(texture);
     }
 
-    public void draw(SpriteBatch sb, Vector2 position, float angle) {
+    public void draw(SpriteBatch sb, Vector3 position, float angle) {
         sb.draw(sprite, position.x - 100, position.y + 50,
                 sprite.getOriginX(),
                 sprite.getOriginY(),

@@ -3,7 +3,7 @@ package com.mygdx.spacechoppers.model;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
 
-public abstract class Actor implements IActor{
+public abstract class Actor implements IActor {
 
     protected int hitPoints;
     protected Vector3 location;

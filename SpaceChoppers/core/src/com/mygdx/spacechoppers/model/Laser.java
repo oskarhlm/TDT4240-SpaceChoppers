@@ -1,17 +1,18 @@
 package com.mygdx.spacechoppers.model;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
 
-public class Laser {
+public class Laser extends Actor {
 
-    private Vector2 position;
+    private Vector3 position;
     private Vector2 velocity;
     private float initialRotation;
     private final float BASE_VELOCITY = 35;
 
-    public Laser(Vector2 position, float chopperRotation, float rotation) {
+    public Laser(Vector3 position, float chopperRotation, float rotation) {
+        super(1, position);
         this.position = position;
         this.initialRotation = rotation;
         this.velocity = getVelocityFromRotation(chopperRotation);
@@ -29,12 +30,12 @@ public class Laser {
         return this.initialRotation;
     }
 
-    public Vector2 getPosition() {
+    public Vector3 getPosition() {
         return this.position;
     }
 
     public void moveLaser() {
-        position.add(velocity.x, velocity.y);
+        position.add(velocity.x, velocity.y, 0);
     }
 
     public boolean isLaserOutsideOfCamera() {

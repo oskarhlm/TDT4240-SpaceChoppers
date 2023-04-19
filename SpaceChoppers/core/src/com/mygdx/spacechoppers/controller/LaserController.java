@@ -27,7 +27,7 @@ public class LaserController {
         if (this.dt > 1) {
             this.dt = 0;
 
-            Laser laser = new Laser(new Vector2(chopperPos.x, chopperPos.y), chopperRotation, chopperRotation);
+            Laser laser = new Laser(new Vector3(chopperPos.x, chopperPos.y, 0), chopperRotation, chopperRotation);
             LaserView view = new LaserView();
             laserAndViews.put(laser, view);
             // Play laser sound here
