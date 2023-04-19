@@ -13,7 +13,7 @@ public class AsteroidModel extends Actor {
     private final Vector2 direction;
 
     public AsteroidModel(int HP, Vector3 location, Vector2 direction, Float size, Vector2 textureSize, World world) {
-        super(HP, location, textureSize.x, textureSize.y, world, ContactType.ASTEROID);
+        super(HP, location, textureSize, world, ContactType.ASTEROID);
         this.direction = direction;
         this.size = size;
 

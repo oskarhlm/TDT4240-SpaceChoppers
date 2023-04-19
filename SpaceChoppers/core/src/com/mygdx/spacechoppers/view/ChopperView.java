@@ -3,6 +3,7 @@ package com.mygdx.spacechoppers.view;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Timer;
@@ -17,6 +18,8 @@ public class ChopperView implements Disposable {
     private final Sprite sprite;
     private int spriteIndex = 0;
     private final List<Texture> textureList;
+
+    private final int SCALE_FACTOR = 1;
 
 
     public ChopperView() {
@@ -50,12 +53,19 @@ public class ChopperView implements Disposable {
                 sprite.getOriginY(),
                 sprite.getWidth(),
                 sprite.getHeight(),
-                (float) 1, (float) 1, angle-90);
+                (float) SCALE_FACTOR, (float) SCALE_FACTOR, angle-90);
     }
 
     public Sprite getSprite(){
         return sprite;
     }
+
+    public Vector2 getTextureSize() {
+        float width = this.textureList.get(0).getWidth() * SCALE_FACTOR;
+        float height = this.textureList.get(0).getHeight() * SCALE_FACTOR;
+        return new Vector2(width, height);
+    }
+
     @Override
     public void dispose() {}
 }

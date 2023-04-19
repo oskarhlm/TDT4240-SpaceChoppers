@@ -9,12 +9,10 @@ import com.mygdx.spacechoppers.helper.ContactType;
 public class ChopperModel extends Actor{
     private final int speedScaler = 5;
     private Vector2 velocityVector;
-    private Vector2 textureSize;
 
     public ChopperModel(int HP, Vector3 Location, Vector2 textureSize, World world) {
-        super(HP, Location, textureSize.x * 0.5f, textureSize.y * 8f, world, ContactType.CHOPPER);
+        super(HP, Location, textureSize, world, ContactType.CHOPPER);
         velocityVector = new Vector2(0,0);
-        this.textureSize = textureSize;
     }
 
     public float getCurrentAngle() {
@@ -22,4 +20,6 @@ public class ChopperModel extends Actor{
     }
 
     public void setVelocityVector(Vector2 value) { this.velocityVector = value; }
+
+
 }

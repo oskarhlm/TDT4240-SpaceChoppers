@@ -2,7 +2,9 @@ package com.mygdx.spacechoppers.model;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
+import com.mygdx.spacechoppers.helper.ContactType;
 
 public class Laser extends Actor {
 
@@ -12,7 +14,7 @@ public class Laser extends Actor {
     private final float BASE_VELOCITY = 35;
 
     public Laser(Vector3 position, float chopperRotation, float rotation) {
-        super(1, position);
+        super(1, position, new Vector2(), new World(new Vector2(), false), ContactType.ASTEROID);
         this.position = position;
         this.initialRotation = rotation;
         this.velocity = getVelocityFromRotation(chopperRotation);

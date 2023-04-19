@@ -18,13 +18,13 @@ public class ChopperController {
     private final int speedScaler = 5;
 
 
-    public ChopperController(Touchpad touchpad, Vector2 textureSize, World world) {
+    public ChopperController(Touchpad touchpad, World world) {
         this.view = new ChopperView();
         this.touchpad = touchpad;
         this.model = new ChopperModel(100, new Vector3(
                 SpaceChoppersGame.Companion.getWidth() / 2 - view.getSprite().getWidth() / 2,
                 SpaceChoppersGame.Companion.getHeight() / 2 - view.getSprite().getHeight() / 2,
-                100) , textureSize, world);
+                100) , view.getTextureSize(), world);
     }
 
     public void moveChopper(float dt) {
@@ -41,13 +41,19 @@ public class ChopperController {
             float nextXPosition = model.getLocation().x + movementNormalizedX * movementSpeed;
             float nextYPosition = model.getLocation().y + movementNormalizedY * movementSpeed;
 
-            if (nextXPosition >= 0 && nextXPosition <= SpaceChoppersGame.Companion.getMapWidth() - 150) {
+            boolean canMoveInXDirection = nextXPosition >= 0 && nextXPosition <= SpaceChoppersGame.Companion.getMapWidth() - 150;
+            boolean canMoveInYDirection = nextYPosition >= 0 && nextYPosition <= SpaceChoppersGame.Companion.getMapHeight() - 150;
+
+            if (canMoveInXDirection && canMoveInYDirection) {
                 model.getLocation().x = nextXPosition;
-            }
-            if (nextYPosition >= 0 && nextYPosition <= SpaceChoppersGame.Companion.getMapHeight() - 150) {
                 model.getLocation().y = nextYPosition;
+                moveYoBody(nextXPosition, nextYPosition);
             }
         }
+    }
+
+    private void moveYoBody(float nextX, float nextY) {
+        model.moveBody(nextX, nextY);
     }
 
     public ChopperModel getModel() {

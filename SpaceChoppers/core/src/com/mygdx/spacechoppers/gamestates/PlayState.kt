@@ -3,6 +3,8 @@ package com.mygdx.spacechoppers.gamestates
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.math.Matrix4
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -18,10 +20,12 @@ import com.mygdx.spacechoppers.factories.AsteroidFactory
 import com.mygdx.spacechoppers.model.AsteroidTextures
 import com.mygdx.spacechoppers.model.Joystick
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
+import com.mygdx.spacechoppers.helper.Const.PIXELS_TO_METERS
 import com.mygdx.spacechoppers.networking.NetworkClient
 import com.mygdx.spacechoppers.utils.MenuCommon.skin
 import com.mygdx.spacechoppers.utils.Preferences
 import kotlin.random.Random
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 
 
 class PlayState(gsm: GameStateManager) : GameState(gsm) {
@@ -31,11 +35,11 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     val networkClient: NetworkClient = NetworkClient.getInstance()
 
-    // Chopper
-    private val chopperTexture = manager.get("heli_img/Chopper_1.png", Texture::class.java)
-    private val chopperTextureSize = Vector2(chopperTexture.width.toFloat(), chopperTexture.height.toFloat())
+    // Debug renderer
+    private val box2DDebugRenderer = Box2DDebugRenderer()
 
-    private val chopperController = ChopperController(joystick.touchpad, chopperTextureSize, world)
+    // Chopper
+    private val chopperController = ChopperController(joystick.touchpad, world)
 
     // Laser
     private val lasersController = LaserController()
@@ -123,6 +127,11 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         stage.act(Gdx.graphics.deltaTime)
         stage.draw()
+
+        val debugMatrix = Matrix4(cam.combined)
+        debugMatrix.scale(1 / PIXELS_TO_METERS, 1 / PIXELS_TO_METERS, 1f)
+
+        box2DDebugRenderer.render(world, debugMatrix)
 
     }
 
