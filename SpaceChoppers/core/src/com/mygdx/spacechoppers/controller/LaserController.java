@@ -1,11 +1,10 @@
 package com.mygdx.spacechoppers.controller;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.spacechoppers.AssetManager;
-import com.mygdx.spacechoppers.model.Laser;
+import com.mygdx.spacechoppers.model.LaserModel;
 import com.mygdx.spacechoppers.view.LaserView;
 
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.HashMap;
 
 public class LaserController {
 
-    private final HashMap<Laser, LaserView> laserAndViews;
+    private final HashMap<LaserModel, LaserView> laserAndViews;
     private float dt;
 
 
@@ -21,15 +20,15 @@ public class LaserController {
         laserAndViews = new HashMap<>();
     }
 
-    public void fireLasers(float dt, Vector3 chopperPos, float chopperRotation) {
+    public void fireLasers(float dt, Vector3 chopperPos, float chopperRotation, World world) {
         this.dt += dt;
         // Create new laser if certain time has passed
         if (this.dt > 1) {
             this.dt = 0;
 
-            Laser laser = new Laser(new Vector3(chopperPos.x, chopperPos.y, 0), chopperRotation, chopperRotation);
             LaserView view = new LaserView();
-            laserAndViews.put(laser, view);
+            LaserModel laserModel = new LaserModel(new Vector3(chopperPos.x, chopperPos.y, 0), view.getTextureSize(), chopperRotation, chopperRotation, world);
+            laserAndViews.put(laserModel, view);
             // Play laser sound here
             AssetManager.INSTANCE.playLaserSound();
 
@@ -39,29 +38,29 @@ public class LaserController {
     }
 
     private void moveAllLasers() {
-        ArrayList<Laser> lasersToDispose = new ArrayList<>();
-        for (Laser laser : laserAndViews.keySet()) {
-            laser.moveLaser();
+        ArrayList<LaserModel> lasersToDispose = new ArrayList<>();
+        for (LaserModel laserModel : laserAndViews.keySet()) {
+            laserModel.moveLaser();
             // Remove if outside screen
 
-            if (laser.isLaserOutsideOfCamera()) {
-                laserAndViews.get(laser).dispose();
-                lasersToDispose.add(laser);
+            if (laserModel.isLaserOutsideOfCamera()) {
+                laserAndViews.get(laserModel).dispose();
+                lasersToDispose.add(laserModel);
             }
         }
         disposeLasers(lasersToDispose);
     }
 
-    private void disposeLasers(ArrayList<Laser> lasers) {
-        for (Laser laser : lasers) {
-            laserAndViews.remove(laser);
+    private void disposeLasers(ArrayList<LaserModel> laserModels) {
+        for (LaserModel laserModel : laserModels) {
+            laserAndViews.remove(laserModel);
         }
     }
 
     public void draw(SpriteBatch sb) {
-        for (Laser laser : laserAndViews.keySet()) {
-            LaserView correspondingView = laserAndViews.get(laser);
-            correspondingView.draw(sb, laser.getPosition(), laser.getInitialRotation());
+        for (LaserModel laserModel : laserAndViews.keySet()) {
+            LaserView correspondingView = laserAndViews.get(laserModel);
+            correspondingView.draw(sb, laserModel.getPosition(), laserModel.getInitialRotation());
         }
     }
 }

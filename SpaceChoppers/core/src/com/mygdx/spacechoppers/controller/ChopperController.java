@@ -52,8 +52,16 @@ public class ChopperController {
         }
     }
 
+    public Vector2 getTextureSize() {
+        return view.getTextureSize();
+    }
+
+    public Vector3 getPosition() {
+        return model.getLocation();
+    }
+
     private void moveYoBody(float nextX, float nextY) {
-        model.moveBody(nextX, nextY);
+        model.moveBody(nextX, nextY, 0);
     }
 
     public ChopperModel getModel() {

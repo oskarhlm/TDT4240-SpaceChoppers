@@ -2,6 +2,8 @@ package com.mygdx.spacechoppers.model;
 
 import static com.mygdx.spacechoppers.helper.Const.PIXELS_TO_METERS;
 
+import static java.lang.Math.PI;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
@@ -40,11 +42,15 @@ public abstract class Actor implements IActor {
         return new Vector2(xAdjusted, yAdjusted);
     }
 
-    public void moveBody(float xPosition, float yPosition) {
+    public void moveBody(float xPosition, float yPosition, float angle) {
         Vector2 adjustedVector = pixelsToMeters(xPosition, yPosition);
         float xMeters = adjustedVector.x;
         float yMeters = adjustedVector.y;
-        body.setTransform(xMeters, yMeters, 0);
+        body.setTransform(xMeters, yMeters, degreesToRadians(angle));
+    }
+
+    private float degreesToRadians(float angleInDegrees) {
+        return (float) (angleInDegrees * (PI / 180));
     }
 
     @Override

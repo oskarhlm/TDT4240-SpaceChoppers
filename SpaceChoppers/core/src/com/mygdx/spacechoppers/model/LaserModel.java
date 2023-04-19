@@ -4,17 +4,18 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
+import com.mygdx.spacechoppers.helper.Const;
 import com.mygdx.spacechoppers.helper.ContactType;
 
-public class Laser extends Actor {
+public class LaserModel extends Actor {
 
     private Vector3 position;
     private Vector2 velocity;
     private float initialRotation;
     private final float BASE_VELOCITY = 35;
 
-    public Laser(Vector3 position, float chopperRotation, float rotation) {
-        super(1, position, new Vector2(), new World(new Vector2(), false), ContactType.ASTEROID);
+    public LaserModel(Vector3 position, Vector2 textureSize, float chopperRotation, float rotation, World world) {
+        super(1, position, textureSize, world, ContactType.LASER);
         this.position = position;
         this.initialRotation = rotation;
         this.velocity = getVelocityFromRotation(chopperRotation);
@@ -38,6 +39,7 @@ public class Laser extends Actor {
 
     public void moveLaser() {
         position.add(velocity.x, velocity.y, 0);
+        moveBody(position.x, position.y, initialRotation);
     }
 
     public boolean isLaserOutsideOfCamera() {

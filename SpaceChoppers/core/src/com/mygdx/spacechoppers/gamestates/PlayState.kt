@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -95,8 +96,13 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         // Get chopper movement
         chopperController.moveChopper(dt)
 
-        cam.position.set(chopperController.model.location)
-        lasersController.fireLasers(dt, chopperController.model.location, chopperController.model.currentAngle)
+        cam.position.set(chopperController.position)
+
+        val adjustedChopperX = chopperController.position.x - (chopperController.textureSize.x / 2)
+        val adjustedChopperY = chopperController.position.y - (chopperController.textureSize.y / 2)
+
+        val adjustedChopperPos = Vector3(adjustedChopperX, adjustedChopperY, 0f);
+        lasersController.fireLasers(dt, adjustedChopperPos, chopperController.model.currentAngle, world)
 
 
         // Check if asteroids are out of bounds

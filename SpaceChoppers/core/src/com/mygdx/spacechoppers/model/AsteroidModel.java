@@ -16,7 +16,6 @@ public class AsteroidModel extends Actor {
         super(HP, location, textureSize, world, ContactType.ASTEROID);
         this.direction = direction;
         this.size = size;
-
     }
 
     public void moveAsteroid(){
