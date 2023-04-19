@@ -3,10 +3,12 @@ package com.mygdx.spacechoppers.controller;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
 import com.mygdx.spacechoppers.model.ChopperModel;
 import com.mygdx.spacechoppers.view.ChopperView;
+import kotlin.Pair;
 
 public class ChopperController {
 
@@ -16,23 +18,13 @@ public class ChopperController {
     private final int speedScaler = 5;
 
 
-    public ChopperController(Touchpad touchpad) {
+    public ChopperController(Touchpad touchpad, Vector2 textureSize, World world) {
         this.view = new ChopperView();
         this.touchpad = touchpad;
         this.model = new ChopperModel(100, new Vector3(
                 SpaceChoppersGame.Companion.getWidth() / 2 - view.getSprite().getWidth() / 2,
                 SpaceChoppersGame.Companion.getHeight() / 2 - view.getSprite().getHeight() / 2,
-                100));
-
-    // public ChopperController(Touchpad touchpad) {
-    //     this.touchpad = touchpad;
-    //     this.model = new ChopperModel(
-    //             100,
-    //             new Vector3(
-    //                     100,
-    //                     100,
-    //                     0
-    //             ));
+                100) , textureSize, world);
     }
 
     public void moveChopper(float dt) {
