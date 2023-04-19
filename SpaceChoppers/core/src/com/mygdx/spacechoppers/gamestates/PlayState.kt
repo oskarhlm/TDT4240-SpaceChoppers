@@ -4,7 +4,10 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.AssetManager
 import com.mygdx.spacechoppers.GameState
@@ -19,6 +22,10 @@ import com.mygdx.spacechoppers.factories.AsteroidFactory
 import com.mygdx.spacechoppers.model.AsteroidTextures
 import com.mygdx.spacechoppers.model.Explosion
 import com.mygdx.spacechoppers.model.Joystick
+import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
+import com.mygdx.spacechoppers.networking.NetworkClient
+import com.mygdx.spacechoppers.utils.MenuCommon.skin
+import com.mygdx.spacechoppers.utils.Preferences
 import kotlin.random.Random
 
 
@@ -28,14 +35,17 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     // health bar
     private val blank : Texture = AssetManager.manager.get("blank.png", Texture::class.java);
 
+
+    val networkClient: NetworkClient = NetworkClient.getInstance()
+
     // Chopper
     private val chopperController = ChopperController(joystick.touchpad)
 
     // Laser
-    private val lasersController = LaserController();
+    private val lasersController = LaserController()
 
     // Scores
-    private val liveScoresController = LiveScoresController();
+    private val liveScoresController = LiveScoresController(cam)
 
     // Asteroids
     private val asteroidFactory = AsteroidFactory(sb, AsteroidTextures())
@@ -44,8 +54,10 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     // Explosions
     private val explosions = ArrayList<Explosion>()
 
+    private val quitButton = TextButton("Quit", skin)
+
     // Background
-    private val background = BackgroundController(stage);
+    private val background = BackgroundController(stage)
 
 
 
@@ -57,6 +69,24 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         explosions.add(Explosion(100f, 100f, 0f))
         explosions.add(Explosion(100f, 800f, 0f))
+
+        quitButton.setPosition(20f, SpaceChoppersGame.height - quitButton.height - 80f)
+        quitButton.width = quitButton.width * 2 // increase width
+        quitButton.height = quitButton.height * 2 // increase height
+        quitButton.label.setFontScale(2f)
+        quitButton.addListener(object : ClickListener() {
+            override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                networkClient.leaveLobby(Preferences.lobbyID, Preferences.username)
+                gsm.set(MainMenuState(gsm))
+            }
+        })
+        stage.addActor(quitButton)
+
+        SpaceChoppersGame.mapWidth = background.mapWidth
+        SpaceChoppersGame.mapHeight = background.mapHeight
+
+        // Send scores in order to draw on screen on startup
+        networkClient.sendScore(Preferences.lobbyID, Preferences.username, 0)
     }
 
     private fun createAsteroids(num: Int) {
@@ -65,12 +95,12 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         }
     }
 
-    override fun update(delta: Float) {
+    override fun update(dt: Float) {
         // Get chopper movement
-        chopperController.moveChopper(delta)
+        chopperController.moveChopper(dt)
 
         cam.position.set(chopperController.model.location)
-        lasersController.fireLasers(delta, chopperController.model.location, chopperController.model.currentAngle)
+        lasersController.fireLasers(dt, chopperController.model.location, chopperController.model.currentAngle)
 
         // Check if asteroids are out of bounds
         if (asteroids.all { a: AsteroidController -> a.model.isOutOfBounds }) {
@@ -79,8 +109,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         }
 
         asteroids.forEach { asteroidController: AsteroidController -> asteroidController.moveAsteroid() }
-
-        explosions.forEach { exp : Explosion -> exp.update(delta) }
+        explosions.forEach { exp : Explosion -> exp.update(dt) }
 
     }
 
@@ -95,7 +124,6 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         chopperController.draw(sb)
         lasersController.draw(sb)
-        liveScoresController.renderScores(sb)
 
         liveScoresController.renderScores(sb)
         asteroids.forEach{ asteroidController: AsteroidController -> asteroidController.draw() }
@@ -119,7 +147,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         stage.act(Gdx.graphics.deltaTime)
         stage.draw()
-        
+
     }
 
     override fun dispose() {

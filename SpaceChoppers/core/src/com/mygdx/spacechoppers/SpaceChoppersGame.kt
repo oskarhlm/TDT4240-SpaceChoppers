@@ -22,6 +22,9 @@ class SpaceChoppersGame : ApplicationAdapter() {
         const val TITLE = "Space Choppers"
         val width get() = Gdx.graphics.width
         val height get() = Gdx.graphics.height
+
+        var mapWidth: Int = 0
+        var mapHeight: Int = 0
     }
 
     override fun create() {
@@ -36,7 +39,6 @@ class SpaceChoppersGame : ApplicationAdapter() {
 
         // Create music
         AssetManager.setUpMusic()
-
     }
 
     override fun render() {

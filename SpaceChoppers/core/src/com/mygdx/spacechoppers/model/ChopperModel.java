@@ -17,6 +17,4 @@ public class ChopperModel extends Actor{
     }
 
     public void setVelocityVector(Vector2 value) { this.velocityVector = value; }
-
-
 }

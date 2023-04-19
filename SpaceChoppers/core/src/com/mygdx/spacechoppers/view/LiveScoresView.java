@@ -1,21 +1,25 @@
 package com.mygdx.spacechoppers.view;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.spacechoppers.data.networking.Score;
 import com.mygdx.spacechoppers.utils.Preferences;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class LiveScoresView implements Disposable {
 
-    private BitmapFont font;
+    private final BitmapFont font;
+    private final OrthographicCamera cam;
+    private final GlyphLayout glyphLayout;
 
-    public LiveScoresView() {
+    public LiveScoresView(OrthographicCamera cam) {
+        this.cam = cam;
+        glyphLayout = new GlyphLayout();
         font = new BitmapFont();
         font.setColor(Color.WHITE); // set the font color to white
         float scaleFactor = 4.0f; // set the font scale factor to 2.0 (you can adjust this as needed)
@@ -23,21 +27,29 @@ public class LiveScoresView implements Disposable {
 
     }
 
-    public void draw(SpriteBatch sb, List<Score> liveScores, Vector2 position){
-        // Draw each username and score here
-        float x = position.x;
-        float y = position.y;
+    public void draw(SpriteBatch sb, List<Score> liveScores) {
+        // Iterate through the scores and draw them on the screen
+        float x = cam.position.x + cam.viewportWidth / 2;
+        float y = cam.position.y + cam.viewportHeight / 2;
         String username = Preferences.INSTANCE.getUsername();
-
         for (Score userScore : liveScores) {
+            // Get the score text and calculate its width
+            String scoreText = userScore.getUsername() + ": " + userScore.getScore();
+            glyphLayout.setText(font, scoreText);
+            float scoreTextWidth = glyphLayout.width;
+
+            // Calculate the drawing position based on the width of the scoreText
+            float drawX = x - scoreTextWidth;
+
+            // Set the font color based on whether the score belongs to the current user
             if (userScore.getUsername().equals(username)) {
                 font.setColor(Color.LIME);
             } else {
                 font.setColor(Color.WHITE);
             }
-            String text = userScore.getUsername() + ": " + userScore.getScore();
 
-            font.draw(sb, text, x, y);
+            // Draw the score text on the screen
+            font.draw(sb, scoreText, drawX, y);
             y -= 60;
         }
     }
