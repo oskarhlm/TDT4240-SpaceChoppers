@@ -30,16 +30,16 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val joystick =
             Joystick(cam.viewportWidth)
 
-    val networkClient = NetworkClient.getInstance()
+    val networkClient: NetworkClient = NetworkClient.getInstance()
 
     // Chopper
     private val chopperController = ChopperController(joystick.touchpad)
 
     // Laser
-    private val lasersController = LaserController();
+    private val lasersController = LaserController()
 
     // Scores
-    private val liveScoresController = LiveScoresController();
+    private val liveScoresController = LiveScoresController(cam)
 
     // Asteroids
     private val asteroidFactory = AsteroidFactory(sb, AsteroidTextures())
@@ -47,7 +47,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     private val quitButton = TextButton("Quit", skin)
     // Background
-    private val background = BackgroundController(stage);
+    private val background = BackgroundController(stage)
 
     init {
         Gdx.input.inputProcessor = stage
@@ -55,9 +55,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         createAsteroids(3)
 
-        println("Width: " + SpaceChoppersGame.width)
-        println("Height: " + SpaceChoppersGame.height)
-        quitButton.setPosition(20f, SpaceChoppersGame.height - quitButton.height - 60f)
+        quitButton.setPosition(20f, SpaceChoppersGame.height - quitButton.height - 80f)
         quitButton.width = quitButton.width * 2 // increase width
         quitButton.height = quitButton.height * 2 // increase height
         quitButton.label.setFontScale(2f)
@@ -72,9 +70,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         SpaceChoppersGame.mapWidth = background.mapWidth
         SpaceChoppersGame.mapHeight = background.mapHeight
 
-        println("--- HER KOMMER DET -----")
-        println("Width: " + SpaceChoppersGame.mapWidth)
-        println("Height: " + SpaceChoppersGame.mapHeight)
+        // Send scores in order to draw on screen on startup
+        networkClient.sendScore(Preferences.lobbyID, Preferences.username, 0)
     }
 
     private fun createAsteroids(num: Int) {
@@ -83,12 +80,12 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         }
     }
 
-    override fun update(delta: Float) {
+    override fun update(dt: Float) {
         // Get chopper movement
-        chopperController.moveChopper(delta)
+        chopperController.moveChopper(dt)
 
         cam.position.set(chopperController.model.location)
-        lasersController.fireLasers(delta, chopperController.model.location, chopperController.model.currentAngle)
+        lasersController.fireLasers(dt, chopperController.model.location, chopperController.model.currentAngle)
 
 
         // Check if asteroids are out of bounds
@@ -111,7 +108,6 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         chopperController.draw(sb)
         lasersController.draw(sb)
-        liveScoresController.renderScores(sb)
 
         liveScoresController.renderScores(sb)
         asteroids.forEach{ asteroidController: AsteroidController -> asteroidController.draw() }
