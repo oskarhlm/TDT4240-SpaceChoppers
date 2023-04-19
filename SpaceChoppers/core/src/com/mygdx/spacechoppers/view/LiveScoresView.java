@@ -29,8 +29,8 @@ public class LiveScoresView implements Disposable {
 
     public void draw(SpriteBatch sb, List<Score> liveScores) {
         // Iterate through the scores and draw them on the screen
-        float x = cam.position.x + cam.viewportWidth / 2;
-        float y = cam.position.y + cam.viewportHeight / 2;
+        float x = cam.position.x + cam.viewportWidth / 2 - 60;
+        float y = cam.position.y + cam.viewportHeight / 2 - 60;
         String username = Preferences.INSTANCE.getUsername();
         for (Score userScore : liveScores) {
             // Get the score text and calculate its width

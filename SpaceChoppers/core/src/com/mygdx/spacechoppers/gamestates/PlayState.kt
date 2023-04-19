@@ -35,7 +35,6 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     // health bar
     private val blank : Texture = AssetManager.manager.get("blank.png", Texture::class.java);
 
-
     val networkClient: NetworkClient = NetworkClient.getInstance()
 
     // Chopper
@@ -139,8 +138,11 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
             sb.setColor(Color.RED);
         }
 
-        sb.draw(blank, 0F, 0F, SpaceChoppersGame.width * (chopperController.model.hitPoints / 100f), 10F)
-        //sb.draw(blank, chopperController.model.location.x - 200, chopperController.model.location.y - 200, 500 * (chopperController.model.hitPoints / 100f), 10F)
+        sb.draw(blank,
+                cam.position.x - cam.viewportWidth / 2,
+                cam.position.y + cam.viewportHeight / 2 - 20F,
+                SpaceChoppersGame.width * (chopperController.model.hitPoints / 100f),
+                20F)
         sb.setColor(Color.WHITE);
 
         sb.end()
