@@ -53,7 +53,6 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
-        api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     }
 }
 
@@ -62,6 +61,7 @@ project(":core") {
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion" // add this line
         api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
         implementation 'org.java-websocket:Java-WebSocket:1.5.3'
         implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
@@ -69,5 +69,8 @@ project(":core") {
         implementation 'com.fasterxml.jackson.core:jackson-core:2.13.0'
         implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
         implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.0'
+        testImplementation 'junit:junit:4.13.2'
+        testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     }
 }
