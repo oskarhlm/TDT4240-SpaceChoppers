@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.AssetManager
@@ -100,10 +99,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         liveScoresController.renderScores(sb)
         asteroids.forEach{ asteroidController: AsteroidController -> asteroidController.draw() }
-        explosions.forEach { explosion: Explosion -> explosion.render(sb) }
+        explosions.forEach { explosion: Explosion -> explosion.draw(sb) }
 
         // Health Bar
-
         if (chopperController.model.hitPoints > 75){
             sb.setColor(Color.GREEN);
         }
@@ -114,6 +112,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         }
 
         sb.draw(blank, 0F, 0F, SpaceChoppersGame.width * (chopperController.model.hitPoints / 100f), 10F)
+        //sb.draw(blank, chopperController.model.location.x - 200, chopperController.model.location.y - 200, 500 * (chopperController.model.hitPoints / 100f), 10F)
         sb.setColor(Color.WHITE);
 
         sb.end()
