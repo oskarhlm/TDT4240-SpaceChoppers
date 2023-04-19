@@ -2,19 +2,18 @@ package com.mygdx.spacechoppers.gamestates
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.InputEvent
+import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.viewport.FitViewport
+import com.mygdx.spacechoppers.AssetManager.manager
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.SpaceChoppersGame
-import com.mygdx.spacechoppers.controller.AsteroidController
-import com.mygdx.spacechoppers.controller.BackgroundController
-import com.mygdx.spacechoppers.controller.ChopperController
-import com.mygdx.spacechoppers.controller.LaserController
-import com.mygdx.spacechoppers.controller.LiveScoresController
+import com.mygdx.spacechoppers.controller.*
 import com.mygdx.spacechoppers.factories.AsteroidFactory
 import com.mygdx.spacechoppers.model.AsteroidTextures
 import com.mygdx.spacechoppers.model.Joystick
@@ -27,13 +26,16 @@ import kotlin.random.Random
 
 class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
-    private val joystick =
-            Joystick(cam.viewportWidth)
+    private val joystick = Joystick(cam.viewportWidth)
+    private val world = World(Vector2(0f,0f), false)
 
     val networkClient: NetworkClient = NetworkClient.getInstance()
 
     // Chopper
-    private val chopperController = ChopperController(joystick.touchpad)
+    private val chopperTexture = manager.get("heli_img/Chopper_1.png", Texture::class.java)
+    private val chopperTextureSize = Vector2(chopperTexture.width.toFloat(), chopperTexture.height.toFloat())
+
+    private val chopperController = ChopperController(joystick.touchpad, chopperTextureSize, world)
 
     // Laser
     private val lasersController = LaserController()
@@ -42,7 +44,12 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val liveScoresController = LiveScoresController(cam)
 
     // Asteroids
-    private val asteroidFactory = AsteroidFactory(sb, AsteroidTextures())
+    private val asteroidTextureSize = with(manager.get("asteroid-sheet.png",
+        Texture::class.java)) {
+        Pair(width / 4, height / 4)
+    }
+
+    private val asteroidFactory = AsteroidFactory(sb, AsteroidTextures(), world)
     private val asteroids = ArrayList<AsteroidController>()
 
     private val quitButton = TextButton("Quit", skin)

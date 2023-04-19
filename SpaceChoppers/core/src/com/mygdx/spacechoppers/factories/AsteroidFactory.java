@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
 import com.mygdx.spacechoppers.controller.AsteroidController;
 import com.mygdx.spacechoppers.model.AsteroidConfiguration;
@@ -19,19 +20,22 @@ public class AsteroidFactory {
     private final int speedMultiplier;
     private final int velocityX;
     private final int velocityY;
+    private final World world;
 
-    public AsteroidFactory(SpriteBatch sb, AsteroidTextures asteroidTextures){
+    public AsteroidFactory(SpriteBatch sb, AsteroidTextures asteroidTextures, World world){
         this.sb = sb;
         this.asteroidTextures = asteroidTextures;
         this.rand = new Random();
         this.velocityX = rand.nextInt(10);
         this.velocityY = rand.nextInt(10);
         this.speedMultiplier = 1;
+        this.world = world;
     }
 
     public AsteroidController create(){
+        Vector2 textureSize = new Vector2(asteroidTextures.getRandomAsteroidTexture().getRegionWidth(), asteroidTextures.getRandomAsteroidTexture().getRegionHeight());
         AsteroidConfiguration config = generateRandomConfiguration();
-        return new AsteroidController(sb, config);
+        return new AsteroidController(sb, config, textureSize, world);
     }
 
     public AsteroidConfiguration generateRandomConfiguration(){
