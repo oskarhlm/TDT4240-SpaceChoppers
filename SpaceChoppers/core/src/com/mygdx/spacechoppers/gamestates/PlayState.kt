@@ -74,29 +74,23 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
             }
         })
 
-        var boostEnabled = true
         boostButton =
-            if (boostEnabled) ImageButton(TextureRegionDrawable(AssetManager.boostButtonActive))
-            else ImageButton(TextureRegionDrawable(AssetManager.boostButtonInactive))
+            if (chopperController.isBoostIsAvailable) AssetManager.boostButtonActive
+            else AssetManager.boostButtonInactive
         boostButton.setPosition(boostButton.width / 2, 160f)
         boostButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
                 chopperController.boost();
-                boostEnabled = false
             }
         })
 
-        var rapidFireEnabled = false
         rapidFireButton =
-            if (rapidFireEnabled) ImageButton(TextureRegionDrawable(AssetManager.rapidFireButtonActive))
-            else ImageButton(TextureRegionDrawable(AssetManager.rapidFireButtonInactive))
-        rapidFireButton.setPosition(
-            SpaceChoppersGame.width - rapidFireButton.width * 1.5f, 160f
-        )
+            if (lasersController.isRapidFireEnabled) AssetManager.rapidFireButtonActive
+            else AssetManager.rapidFireButtonInactive
+        rapidFireButton.setPosition(SpaceChoppersGame.width - rapidFireButton.width * 1.5f, 160f)
         rapidFireButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
                 lasersController.rapidFire()
-                rapidFireEnabled = false
             }
         })
 

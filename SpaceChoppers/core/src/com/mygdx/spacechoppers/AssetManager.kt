@@ -3,7 +3,9 @@ package com.mygdx.spacechoppers
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 
 object AssetManager {
     val manager = com.badlogic.gdx.assets.AssetManager()
@@ -64,10 +66,14 @@ object AssetManager {
     val blank get() = manager.get<Texture>(BLANK)
     val asteroidSheet get() = manager.get<Texture>(ASTEROID_SHEET)
     val laserTexture get() = manager.get<Texture>(LASER)
-    val boostButtonActive get() = manager.get<Texture>(BOOST_BTN_ACTIVE)
-    val boostButtonInactive get() = manager.get<Texture>(BOOST_BTN_INACTIVE)
-    val rapidFireButtonActive get() = manager.get<Texture>(RAPID_FIRE_BTN_ACTIVE)
-    val rapidFireButtonInactive get() = manager.get<Texture>(RAPID_FIRE_BTN_INACTIVE)
+    val boostButtonActive
+        get() = ImageButton(TextureRegionDrawable(manager.get<Texture>(BOOST_BTN_ACTIVE)))
+    val boostButtonInactive
+        get() = ImageButton(TextureRegionDrawable(manager.get<Texture>(BOOST_BTN_INACTIVE)))
+    val rapidFireButtonActive
+        get() = ImageButton(TextureRegionDrawable(manager.get<Texture>(RAPID_FIRE_BTN_ACTIVE)))
+    val rapidFireButtonInactive
+        get() = ImageButton(TextureRegionDrawable(manager.get<Texture>(RAPID_FIRE_BTN_INACTIVE)))
 
     // Music
     private val backgroundMusic: Music get() = manager.get<Music>(BG_MUSIC)

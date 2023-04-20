@@ -16,9 +16,11 @@ public class LaserController {
 
     private final HashMap<Laser, LaserView> laserAndViews;
     private float dt;
-    private int fireRate = 1;
-    private final Timer timer = new Timer();
+    private float initialFireRate = 1;
+    private float fireRate = initialFireRate;
     private boolean rapidFireEnabled = true;
+    private float maxFireRate = 8;
+    private float rapidFireDuration;
 
     public LaserController() {
         laserAndViews = new HashMap<>();
@@ -68,24 +70,19 @@ public class LaserController {
         }
     }
 
-    public void rapidFire(){
-        fireRate = 10;
+    public void rapidFire() {
+        fireRate = maxFireRate;
         rapidFireEnabled = false;
-        Timer.Task task = new Timer.Task() {
-            float dt = 0;
+        Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                this.dt += 0.1F;
-                if (this.dt > 10) {
-                    fireRate = 1;
-                    rapidFireEnabled = true;
-                    cancel();
-                }
+                fireRate = initialFireRate;
+                rapidFireEnabled = true;
+
             }
-        };
-        timer.scheduleTask(task, 0, 0.1F);
+        }, 10);
     }
-    
+
     public boolean isRapidFireEnabled() {
         return rapidFireEnabled;
     }
