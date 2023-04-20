@@ -27,13 +27,9 @@ import com.mygdx.spacechoppers.controller.ChopperController
 import com.mygdx.spacechoppers.controller.HealthBarController
 import com.mygdx.spacechoppers.controller.LaserController
 import com.mygdx.spacechoppers.controller.LiveScoresController
-import com.mygdx.spacechoppers.factories.AsteroidFactory
-import com.mygdx.spacechoppers.model.AsteroidTextures
 import com.mygdx.spacechoppers.model.Explosion
-import com.mygdx.spacechoppers.model.Joystick
 
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
-import com.mygdx.spacechoppers.helper.Const.PIXELS_TO_METERS
 import com.mygdx.spacechoppers.model.Joystick
 import com.mygdx.spacechoppers.networking.NetworkClient
 import com.mygdx.spacechoppers.utils.MenuCommon.skin
@@ -130,7 +126,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
 
         // Draw background
-        background.draw(sb)
+        backgroundController.draw(sb)
 
         // Draw lasers
         lasersController.draw(sb)
