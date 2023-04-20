@@ -88,8 +88,7 @@ class MainMenuState(gsm: GameStateManager) : MenuBase(gsm) {
 
         // Override default background
         background = TextureRegion(
-            AssetManager.manager.get("menu_bg.png", Texture::class.java),
-            0, 0, SpaceChoppersGame.width, SpaceChoppersGame.height
+            AssetManager.manager.get("menu_bg.png", Texture::class.java)
         )
 
         // Add buttons to table

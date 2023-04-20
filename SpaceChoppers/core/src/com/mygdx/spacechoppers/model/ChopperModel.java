@@ -13,6 +13,7 @@ public class ChopperModel extends Actor{
 
     public ChopperModel(int HP, Vector3 Location, Vector2 textureSize, World world) {
         super(HP, Location, textureSize, world);
+
         velocityVector = new Vector2(0,0);
     }
 

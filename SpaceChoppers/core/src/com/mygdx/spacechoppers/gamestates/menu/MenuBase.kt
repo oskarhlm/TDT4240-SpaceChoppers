@@ -11,13 +11,13 @@ import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.SpaceChoppersGame
 import com.mygdx.spacechoppers.utils.MenuCommon
+import kotlin.math.min
 
 abstract class MenuBase(gsm: GameStateManager) : GameState(gsm) {
     protected val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
     protected val skin = MenuCommon.skin
     protected var background = TextureRegion(
-        AssetManager.manager.get("menu_bg_clean.png", Texture::class.java),
-        0, 0, SpaceChoppersGame.width, SpaceChoppersGame.height
+        AssetManager.manager.get("menu_bg_clean.png", Texture::class.java)
     )
 
     init {
@@ -34,7 +34,7 @@ abstract class MenuBase(gsm: GameStateManager) : GameState(gsm) {
         sb.draw(background, 0f, 0f)
         sb.end()
 
-        stage.act(Math.min(delta, 1 / 30f))
+        stage.act(min(delta, 1 / 30f))
         stage.draw()
     }
 

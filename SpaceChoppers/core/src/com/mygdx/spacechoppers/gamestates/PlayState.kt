@@ -18,7 +18,20 @@ import com.mygdx.spacechoppers.GameContactListener
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.SpaceChoppersGame
+
 import com.mygdx.spacechoppers.controller.*
+
+import com.mygdx.spacechoppers.controller.AsteroidController
+import com.mygdx.spacechoppers.controller.BackgroundController
+import com.mygdx.spacechoppers.controller.ChopperController
+import com.mygdx.spacechoppers.controller.HealthBarController
+import com.mygdx.spacechoppers.controller.LaserController
+import com.mygdx.spacechoppers.controller.LiveScoresController
+import com.mygdx.spacechoppers.factories.AsteroidFactory
+import com.mygdx.spacechoppers.model.AsteroidTextures
+import com.mygdx.spacechoppers.model.Explosion
+import com.mygdx.spacechoppers.model.Joystick
+
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
 import com.mygdx.spacechoppers.helper.Const.PIXELS_TO_METERS
 import com.mygdx.spacechoppers.model.Joystick
@@ -30,6 +43,7 @@ import com.mygdx.spacechoppers.utils.Preferences
 class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
     private val joystick = Joystick(cam.viewportWidth)
+
     private val world = World(Vector2(0f,0f), false)
 
     val networkClient: NetworkClient = NetworkClient.getInstance()
@@ -44,18 +58,19 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val chopperController = ChopperController(joystick.touchpad, world)
 
     // Laser
-    private val lasersController = LaserController()
 
-    // Scores
+    private val lasersController = LaserController()
     private val liveScoresController = LiveScoresController(cam)
+    private val backgroundController = BackgroundController(stage)
 
     // Asteroids
     private val asteroidsController = AsteroidController.getInstance();
 
 
+    // Explosions
+    private val explosions = ArrayList<Explosion>()
+
     private val quitButton = TextButton("Quit", skin)
-    // Background
-    private val background = BackgroundController(stage)
 
     init {
         Gdx.input.inputProcessor = stage
@@ -63,6 +78,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         // Set contact listener for the world of bodies
         world.setContactListener(gameContactListener)
+
+        explosions.add(Explosion(100f, 100f, 0f)) // TODO: Delete these later
+        explosions.add(Explosion(100f, 800f, 0f)) // TODO: Delete these later
 
         quitButton.setPosition(20f, SpaceChoppersGame.height - quitButton.height - 80f)
         quitButton.width = quitButton.width * 2 // increase width
@@ -76,8 +94,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         })
         stage.addActor(quitButton)
 
-        SpaceChoppersGame.mapWidth = background.mapWidth
-        SpaceChoppersGame.mapHeight = background.mapHeight
+        SpaceChoppersGame.mapWidth = backgroundController.mapWidth
+        SpaceChoppersGame.mapHeight = backgroundController.mapHeight
 
         // Send scores in order to draw on screen on startup
         networkClient.sendScore(Preferences.lobbyID, Preferences.username, 0)
@@ -89,6 +107,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         // Move chopper
         chopperController.moveChopper(dt)
 
+
         // Move camera
         cam.position.set(chopperController.position)
 
@@ -97,6 +116,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         
         // Spawn and move asteroids
         asteroidsController.spawnAndMoveAsteroids(dt, world, cam);
+
     }
 
     override fun render(delta: Float) {
@@ -107,6 +127,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
 
         sb.begin()
+
 
         // Draw background
         background.draw(sb)
@@ -123,12 +144,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         // Draw scores
         liveScoresController.renderScores(sb)
 
-
         sb.end()
         stage.act(Gdx.graphics.deltaTime)
         stage.draw()
-
-        // Draw 2d physics boxes for all bodies
 
     }
 
