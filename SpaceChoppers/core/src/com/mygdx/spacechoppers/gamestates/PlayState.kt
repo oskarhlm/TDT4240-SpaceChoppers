@@ -74,7 +74,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
             }
         })
 
-        val boostEnabled = true
+        var boostEnabled = true
         boostButton =
             if (boostEnabled) ImageButton(TextureRegionDrawable(AssetManager.boostButtonActive))
             else ImageButton(TextureRegionDrawable(AssetManager.boostButtonInactive))
@@ -82,10 +82,11 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         boostButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
                 chopperController.boost();
+                boostEnabled = false
             }
         })
 
-        val rapidFireEnabled = false
+        var rapidFireEnabled = false
         rapidFireButton =
             if (rapidFireEnabled) ImageButton(TextureRegionDrawable(AssetManager.rapidFireButtonActive))
             else ImageButton(TextureRegionDrawable(AssetManager.rapidFireButtonInactive))
@@ -94,7 +95,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         )
         rapidFireButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
-                //TODO: Boost
+                lasersController.rapidFire()
+                rapidFireEnabled = false
             }
         })
 

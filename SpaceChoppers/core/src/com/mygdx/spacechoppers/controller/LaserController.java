@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.spacechoppers.AssetManager;
 import com.mygdx.spacechoppers.model.Laser;
 import com.mygdx.spacechoppers.view.LaserView;
@@ -15,7 +16,9 @@ public class LaserController {
 
     private final HashMap<Laser, LaserView> laserAndViews;
     private float dt;
-
+    private int fireRate = 1;
+    private final Timer timer = new Timer();
+    private boolean rapidFireEnabled = true;
 
     public LaserController() {
         laserAndViews = new HashMap<>();
@@ -24,7 +27,7 @@ public class LaserController {
     public void fireLasers(float dt, Vector3 chopperPos, float chopperRotation) {
         this.dt += dt;
         // Create new laser if certain time has passed
-        if (this.dt > 1) {
+        if (this.dt > 1 / fireRate) {
             this.dt = 0;
 
             Laser laser = new Laser(new Vector2(chopperPos.x, chopperPos.y), chopperRotation, chopperRotation);
@@ -63,5 +66,27 @@ public class LaserController {
             LaserView correspondingView = laserAndViews.get(laser);
             correspondingView.draw(sb, laser.getPosition(), laser.getInitialRotation());
         }
+    }
+
+    public void rapidFire(){
+        fireRate = 10;
+        rapidFireEnabled = false;
+        Timer.Task task = new Timer.Task() {
+            float dt = 0;
+            @Override
+            public void run() {
+                this.dt += 0.1F;
+                if (this.dt > 10) {
+                    fireRate = 1;
+                    rapidFireEnabled = true;
+                    cancel();
+                }
+            }
+        };
+        timer.scheduleTask(task, 0, 0.1F);
+    }
+    
+    public boolean isRapidFireEnabled() {
+        return rapidFireEnabled;
     }
 }
