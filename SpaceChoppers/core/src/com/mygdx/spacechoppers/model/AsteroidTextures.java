@@ -23,7 +23,6 @@ public class AsteroidTextures implements Disposable {
         this.random = new Random();
         initialize();
     }
-
     private void initialize() {
         int singleTextureWidth = allAsteroidsTexture.getWidth() / numColumns;
         int singleTextureHeight = allAsteroidsTexture.getHeight() / numRows;

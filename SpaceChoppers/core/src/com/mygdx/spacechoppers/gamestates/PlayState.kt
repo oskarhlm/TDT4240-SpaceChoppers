@@ -1,12 +1,13 @@
 package com.mygdx.spacechoppers.gamestates
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.AssetManager
 import com.mygdx.spacechoppers.GameState
@@ -50,8 +51,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     // Buttons
     private val quitButton = TextButton("Quit", AssetManager.menuSkin)
-    private val boostButton = TextButton("Boost", AssetManager.menuSkin)
-    private val rapidFireButton = TextButton("Fire", AssetManager.menuSkin)
+    private var boostButton: ImageButton
+    private var rapidFireButton: ImageButton
 
     init {
         Gdx.input.inputProcessor = stage
@@ -63,8 +64,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         explosions.add(Explosion(100f, 800f, 0f)) // TODO: Delete these later
 
         quitButton.setPosition(20f, SpaceChoppersGame.height - quitButton.height - 80f)
-        quitButton.width = quitButton.width * 2 // increase width
-        quitButton.height = quitButton.height * 2 // increase height
+        quitButton.width *= 2 // increase width
+        quitButton.height *= 2 // increase height
         quitButton.label.setFontScale(2f)
         quitButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
@@ -73,20 +74,24 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
             }
         })
 
-        boostButton.setPosition(20f, 80f)
-        boostButton.width = boostButton.width * 2 // increase width
-        boostButton.height = boostButton.height * 2 // increase height
-        boostButton.label.setFontScale(2f)
+        val boostEnabled = true
+        boostButton =
+            if (boostEnabled) ImageButton(TextureRegionDrawable(AssetManager.boostButtonActive))
+            else ImageButton(TextureRegionDrawable(AssetManager.boostButtonInactive))
+        boostButton.setPosition(boostButton.width / 2, 160f)
         boostButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
                 //TODO: Boost
             }
         })
 
-        rapidFireButton.setPosition(100f, 80f)
-        rapidFireButton.width = rapidFireButton.width * 2 // increase width
-        rapidFireButton.height = rapidFireButton.height * 2 // increase height
-        rapidFireButton.label.setFontScale(2f)
+        val rapidFireEnabled = false
+        rapidFireButton =
+            if (rapidFireEnabled) ImageButton(TextureRegionDrawable(AssetManager.rapidFireButtonActive))
+            else ImageButton(TextureRegionDrawable(AssetManager.rapidFireButtonInactive))
+        rapidFireButton.setPosition(
+            SpaceChoppersGame.width - rapidFireButton.width * 1.5f, 160f
+        )
         rapidFireButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
                 //TODO: Boost
@@ -115,7 +120,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         chopperController.moveChopper(dt)
 
         cam.position.set(chopperController.model.location)
-        lasersController.fireLasers(dt, chopperController.model.location, chopperController.model.currentAngle)
+        lasersController.fireLasers(
+            dt, chopperController.model.location, chopperController.model.currentAngle
+        )
 
         // Check if asteroids are out of bounds
         if (asteroids.all { a: AsteroidController -> a.model.isOutOfBounds }) {
@@ -124,7 +131,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         }
 
         asteroids.forEach { asteroidController: AsteroidController -> asteroidController.moveAsteroid() }
-        explosions.forEach { exp : Explosion -> exp.update(dt) }
+        explosions.forEach { exp: Explosion -> exp.update(dt) }
 
     }
 
@@ -139,7 +146,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         chopperController.draw(sb)
         lasersController.draw(sb)
         liveScoresController.renderScores(sb)
-        asteroids.forEach{ asteroid: AsteroidController -> asteroid.draw() }
+        asteroids.forEach { asteroid: AsteroidController -> asteroid.draw() }
         explosions.forEach { explosion: Explosion -> explosion.draw(sb) }
         healthBarController.draw(sb, chopperController.model.hitPoints)
         sb.end()

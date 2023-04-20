@@ -24,6 +24,10 @@ object AssetManager {
     private const val LASER = "green_laser.png"
     private const val MENU_SKIN = "star-soldier/star-soldier-ui.json"
     private const val JOYSTICK_SKIN = "quantum-horizon/skin/quantum-horizon-ui.json"
+    private const val BOOST_BTN_ACTIVE = "button/Boost_Active.png"
+    private const val BOOST_BTN_INACTIVE = "button/Boost_Inactive.png"
+    private const val RAPID_FIRE_BTN_ACTIVE = "button/RapidFire_Active.png"
+    private const val RAPID_FIRE_BTN_INACTIVE = "button/RapidFire_Inactive.png"
 
     private val HELI_IMAGES = listOf(HELI_IMG_1, HELI_IMG_2, HELI_IMG_3, HELI_IMG_4)
 
@@ -40,6 +44,10 @@ object AssetManager {
         manager.load(EXPLOSION, Texture::class.java)
         manager.load(BLANK, Texture::class.java)
         manager.load(LASER, Texture::class.java)
+        manager.load(BOOST_BTN_ACTIVE, Texture::class.java)
+        manager.load(BOOST_BTN_INACTIVE, Texture::class.java)
+        manager.load(RAPID_FIRE_BTN_ACTIVE, Texture::class.java)
+        manager.load(RAPID_FIRE_BTN_INACTIVE, Texture::class.java)
 
         // Skins
         manager.load(MENU_SKIN, Skin::class.java)
@@ -56,6 +64,10 @@ object AssetManager {
     val blank get() = manager.get<Texture>(BLANK)
     val asteroidSheet get() = manager.get<Texture>(ASTEROID_SHEET)
     val laserTexture get() = manager.get<Texture>(LASER)
+    val boostButtonActive get() = manager.get<Texture>(BOOST_BTN_ACTIVE)
+    val boostButtonInactive get() = manager.get<Texture>(BOOST_BTN_INACTIVE)
+    val rapidFireButtonActive get() = manager.get<Texture>(RAPID_FIRE_BTN_ACTIVE)
+    val rapidFireButtonInactive get() = manager.get<Texture>(RAPID_FIRE_BTN_INACTIVE)
 
     // Music
     private val backgroundMusic: Music get() = manager.get<Music>(BG_MUSIC)

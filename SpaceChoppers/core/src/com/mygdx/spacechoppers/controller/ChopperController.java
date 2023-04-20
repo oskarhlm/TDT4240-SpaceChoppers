@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
 import com.mygdx.spacechoppers.model.ChopperModel;
 import com.mygdx.spacechoppers.view.ChopperView;
@@ -13,8 +14,13 @@ public class ChopperController {
     private final ChopperModel model;
     private final ChopperView view;
     private Touchpad touchpad;
-    private final int speedScaler = 5;
-
+    private final float initialSpeedScaler = 5;
+    private float speedScaler = initialSpeedScaler;
+    private boolean boostIsAvailible = true;
+    private boolean boostEnabled = false;
+    private final float boostMutliplier = 3;
+    private float boostDurationSeconds = 0;
+    private final float maxBoostDurationSeconds = 10;
 
     public ChopperController(Touchpad touchpad) {
         this.view = new ChopperView();
@@ -26,6 +32,8 @@ public class ChopperController {
     }
 
     public void moveChopper(float dt) {
+        if (boostEnabled) addSpeedBoost(dt);
+        System.out.println(speedScaler);
         float deltaX = touchpad.getKnobPercentX();
         float deltaY = touchpad.getKnobPercentY();
         float movementMagnitude = (float) Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)) * speedScaler;
@@ -56,4 +64,27 @@ public class ChopperController {
         view.draw(sb, model);
     }
 
+
+    private void addSpeedBoost(float dt) {
+        speedScaler *= (1 - boostDurationSeconds / maxBoostDurationSeconds) * boostMutliplier;
+        boostDurationSeconds += dt;
+        if (boostDurationSeconds > 10) {
+            boostDurationSeconds = 0;
+            boostEnabled = false;
+            speedScaler = initialSpeedScaler;
+        }
+    }
+
+    public void enableBoost() {
+        boostEnabled = true;
+        boostIsAvailible = false;
+    }
+
+    public void makeBoostAvailible() {
+        boostIsAvailible = true;
+    }
+
+    public boolean isBoostIsAvailible() {
+        return boostIsAvailible;
+    }
 }
