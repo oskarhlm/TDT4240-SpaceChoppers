@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.viewport.FitViewport
+import com.mygdx.spacechoppers.AssetManager
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.SpaceChoppersGame
@@ -22,7 +23,6 @@ import com.mygdx.spacechoppers.model.Explosion
 import com.mygdx.spacechoppers.model.Joystick
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
 import com.mygdx.spacechoppers.networking.NetworkClient
-import com.mygdx.spacechoppers.utils.MenuCommon.skin
 import com.mygdx.spacechoppers.utils.Preferences
 import kotlin.random.Random
 
@@ -47,7 +47,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     // Explosions
     private val explosions = ArrayList<Explosion>()
 
-    private val quitButton = TextButton("Quit", skin)
+    private val quitButton = TextButton("Quit", AssetManager.menuSkin)
 
     init {
         Gdx.input.inputProcessor = stage

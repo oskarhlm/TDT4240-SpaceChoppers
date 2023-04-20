@@ -21,6 +21,7 @@ object AssetManager {
     private const val MENU_BG_CLEAN = "menu_bg_clean.png"
     private const val EXPLOSION = "explosion.png"
     private const val BLANK = "blank.png"
+    private const val LASER = "green_laser.png"
     private const val MENU_SKIN = "star-soldier/star-soldier-ui.json"
     private const val JOYSTICK_SKIN = "quantum-horizon/skin/quantum-horizon-ui.json"
 
@@ -38,6 +39,7 @@ object AssetManager {
         manager.load(MENU_BG_CLEAN, Texture::class.java)
         manager.load(EXPLOSION, Texture::class.java)
         manager.load(BLANK, Texture::class.java)
+        manager.load(LASER, Texture::class.java)
 
         // Skins
         manager.load(MENU_SKIN, Skin::class.java)
@@ -46,16 +48,22 @@ object AssetManager {
         manager.finishLoading()
     }
 
-    val music get() = manager.get<Music>(BG_MUSIC)
-    val heliSprites get() = HELI_IMAGES.map { manager.get<Texture>(it) }
+    // Textures
+    val heliTextures get() = HELI_IMAGES.map { manager.get<Texture>(it) }
     val menuBackground get() = manager.get<Texture>(MENU_BG)
     val menuBackgroundClean get() = manager.get<Texture>(MENU_BG_CLEAN)
     val explosion get() = manager.get<Texture>(EXPLOSION)
     val blank get() = manager.get<Texture>(BLANK)
+    val asteroidSheet get() = manager.get<Texture>(ASTEROID_SHEET)
+    val laserTexture get() = manager.get<Texture>(LASER)
+
+    // Music
+    private val backgroundMusic: Music get() = manager.get<Music>(BG_MUSIC)
+    private val laserSound: Music get() = manager.get<Music>(LASER_SOUND)
+
+    // Skins
     val menuSkin get() = manager.get<Skin>(MENU_SKIN)
     val joystickSkin get() = manager.get<Skin>(JOYSTICK_SKIN)
-
-    private val backgroundMusic = music
 
     fun playMusic() {
         backgroundMusic.isLooping = true

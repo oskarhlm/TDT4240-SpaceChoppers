@@ -9,9 +9,6 @@ import com.mygdx.spacechoppers.gamestates.menu.OptionsState
 import com.mygdx.spacechoppers.utils.Preferences
 import com.mygdx.spacechoppers.networking.NetworkClient
 
-import com.mygdx.spacechoppers.utils.MenuCommon
-
-
 class SpaceChoppersGame : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
         private set
@@ -35,8 +32,7 @@ class SpaceChoppersGame : ApplicationAdapter() {
 
         // Create network handler and fetch highscores
         val networkClient = NetworkClient.getInstance()
-        networkClient.getHighscores();
-
+        networkClient.getHighscores()
         // Play music
         Preferences.musicEnabled.let { AssetManager.playMusic() }
     }
@@ -50,7 +46,7 @@ class SpaceChoppersGame : ApplicationAdapter() {
     override fun dispose() {
         println("Closed game")
         sb.dispose()
-        MenuCommon.skin.dispose()
+        //MenuCommon.skin.dispose()
         AssetManager.manager.dispose()
     }
 }

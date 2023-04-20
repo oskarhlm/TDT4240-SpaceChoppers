@@ -7,12 +7,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 
 public class AsteroidView implements Disposable {
-
-    private final TextureRegion texture;
     private final Sprite sprite;
 
     public AsteroidView(TextureRegion texture){
-        this.texture = texture;
         this.sprite = new Sprite(texture);
     }
 

@@ -7,10 +7,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.spacechoppers.AssetManager;
-import com.mygdx.spacechoppers.SpaceChoppersGame;
 import com.mygdx.spacechoppers.model.ChopperModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChopperView implements Disposable {
@@ -18,9 +16,8 @@ public class ChopperView implements Disposable {
     private int spriteIndex = 0;
     private final List<Texture> textureList;
 
-
     public ChopperView() {
-        this.textureList = AssetManager.INSTANCE.getHeliSprites();
+        this.textureList = AssetManager.INSTANCE.getHeliTextures();
         Texture currentTexture = textureList.get(spriteIndex);
         this.sprite = new Sprite(currentTexture);
 
