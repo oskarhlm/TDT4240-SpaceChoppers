@@ -65,7 +65,30 @@ public class GameContactListener implements ContactListener {
             }
         }
 
+        boolean isAsteroidChopperCollision = classA == AsteroidModel.class && classB == ChopperModel.class;
+        boolean isChopperAsteroidCollision = classA == ChopperModel.class && classB == AsteroidModel.class;
 
+        if (isAsteroidChopperCollision) {
+            // Cast models
+            AsteroidModel asteroid = (AsteroidModel) a.getBody().getUserData();
+            ChopperModel chopper = (ChopperModel) b.getBody().getUserData();
+
+            // Destroy asteroid
+            AsteroidController.getInstance().toDispose.add(asteroid);
+
+            chopper.takeDamage();
+
+            // Create explosion
+        } else if (isChopperAsteroidCollision) {
+            // Cast models
+            AsteroidModel asteroid = (AsteroidModel) b.getBody().getUserData();
+            ChopperModel chopper = (ChopperModel) a.getBody().getUserData();
+
+            // Destroy asteroid
+            AsteroidController.getInstance().toDispose.add(asteroid);
+
+            chopper.takeDamage();
+        }
 
 //            if (a.getBody().getUserData(). || b.getBody().getUserData() == ContactType.ASTEROID) {
 //                // Fetch asteroid that was contacted

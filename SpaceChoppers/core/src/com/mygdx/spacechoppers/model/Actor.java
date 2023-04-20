@@ -35,7 +35,7 @@ public abstract class Actor implements IActor {
 
     @Override
     public void takeDamage() {
-        this.hitPoints--;
+        this.hitPoints-=10;
     }
 
     public boolean isOutOfBounds() {

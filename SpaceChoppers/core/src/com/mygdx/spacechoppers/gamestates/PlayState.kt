@@ -2,10 +2,7 @@ package com.mygdx.spacechoppers.gamestates
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.math.Matrix4
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.InputEvent
@@ -13,23 +10,18 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.viewport.FitViewport
-import com.mygdx.spacechoppers.AssetManager.manager
 import com.mygdx.spacechoppers.GameContactListener
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.SpaceChoppersGame
-
-import com.mygdx.spacechoppers.controller.*
-
 import com.mygdx.spacechoppers.controller.AsteroidController
 import com.mygdx.spacechoppers.controller.BackgroundController
 import com.mygdx.spacechoppers.controller.ChopperController
 import com.mygdx.spacechoppers.controller.HealthBarController
 import com.mygdx.spacechoppers.controller.LaserController
 import com.mygdx.spacechoppers.controller.LiveScoresController
-import com.mygdx.spacechoppers.model.Explosion
-
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
+import com.mygdx.spacechoppers.model.Explosion
 import com.mygdx.spacechoppers.model.Joystick
 import com.mygdx.spacechoppers.networking.NetworkClient
 import com.mygdx.spacechoppers.utils.MenuCommon.skin
@@ -61,6 +53,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     // Asteroids
     private val asteroidsController = AsteroidController.getInstance();
+
+    private val healthBarController = HealthBarController(cam)
 
 
     // Explosions
@@ -139,6 +133,14 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         // Draw scores
         liveScoresController.renderScores(sb)
+
+        // Draw health bar
+        if (chopperController.model.hitPoints > 0) {
+            healthBarController.draw(sb, chopperController.model.hitPoints)
+        } else {
+            networkClient.leaveLobby(Preferences.lobbyID, Preferences.username)
+            gsm.set(MainMenuState(gsm))
+        }
 
         sb.end()
         stage.act(Gdx.graphics.deltaTime)
