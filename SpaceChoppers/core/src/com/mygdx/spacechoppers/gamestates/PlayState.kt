@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
@@ -75,18 +76,18 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         })
 
         boostButton =
-            if (chopperController.isBoostIsAvailable) AssetManager.boostButtonActive
-            else AssetManager.boostButtonInactive
+            if (chopperController.isBoostIsAvailable) ImageButton(TextureRegionDrawable(AssetManager.boostButtonActive))
+            else ImageButton(TextureRegionDrawable(AssetManager.boostButtonInactive))
         boostButton.setPosition(boostButton.width / 2, 160f)
         boostButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
-                chopperController.boost();
+                chopperController.boost()
             }
         })
 
         rapidFireButton =
-            if (lasersController.isRapidFireEnabled) AssetManager.rapidFireButtonActive
-            else AssetManager.rapidFireButtonInactive
+            if (lasersController.isRapidFireEnabled) ImageButton(TextureRegionDrawable(AssetManager.rapidFireButtonActive))
+            else ImageButton(TextureRegionDrawable(AssetManager.rapidFireButtonInactive))
         rapidFireButton.setPosition(SpaceChoppersGame.width - rapidFireButton.width * 1.5f, 160f)
         rapidFireButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {

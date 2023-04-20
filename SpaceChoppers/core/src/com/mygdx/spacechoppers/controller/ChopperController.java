@@ -65,13 +65,13 @@ public class ChopperController {
         view.draw(sb, model);
     }
 
-    public void boost(){
+    public void boost() {
         boostIsAvailable = false;
         this.speedScaler *= boostMultiplier;
         Timer.Task task = new Timer.Task() {
             @Override
             public void run() {
-                speedScaler-=0.2;
+                speedScaler -= 0.2;
                 if (speedScaler < initialSpeedScaler) {
                     speedScaler = initialSpeedScaler;
                     boostIsAvailable = true; // TODO: Fix this into own method
@@ -82,7 +82,6 @@ public class ChopperController {
 
         timer.scheduleTask(task, 0, 0.1F);
     }
-
 
 
     public boolean isBoostIsAvailable() {

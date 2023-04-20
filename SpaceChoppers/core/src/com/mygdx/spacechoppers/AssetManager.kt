@@ -67,13 +67,13 @@ object AssetManager {
     val asteroidSheet get() = manager.get<Texture>(ASTEROID_SHEET)
     val laserTexture get() = manager.get<Texture>(LASER)
     val boostButtonActive
-        get() = ImageButton(TextureRegionDrawable(manager.get<Texture>(BOOST_BTN_ACTIVE)))
+        get() = manager.get<Texture>(BOOST_BTN_ACTIVE)
     val boostButtonInactive
-        get() = ImageButton(TextureRegionDrawable(manager.get<Texture>(BOOST_BTN_INACTIVE)))
+        get() = manager.get<Texture>(BOOST_BTN_INACTIVE)
     val rapidFireButtonActive
-        get() = ImageButton(TextureRegionDrawable(manager.get<Texture>(RAPID_FIRE_BTN_ACTIVE)))
+        get() = manager.get<Texture>(RAPID_FIRE_BTN_ACTIVE)
     val rapidFireButtonInactive
-        get() = ImageButton(TextureRegionDrawable(manager.get<Texture>(RAPID_FIRE_BTN_INACTIVE)))
+        get() = manager.get<Texture>(RAPID_FIRE_BTN_INACTIVE)
 
     // Music
     private val backgroundMusic: Music get() = manager.get<Music>(BG_MUSIC)

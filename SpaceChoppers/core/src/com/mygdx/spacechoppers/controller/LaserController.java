@@ -78,7 +78,6 @@ public class LaserController {
             public void run() {
                 fireRate = initialFireRate;
                 rapidFireEnabled = true;
-
             }
         }, 10);
     }
