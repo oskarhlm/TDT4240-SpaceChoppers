@@ -81,7 +81,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         boostButton.setPosition(boostButton.width / 2, 160f)
         boostButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
-                //TODO: Boost
+                chopperController.boost();
             }
         })
 

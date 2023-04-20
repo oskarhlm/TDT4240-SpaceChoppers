@@ -9,22 +9,24 @@ import com.mygdx.spacechoppers.SpaceChoppersGame;
 import com.mygdx.spacechoppers.model.ChopperModel;
 import com.mygdx.spacechoppers.view.ChopperView;
 
+import java.util.TimerTask;
+
 public class ChopperController {
 
     private final ChopperModel model;
     private final ChopperView view;
-    private Touchpad touchpad;
-    private final float initialSpeedScaler = 5;
+    private final Touchpad touchpad;
+    private final float initialSpeedScaler = 10;
     private float speedScaler = initialSpeedScaler;
-    private boolean boostIsAvailible = true;
-    private boolean boostEnabled = false;
-    private final float boostMutliplier = 3;
+    private boolean boostIsAvailable = true;
+    private final float boostMultiplier = 3;
     private float boostDurationSeconds = 0;
-    private final float maxBoostDurationSeconds = 10;
+    private final Timer timer;
 
     public ChopperController(Touchpad touchpad) {
         this.view = new ChopperView();
         this.touchpad = touchpad;
+        this.timer = new Timer();
         this.model = new ChopperModel(100, new Vector3(
                 SpaceChoppersGame.Companion.getWidth() / 2 - view.getSprite().getWidth() / 2,
                 SpaceChoppersGame.Companion.getHeight() / 2 - view.getSprite().getHeight() / 2,
@@ -32,8 +34,7 @@ public class ChopperController {
     }
 
     public void moveChopper(float dt) {
-        if (boostEnabled) addSpeedBoost(dt);
-        System.out.println(speedScaler);
+
         float deltaX = touchpad.getKnobPercentX();
         float deltaY = touchpad.getKnobPercentY();
         float movementMagnitude = (float) Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)) * speedScaler;
@@ -64,27 +65,27 @@ public class ChopperController {
         view.draw(sb, model);
     }
 
+    public void boost(){
+        boostIsAvailable = false;
+        this.speedScaler *= boostMultiplier;
+        Timer.Task task = new Timer.Task() {
+            @Override
+            public void run() {
+                speedScaler-=0.2;
+                if (speedScaler < initialSpeedScaler) {
+                    speedScaler = initialSpeedScaler;
+                    boostIsAvailable = true; // TODO: Fix this into own method
+                    cancel();
+                }
+            }
+        };
 
-    private void addSpeedBoost(float dt) {
-        speedScaler *= (1 - boostDurationSeconds / maxBoostDurationSeconds) * boostMutliplier;
-        boostDurationSeconds += dt;
-        if (boostDurationSeconds > 10) {
-            boostDurationSeconds = 0;
-            boostEnabled = false;
-            speedScaler = initialSpeedScaler;
-        }
+        timer.scheduleTask(task, 0, 0.1F);
     }
 
-    public void enableBoost() {
-        boostEnabled = true;
-        boostIsAvailible = false;
-    }
 
-    public void makeBoostAvailible() {
-        boostIsAvailible = true;
-    }
 
-    public boolean isBoostIsAvailible() {
-        return boostIsAvailible;
+    public boolean isBoostIsAvailable() {
+        return boostIsAvailable;
     }
 }
