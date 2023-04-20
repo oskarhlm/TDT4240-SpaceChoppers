@@ -2,6 +2,7 @@ package com.mygdx.spacechoppers.model;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
 import com.mygdx.spacechoppers.helper.Const;
@@ -39,7 +40,6 @@ public class LaserModel extends Actor {
 
     public void moveLaser() {
         position.add(velocity.x, velocity.y, 0);
-        moveBody(position.x, position.y, initialRotation);
     }
 
     public boolean isLaserOutsideOfCamera() {
@@ -49,5 +49,9 @@ public class LaserModel extends Actor {
             return true;
         }
         return false;
+    }
+
+    public Body getBody() {
+        return body;
     }
 }

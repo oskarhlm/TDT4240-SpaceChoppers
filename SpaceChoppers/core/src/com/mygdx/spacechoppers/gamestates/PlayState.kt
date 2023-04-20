@@ -109,7 +109,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         val adjustedChopperY = chopperController.position.y - (chopperController.textureSize.y / 2)
 
         val adjustedChopperPos = Vector3(adjustedChopperX, adjustedChopperY, 0f);
-        lasersController.fireLasers(dt, adjustedChopperPos, chopperController.model.currentAngle, world)
+        lasersController.fireLasers(dt, cam.position, chopperController.model.currentAngle, world)
 
 
         // Check if asteroids are out of bounds
@@ -130,8 +130,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         sb.begin()
         background.draw(sb)
 
-        chopperController.draw(sb)
         lasersController.draw(sb)
+        chopperController.draw(sb)
+
 
         liveScoresController.renderScores(sb)
         asteroids.forEach{ asteroidController: AsteroidController -> asteroidController.draw() }

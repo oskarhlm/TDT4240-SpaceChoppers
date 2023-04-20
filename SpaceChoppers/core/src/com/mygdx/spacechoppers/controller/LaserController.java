@@ -20,14 +20,16 @@ public class LaserController {
         laserAndViews = new HashMap<>();
     }
 
-    public void fireLasers(float dt, Vector3 chopperPos, float chopperRotation, World world) {
+    public void fireLasers(float dt, Vector3 camPos, float chopperRotation, World world) {
         this.dt += dt;
         // Create new laser if certain time has passed
         if (this.dt > 1) {
             this.dt = 0;
 
             LaserView view = new LaserView();
-            LaserModel laserModel = new LaserModel(new Vector3(chopperPos.x, chopperPos.y, 0), view.getTextureSize(), chopperRotation, chopperRotation, world);
+            float xPosition = camPos.x - view.getTextureSize().x;
+            float yPosition = camPos.y - view.getTextureSize().y;
+            LaserModel laserModel = new LaserModel(new Vector3(xPosition, yPosition, 0), view.getTextureSize(), chopperRotation, chopperRotation, world);
             laserAndViews.put(laserModel, view);
             // Play laser sound here
             AssetManager.INSTANCE.playLaserSound();
@@ -60,7 +62,7 @@ public class LaserController {
     public void draw(SpriteBatch sb) {
         for (LaserModel laserModel : laserAndViews.keySet()) {
             LaserView correspondingView = laserAndViews.get(laserModel);
-            correspondingView.draw(sb, laserModel.getPosition(), laserModel.getInitialRotation());
+            correspondingView.draw(sb, laserModel.getPosition(), laserModel.getInitialRotation(), laserModel.getBody());
         }
     }
 }

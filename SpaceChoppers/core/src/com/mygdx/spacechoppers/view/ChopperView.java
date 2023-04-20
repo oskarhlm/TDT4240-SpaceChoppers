@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.spacechoppers.AssetManager;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
+import com.mygdx.spacechoppers.helper.Const;
 import com.mygdx.spacechoppers.model.ChopperModel;
 
 import java.util.ArrayList;
@@ -44,17 +46,28 @@ public class ChopperView implements Disposable {
     }
 
 
-    public void draw(SpriteBatch sb, ChopperModel model) {
+    public void draw(SpriteBatch sb, ChopperModel model, Body chopperBody) {
 
         Vector3 location = model.getLocation();
+        float drawX = location.x - sprite.getTexture().getWidth() / 2.0f;
+        float drawY = location.y - sprite.getTexture().getHeight() / 2.0f;
+
+
         float angle = model.getCurrentAngle();
-        sb.draw(sprite, location.x, location.y,
+        sb.draw(sprite, drawX, drawY,
                 sprite.getOriginX(),
                 sprite.getOriginY(),
                 sprite.getWidth(),
                 sprite.getHeight(),
                 (float) SCALE_FACTOR, (float) SCALE_FACTOR, angle-90);
+
+        // Convert pixels to meters
+        float adjustedX = location.x * Const.PIXELS_TO_METERS;
+        float adjustedY = location.y * Const.PIXELS_TO_METERS;
+        chopperBody.setTransform(adjustedX, adjustedY, 0);
     }
+
+
 
     public Sprite getSprite(){
         return sprite;

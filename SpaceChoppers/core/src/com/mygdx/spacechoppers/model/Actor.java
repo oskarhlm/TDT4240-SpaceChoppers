@@ -19,12 +19,9 @@ public abstract class Actor implements IActor {
     protected Vector3 location;
     protected Body body;
 
-    private Vector2 textureSize;
-
     public Actor(int hitPoints, Vector3 location, Vector2 textureSize, World world, ContactType contactType) {
         this.hitPoints = hitPoints;
         this.location = location;
-        this.textureSize = textureSize;
         this.body = BodyHelper.createBody(location.x * PIXELS_TO_METERS, location.y * PIXELS_TO_METERS, textureSize, 1, world, contactType);
     }
 
@@ -34,23 +31,6 @@ public abstract class Actor implements IActor {
 
     public Vector3 getLocation() {
         return location;
-    }
-
-    public Vector2 pixelsToMeters(float xPosition, float yPosition) {
-        float xAdjusted = (xPosition + textureSize.x / 2) * PIXELS_TO_METERS;
-        float yAdjusted = (yPosition + textureSize.y / 2) * PIXELS_TO_METERS;
-        return new Vector2(xAdjusted, yAdjusted);
-    }
-
-    public void moveBody(float xPosition, float yPosition, float angle) {
-        Vector2 adjustedVector = pixelsToMeters(xPosition, yPosition);
-        float xMeters = adjustedVector.x;
-        float yMeters = adjustedVector.y;
-        body.setTransform(xMeters, yMeters, degreesToRadians(angle));
-    }
-
-    private float degreesToRadians(float angleInDegrees) {
-        return (float) (angleInDegrees * (PI / 180));
     }
 
     @Override

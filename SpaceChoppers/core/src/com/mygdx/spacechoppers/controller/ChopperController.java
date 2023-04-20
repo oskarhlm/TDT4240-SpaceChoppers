@@ -3,6 +3,7 @@ package com.mygdx.spacechoppers.controller;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
@@ -47,7 +48,7 @@ public class ChopperController {
             if (canMoveInXDirection && canMoveInYDirection) {
                 model.getLocation().x = nextXPosition;
                 model.getLocation().y = nextYPosition;
-                moveYoBody(nextXPosition, nextYPosition);
+                //moveYoBody(nextXPosition, nextYPosition);
             }
         }
     }
@@ -60,16 +61,16 @@ public class ChopperController {
         return model.getLocation();
     }
 
-    private void moveYoBody(float nextX, float nextY) {
-        model.moveBody(nextX, nextY, 0);
-    }
+    //private void moveYoBody(float nextX, float nextY) {
+       // model.moveBody(nextX, nextY, 0);
+    //}
 
     public ChopperModel getModel() {
         return model;
     }
 
     public void draw(SpriteBatch sb) {
-        view.draw(sb, model);
+        view.draw(sb, model, model.getBody());
     }
 
 }
