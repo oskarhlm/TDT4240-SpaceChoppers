@@ -15,9 +15,13 @@ public class Joystick {
     public Joystick(float camWidth){
         this.x = camWidth / 2 - width / 2;
         this.y = 100;
-        this.skin = new Skin(Gdx.files.internal("neon/skin/neon-ui.json"));
+//        this.skin = new Skin(Gdx.files.internal("neon/skin/neon-ui.json"));
+        this.skin = new Skin(Gdx.files.internal("quantum-horizon/skin/quantum-horizon-ui.json"));
+
         this.touchpad = new Touchpad(20, skin);
         touchpad.setBounds(x, y, width, height);
+        touchpad.getStyle().knob.setMinWidth(20);
+        touchpad.getStyle().knob.setMinHeight(20);
     }
 
     public Touchpad getTouchpad(){

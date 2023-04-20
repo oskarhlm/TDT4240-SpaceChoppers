@@ -3,10 +3,11 @@ package com.mygdx.spacechoppers
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.mygdx.spacechoppers.utils.Preferences
 
 object AssetManager {
     val manager = com.badlogic.gdx.assets.AssetManager()
+    var playSoundEffects = true;
 
     init {
         // Sounds and music
@@ -23,27 +24,25 @@ object AssetManager {
         manager.load("menu_bg_clean.png", Texture::class.java)
         manager.load("explosion.png", Texture::class.java)
         manager.load("blank.png", Texture::class.java)
+
+        // Skins
         manager.finishLoading()
     }
 
-    fun setUpMusic() {
+    fun playMusic() {
         val backgroundMusic = manager.get("sounds/background_music.mp3", Music::class.java);
         backgroundMusic.isLooping = true
         backgroundMusic.play()
     }
 
-    fun muteMusic(){
+    fun muteMusic() {
         val backgroundMusic = manager.get("sounds/background_music.mp3", Music::class.java);
-        backgroundMusic.stop()
+        backgroundMusic.pause()
     }
 
     fun playLaserSound() {
+        if (!playSoundEffects) return
         val laserSound = manager.get("sounds/laser.mp3", Sound::class.java)
         laserSound.play()
-    }
-
-    fun muteLaserSound(){
-        val laserSound = manager.get("sounds/laser.mp3", Sound::class.java)
-        laserSound.stop()
     }
 }
