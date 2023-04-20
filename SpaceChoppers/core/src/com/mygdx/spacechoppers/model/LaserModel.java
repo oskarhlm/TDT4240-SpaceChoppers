@@ -16,7 +16,7 @@ public class LaserModel extends Actor {
     private final float BASE_VELOCITY = 35;
 
     public LaserModel(Vector3 position, Vector2 textureSize, float chopperRotation, float rotation, World world) {
-        super(1, position, textureSize, world, ContactType.LASER);
+        super(1, position, textureSize, world);
         this.position = position;
         this.initialRotation = rotation;
         this.velocity = getVelocityFromRotation(chopperRotation);

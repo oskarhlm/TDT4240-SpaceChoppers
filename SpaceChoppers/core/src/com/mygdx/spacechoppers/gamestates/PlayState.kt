@@ -50,7 +50,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val liveScoresController = LiveScoresController(cam)
 
     // Asteroids
-    private val asteroidsController = AsteroidController()
+    private val asteroidsController = AsteroidController.getInstance();
 
 
     private val quitButton = TextButton("Quit", skin)

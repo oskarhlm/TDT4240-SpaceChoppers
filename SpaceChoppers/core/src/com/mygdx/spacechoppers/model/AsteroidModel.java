@@ -15,7 +15,7 @@ public class AsteroidModel extends Actor {
 
 
     public AsteroidModel(int HP, Vector3 position, Vector2 velocity, Vector2 textureSize, World world) {
-        super(HP, position, textureSize, world, ContactType.ASTEROID);
+        super(HP, position, textureSize, world);
         this.position = position;
         this.velocity = velocity;
         this.size = textureSize;

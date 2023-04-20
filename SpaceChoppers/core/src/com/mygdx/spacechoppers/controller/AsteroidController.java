@@ -4,28 +4,45 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.spacechoppers.model.AsteroidHelper;
 import com.mygdx.spacechoppers.model.AsteroidModel;
+import com.mygdx.spacechoppers.networking.NetworkClient;
 import com.mygdx.spacechoppers.view.AsteroidView;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import kotlin.Pair;
 
 
 public class AsteroidController {
 
+    private static AsteroidController INSTANCE = null;
     private final HashMap<AsteroidModel, AsteroidView> modelAndViews;
+    public Set<AsteroidModel> toDispose;
     private float dt;
-    private final int NUM_ASTEROIDS_TO_SPAWN = 1;
+    private World world;
 
-    public AsteroidController() {
+
+    public static AsteroidController getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new AsteroidController();
+        }
+        return INSTANCE;
+    }
+
+    private AsteroidController() {
         modelAndViews = new HashMap<>();
+        toDispose = new HashSet<>();
     }
 
     public void spawnAndMoveAsteroids(float dt, World world, OrthographicCamera cam) {
+        this.world = world;
         this.dt += dt;
 
         // Create new asteroids if certain time has passed
@@ -58,34 +75,34 @@ public class AsteroidController {
 
         }
         // Move all asteroids
-        moveAllAsteroids(world);
+        moveAllAsteroids();
+        disposeAsteroidList();
     }
 
-    private void moveAllAsteroids(World world) {
-        ArrayList<AsteroidModel> asteroidsToDispose = new ArrayList<>();
+    private void moveAllAsteroids() {
         for (AsteroidModel asteroid : modelAndViews.keySet()) {
             moveAsteroid(asteroid);
 
-            // Remove if outside screen
+            // Check for disposable asteroids
             if (asteroid.isOutOfBounds()) {
-                modelAndViews.get(asteroid).dispose();
-                asteroidsToDispose.add(asteroid);
+                toDispose.add(asteroid);
             }
         }
-        disposeAsteroids(asteroidsToDispose, world);
     }
 
     private void moveAsteroid(AsteroidModel asteroidModel) {
         asteroidModel.updatePosition();
     }
 
-    private void disposeAsteroids(ArrayList<AsteroidModel> asteroidModels, World world) {
-        for (AsteroidModel asteroid : asteroidModels) {
+    private void disposeAsteroidList() {
+        for (AsteroidModel asteroid : toDispose) {
+            world.destroyBody(asteroid.getBody());
             AsteroidView view = modelAndViews.remove(asteroid);
             view.dispose();
-            world.destroyBody(asteroid.getBody());
         }
+        toDispose.clear();
     }
+
 
     public void draw(SpriteBatch sb) {
         for (AsteroidModel asteroid : modelAndViews.keySet()) {

@@ -19,10 +19,10 @@ public abstract class Actor implements IActor {
     protected Vector3 location;
     protected Body body;
 
-    public Actor(int hitPoints, Vector3 location, Vector2 textureSize, World world, ContactType contactType) {
+    public Actor(int hitPoints, Vector3 location, Vector2 textureSize, World world) {
         this.hitPoints = hitPoints;
         this.location = location;
-        this.body = BodyHelper.createBody(location.x * PIXELS_TO_METERS, location.y * PIXELS_TO_METERS, textureSize, 1, world, contactType);
+        this.body = BodyHelper.createBody(location.x * PIXELS_TO_METERS, location.y * PIXELS_TO_METERS, textureSize, 1, world, this);
     }
 
     public int getHitPoints() {

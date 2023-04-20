@@ -73,9 +73,6 @@ public class AsteroidHelper {
                 break;
 
         }
-        System.out.println("--- VELOCITIES HERWIHRWIOEIWOE ---");
-        System.out.println("X: " + position.x);
-        System.out.println("Y: " + position.y);
         return new Pair<>(position, velocity);
     }
 

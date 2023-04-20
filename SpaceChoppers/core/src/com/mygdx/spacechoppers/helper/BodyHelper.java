@@ -6,10 +6,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.spacechoppers.model.Actor;
 
 public class BodyHelper {
 
-    public static Body createBody(float x, float y, Vector2 textureSize, float density, World world, ContactType type) {
+    public static Body createBody(float x, float y, Vector2 textureSize, float density, World world, Actor actorModel) {
 
         // Convert pixels to meters
         float textureWidth = textureSize.x * Const.PIXELS_TO_METERS;
@@ -26,8 +27,8 @@ public class BodyHelper {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = density;
-        body.setUserData(type);
-        body.createFixture(fixtureDef);
+        body.createFixture(fixtureDef).setUserData(actorModel);
+        body.setUserData(actorModel);
 
         shape.dispose();
 
