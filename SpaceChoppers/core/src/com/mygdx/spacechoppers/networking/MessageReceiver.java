@@ -1,6 +1,8 @@
 package com.mygdx.spacechoppers.networking;
 
 import com.mygdx.spacechoppers.data.networking.Score;
+import com.mygdx.spacechoppers.utils.Preferences;
+
 import java.util.ArrayList;
 
 import java.util.List;
@@ -12,6 +14,7 @@ public class MessageReceiver {
     private static MessageReceiver instance = null;
     private List<Score> liveScores;
     private List<Score> highScores;
+    private int playerScore = 0;
 
     private int lobbyID;
     private MessageReceiver() {
@@ -29,6 +32,11 @@ public class MessageReceiver {
 
     public void updateLiveScores(List<Score> updatedLiveScores) {
         this.liveScores = updatedLiveScores;
+        for (Score score : updatedLiveScores) {
+            if (score.getUsername().equals(Preferences.INSTANCE.getUsername())) {
+                playerScore = score.getScore();
+            }
+        }
     }
 
     public void updateHighscores(List<Score> updatedHighscores) {
@@ -46,6 +54,10 @@ public class MessageReceiver {
 
     public List<Score> getHighScores() {
         return this.highScores;
+    }
+
+    public int getPlayerScore() {
+        return this.playerScore;
     }
 
     public int getLobbyID() {

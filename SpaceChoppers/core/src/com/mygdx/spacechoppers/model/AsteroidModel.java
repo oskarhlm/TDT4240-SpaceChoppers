@@ -2,25 +2,31 @@ package com.mygdx.spacechoppers.model;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.spacechoppers.helper.Const;
+import com.mygdx.spacechoppers.helper.ContactType;
 
 public class AsteroidModel extends Actor {
 
-    private final float size;
-    private int speed;
-    private final Vector2 direction;
+    private Vector3 position;
+    private Vector2 velocity;
+    private Vector2 size;
 
-    public AsteroidModel(int HP, Vector3 location, Vector2 direction, float size) {
-        super(HP, location);
-        this.direction = direction;
-        this.size = size;
+
+    public AsteroidModel(int HP, Vector3 position, Vector2 velocity, Vector2 textureSize, World world) {
+        super(HP, position, textureSize, world);
+        this.position = position;
+        this.velocity = velocity;
+        this.size = textureSize;
     }
 
-    public void moveAsteroid(){
-        location.add(direction.x, direction.y, 0);
+    public void updatePosition() {
+        position.add(velocity.x, velocity.y, 0);
     }
 
-    public float getSize() {
-        return size;
+    public Body getBody() {
+        return this.body;
     }
 }
 
