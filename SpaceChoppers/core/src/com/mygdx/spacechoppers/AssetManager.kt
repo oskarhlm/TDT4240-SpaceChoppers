@@ -32,8 +32,18 @@ object AssetManager {
         backgroundMusic.play()
     }
 
+    fun muteMusic(){
+        val backgroundMusic = manager.get("sounds/background_music.mp3", Music::class.java);
+        backgroundMusic.stop()
+    }
+
     fun playLaserSound() {
         val laserSound = manager.get("sounds/laser.mp3", Sound::class.java)
         laserSound.play()
+    }
+
+    fun muteLaserSound(){
+        val laserSound = manager.get("sounds/laser.mp3", Sound::class.java)
+        laserSound.stop()
     }
 }
