@@ -23,7 +23,7 @@ abstract class MenuBase(gsm: GameStateManager) : GameState(gsm) {
     protected var background = TextureRegion(AssetManager.menuBackgroundClean)
 
     // Asteroids
-    private val asteroidFactory = AsteroidFactory(sb, AsteroidTextures())
+    private val asteroidFactory = AsteroidFactory(sb, AsteroidTextures(), cam)
     private val asteroids = ArrayList<AsteroidController>()
 
     init {

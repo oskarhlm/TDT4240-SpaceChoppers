@@ -33,7 +33,7 @@ class Explosion(x: Float, y: Float, asteroidSize: Float) {
         statetime += deltaTime
         if (anim!!.isAnimationFinished(statetime)) {
             remove = true
-            statetime = 0f // TODO: Remove (only used in testing)
+            //statetime = 0f // TODO: Remove (only used in testing)
         }
     }
 
@@ -45,6 +45,4 @@ class Explosion(x: Float, y: Float, asteroidSize: Float) {
                 500f,
                 500f)
     }
-
-
 }

@@ -1,5 +1,6 @@
 package com.mygdx.spacechoppers.factories;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -19,9 +20,11 @@ public class AsteroidFactory {
     private final int speedMultiplier;
     private final int velocityX;
     private final int velocityY;
+    private final OrthographicCamera camera;
 
-    public AsteroidFactory(SpriteBatch sb, AsteroidTextures asteroidTextures){
+    public AsteroidFactory(SpriteBatch sb, AsteroidTextures asteroidTextures, OrthographicCamera camera){
         this.sb = sb;
+        this.camera = camera;
         this.asteroidTextures = asteroidTextures;
         this.rand = new Random();
         this.velocityX = rand.nextInt(10);
@@ -48,11 +51,14 @@ public class AsteroidFactory {
         Vector3 location = new Vector3();
         Vector2 direction = new Vector2();
 
-        int n = rand.nextInt(8);
+        int n = 0; //rand.nextInt(8);
         switch (n){
             case 0: // LEFT-BOTTOM
-                location.add(-1000, rand.nextInt(height / 2), 0);
-                direction.add(changeX, changeY);
+                float x = camera.position.x - camera.viewportWidth;
+                float y = camera.position.y - camera.viewportHeight;
+                //location.add(-1000, rand.nextInt(height / 2), 0);
+                location.add(x, y, 0);
+                direction.add(5, 0);
                 break;
             case 1: // LEFT-TOP
                 location.add(-1000, rand.nextInt(height / 2) + height / 2, 0);

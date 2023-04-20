@@ -1,6 +1,7 @@
 package com.mygdx.spacechoppers.gamestates
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -41,13 +42,16 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val backgroundController = BackgroundController(stage)
 
     // Asteroids
-    private val asteroidFactory = AsteroidFactory(sb, AsteroidTextures())
+    private val asteroidFactory = AsteroidFactory(sb, AsteroidTextures(), cam)
     private val asteroids = ArrayList<AsteroidController>()
 
     // Explosions
     private val explosions = ArrayList<Explosion>()
 
+    // Buttons
     private val quitButton = TextButton("Quit", AssetManager.menuSkin)
+    private val boostButton = TextButton("Boost", AssetManager.menuSkin)
+    private val rapidFireButton = TextButton("Fire", AssetManager.menuSkin)
 
     init {
         Gdx.input.inputProcessor = stage
@@ -68,7 +72,30 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
                 gsm.set(MainMenuState(gsm))
             }
         })
+
+        boostButton.setPosition(20f, 80f)
+        boostButton.width = boostButton.width * 2 // increase width
+        boostButton.height = boostButton.height * 2 // increase height
+        boostButton.label.setFontScale(2f)
+        boostButton.addListener(object : ClickListener() {
+            override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                //TODO: Boost
+            }
+        })
+
+        rapidFireButton.setPosition(100f, 80f)
+        rapidFireButton.width = rapidFireButton.width * 2 // increase width
+        rapidFireButton.height = rapidFireButton.height * 2 // increase height
+        rapidFireButton.label.setFontScale(2f)
+        rapidFireButton.addListener(object : ClickListener() {
+            override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                //TODO: Boost
+            }
+        })
+
         stage.addActor(quitButton)
+        stage.addActor(boostButton)
+        stage.addActor(rapidFireButton)
 
         SpaceChoppersGame.mapWidth = backgroundController.mapWidth
         SpaceChoppersGame.mapHeight = backgroundController.mapHeight
