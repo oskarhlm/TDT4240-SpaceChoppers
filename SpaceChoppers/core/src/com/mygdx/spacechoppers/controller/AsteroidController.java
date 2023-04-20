@@ -1,5 +1,6 @@
 package com.mygdx.spacechoppers.controller;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -24,11 +25,11 @@ public class AsteroidController {
         modelAndViews = new HashMap<>();
     }
 
-    public void spawnAndMoveAsteroids(float dt, World world) {
+    public void spawnAndMoveAsteroids(float dt, World world, OrthographicCamera cam) {
         this.dt += dt;
 
         // Create new asteroids if certain time has passed
-        if (this.dt > 0.1) {
+        if (this.dt > 0.4) {
             // Reset timer
             this.dt = 0;
 
@@ -38,7 +39,7 @@ public class AsteroidController {
             Vector2 size = AsteroidHelper.getSize();
 
             // Get position and velocity
-            Pair<Vector3, Vector2> posAndVelocity = AsteroidHelper.getPositionAndVelocity();
+            Pair<Vector3, Vector2> posAndVelocity = AsteroidHelper.getPositionAndVelocity(cam);
 
             // Get initial spawning position
             Vector3 spawnPosition = posAndVelocity.component1();

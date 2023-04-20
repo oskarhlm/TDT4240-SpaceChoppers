@@ -81,10 +81,10 @@ public class AsteroidView implements Disposable {
 
     @Override
     public void dispose() {
-        for (TextureRegion tr : asteroids) {
-            if (!tr.equals(currentTexture)) {
-                tr.getTexture().dispose();
-            }
-        }
+//        for (TextureRegion tr : asteroids) {
+//            if (!tr.equals(currentTexture)) {
+//                tr.getTexture().dispose();
+//            }
+//        }
     }
 }

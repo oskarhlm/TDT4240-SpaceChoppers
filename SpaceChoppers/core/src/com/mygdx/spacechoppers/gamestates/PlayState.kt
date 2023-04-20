@@ -84,12 +84,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     }
 
     override fun update(dt: Float) {
-<<<<<<< HEAD
-        // Move chopper
-=======
+        // Step world
         world.step(1/60f, 6, 2)
-        // Get chopper movement
->>>>>>> 6f102038e35bb43050e9f194fd0e9651ed0ff9ba
+        // Move chopper
         chopperController.moveChopper(dt)
 
         // Move camera
@@ -99,7 +96,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         lasersController.fireLasers(dt, cam.position, chopperController.model.currentAngle, world)
         
         // Spawn and move asteroids
-        asteroidsController.spawnAndMoveAsteroids(dt, world);
+        asteroidsController.spawnAndMoveAsteroids(dt, world, cam);
     }
 
     override fun render(delta: Float) {
@@ -107,6 +104,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         cam.update()
         sb.projectionMatrix = cam.combined
+
 
         sb.begin()
 

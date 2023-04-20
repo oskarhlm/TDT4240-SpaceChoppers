@@ -16,7 +16,7 @@ public class ChopperController {
     private final ChopperModel model;
     private final ChopperView view;
     private Touchpad touchpad;
-    private final int speedScaler = 5;
+    private final int speedScaler = 15;
 
 
     public ChopperController(Touchpad touchpad, World world) {
