@@ -23,8 +23,6 @@ public class AsteroidHelper {
         Vector2 velocity = new Vector2(0,0);
 
         int direction  = random.nextInt(8);
-        System.out.println("--- DIRECTION ---");
-        System.out.println(direction);
 
         switch (direction){
 
@@ -47,6 +45,7 @@ public class AsteroidHelper {
             case 4: // RIGHT-TOP
                 position.add(MAP_WIDTH, random.nextInt(MAP_HEIGHT / 2) + MAP_HEIGHT / 2, 0);
                 velocity.add(-velocityX, -velocityY);
+                break;
             case 5: // RIGHT-BOTTOM
                 position.add(MAP_WIDTH, random.nextInt(MAP_HEIGHT / 2), 0);
                 velocity.add(-velocityX, velocityY);
@@ -56,8 +55,9 @@ public class AsteroidHelper {
                 velocity.add(-velocityX, velocityY);
                 break;
             case 7: // BOTTOM-LEFT
-                position.add(random.nextInt(MAP_WIDTH /2), -1000, 0);
+                position.add(random.nextInt(MAP_WIDTH /2), -2000, 0);
                 velocity.add(velocityX, velocityY);
+                break;
         }
         return new Pair<>(position, velocity);
     }

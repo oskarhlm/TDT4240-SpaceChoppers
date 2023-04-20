@@ -36,10 +36,10 @@ public class LaserController {
 
         }
         // We want to move the laser anyways
-        moveAllLasers();
+        moveAllLasers(world);
     }
 
-    private void moveAllLasers() {
+    private void moveAllLasers(World world) {
         ArrayList<LaserModel> lasersToDispose = new ArrayList<>();
         for (LaserModel laserModel : laserAndViews.keySet()) {
             laserModel.moveLaser();
@@ -50,12 +50,13 @@ public class LaserController {
                 lasersToDispose.add(laserModel);
             }
         }
-        disposeLasers(lasersToDispose);
+        disposeLasers(lasersToDispose, world);
     }
 
-    private void disposeLasers(ArrayList<LaserModel> laserModels) {
+    private void disposeLasers(ArrayList<LaserModel> laserModels, World world) {
         for (LaserModel laserModel : laserModels) {
             laserAndViews.remove(laserModel);
+            world.destroyBody(laserModel.getBody());
         }
     }
 
