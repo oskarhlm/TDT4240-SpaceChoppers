@@ -26,7 +26,8 @@ public class BodyHelper {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = density;
-        body.createFixture(fixtureDef).setUserData(type);
+        body.setUserData(type);
+        body.createFixture(fixtureDef);
 
         shape.dispose();
 
