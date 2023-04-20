@@ -129,10 +129,6 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         stage.draw()
 
         // Draw 2d physics boxes for all bodies
-        val debugMatrix = Matrix4(cam.combined)
-        debugMatrix.scale(1 / PIXELS_TO_METERS, 1 / PIXELS_TO_METERS, 1f)
-
-        box2DDebugRenderer.render(world, debugMatrix)
 
     }
 

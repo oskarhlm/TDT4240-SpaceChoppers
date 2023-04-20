@@ -40,7 +40,9 @@ class JoinLobbyState(gsm: GameStateManager) : MenuBase(gsm) {
         joinButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
                 Gdx.input.setOnscreenKeyboardVisible(false)
+                Preferences.lobbyID = Integer.parseInt(gamePinField.text)
                 networkClient.joinLobby(Integer.parseInt(gamePinField.text), Preferences.username);
+
                 gsm.set(PlayState(gsm))
             }
         })
