@@ -77,9 +77,7 @@ class MainMenuState(gsm: GameStateManager) : MenuBase(gsm) {
         })
 
         // Override default background
-        background = TextureRegion(
-            AssetManager.manager.get("menu_bg.png", Texture::class.java)
-        )
+        background = TextureRegion(AssetManager.menuBackground)
 
         // Add buttons to table
         mainTable.columnDefaults(0).expandX().fillX()

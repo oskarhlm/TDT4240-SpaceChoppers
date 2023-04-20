@@ -20,13 +20,7 @@ public class ChopperView implements Disposable {
 
 
     public ChopperView() {
-        this.textureList = new ArrayList<>();
-        // TODO: This can be cleaned up
-        this.textureList.add(AssetManager.INSTANCE.getManager().get("heli_img/Chopper_1.png", Texture.class));
-        this.textureList.add(AssetManager.INSTANCE.getManager().get("heli_img/Chopper_2.png", Texture.class));
-        this.textureList.add(AssetManager.INSTANCE.getManager().get("heli_img/Chopper_3.png", Texture.class));
-        this.textureList.add(AssetManager.INSTANCE.getManager().get("heli_img/Chopper_4.png", Texture.class));
-
+        this.textureList = AssetManager.INSTANCE.getHeliSprites();
         Texture currentTexture = textureList.get(spriteIndex);
         this.sprite = new Sprite(currentTexture);
 
@@ -37,7 +31,6 @@ public class ChopperView implements Disposable {
                 sprite.setTexture(textureList.get(spriteIndex));
             }
         }, 0, 0.1f);
-
     }
 
 

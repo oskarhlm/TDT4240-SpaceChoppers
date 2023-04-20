@@ -3,6 +3,7 @@ package com.mygdx.spacechoppers.model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.mygdx.spacechoppers.AssetManager;
 
 public class Joystick {
     private final float width = 300;
@@ -15,9 +16,7 @@ public class Joystick {
     public Joystick(float camWidth){
         this.x = camWidth / 2 - width / 2;
         this.y = 100;
-//        this.skin = new Skin(Gdx.files.internal("neon/skin/neon-ui.json"));
-        this.skin = new Skin(Gdx.files.internal("quantum-horizon/skin/quantum-horizon-ui.json"));
-
+        this.skin = AssetManager.INSTANCE.getJoystickSkin();
         this.touchpad = new Touchpad(20, skin);
         touchpad.setBounds(x, y, width, height);
         touchpad.getStyle().knob.setMinWidth(20);
