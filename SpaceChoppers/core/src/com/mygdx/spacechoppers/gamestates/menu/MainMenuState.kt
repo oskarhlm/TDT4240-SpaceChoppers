@@ -1,26 +1,16 @@
 package com.mygdx.spacechoppers.gamestates.menu
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Screen
-import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.InputEvent
-import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.Container
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.Align
-import com.badlogic.gdx.utils.Disposable
-import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.AssetManager
-import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
-import com.mygdx.spacechoppers.SpaceChoppersGame
-import com.mygdx.spacechoppers.gamestates.PlayState
-import com.mygdx.spacechoppers.utils.MenuCommon
 import com.mygdx.spacechoppers.utils.Preferences
 import com.mygdx.spacechoppers.networking.NetworkClient
 
@@ -51,8 +41,8 @@ class MainMenuState(gsm: GameStateManager) : MenuBase(gsm) {
         joinButton.label.setFontScale(buttonFontScale)
         val leaderboardButton = TextButton("Leaderboard", skin)
         leaderboardButton.label.setFontScale(buttonFontScale)
-        val settingsButton = TextButton("Options", skin)
-        settingsButton.label.setFontScale(buttonFontScale)
+        val optionsButton = TextButton("Options", skin)
+        optionsButton.label.setFontScale(buttonFontScale)
         val exitButton = TextButton("Exit", skin)
         exitButton.label.setFontScale(buttonFontScale)
 
@@ -74,10 +64,10 @@ class MainMenuState(gsm: GameStateManager) : MenuBase(gsm) {
                 gsm.set(LeaderboardMenuState(gsm))
             }
         })
-        settingsButton.addListener(object : ClickListener() {
+        optionsButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
 //                gsm.set(OptionsState(gsm))
-                gsm.set(UsernamePromptState(gsm))
+                gsm.set(OptionsState(gsm))
             }
         })
         exitButton.addListener(object : ClickListener() {
@@ -97,7 +87,7 @@ class MainMenuState(gsm: GameStateManager) : MenuBase(gsm) {
         mainTable.add(createButton).row()
         mainTable.add(joinButton).row()
         mainTable.add(leaderboardButton).row()
-        mainTable.add(settingsButton).row()
+        mainTable.add(optionsButton).row()
         mainTable.add(exitButton).row()
 
         // Add table to

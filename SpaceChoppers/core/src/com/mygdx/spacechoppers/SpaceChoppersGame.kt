@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.ScreenUtils
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
-import com.mygdx.spacechoppers.gamestates.menu.UsernamePromptState
+import com.mygdx.spacechoppers.gamestates.menu.OptionsState
 import com.mygdx.spacechoppers.utils.Preferences
 import com.mygdx.spacechoppers.networking.NetworkClient
 
@@ -31,7 +31,7 @@ class SpaceChoppersGame : ApplicationAdapter() {
         sb = SpriteBatch()
         gsm = GameStateManager(this)
         Preferences.username?.let { gsm.push(MainMenuState(gsm)) }
-            ?: run { gsm.push(UsernamePromptState(gsm)) }
+            ?: run { gsm.push(OptionsState(gsm)) }
 
         // Create network handler and fetch highscores
         val networkClient = NetworkClient.getInstance()
