@@ -14,15 +14,15 @@ public class GameContactListener implements ContactListener {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if(a == null || b == null) return;
-        if(a.getUserData() == null || b.getUserData() == null) return;
+        if (a == null || b == null) return;
+        if (a.getBody().getUserData() == null || b.getBody().getUserData() == null) return;
 
-        if(a.getUserData() == ContactType.ASTEROID || b.getUserData() == ContactType.ASTEROID){
-            if(a.getUserData() == ContactType.CHOPPER || b.getUserData() == ContactType.CHOPPER){
-                // do something
+        if (a.getBody().getUserData() == ContactType.ASTEROID || b.getBody().getUserData() == ContactType.ASTEROID) {
+            if (a.getBody().getUserData() == ContactType.CHOPPER || b.getBody().getUserData() == ContactType.CHOPPER) {
+                System.out.println("scream!");
             }
-            if(a.getUserData() == ContactType.LASER || b.getUserData() == ContactType.LASER){
-                // do something else
+            if (a.getBody().getUserData() == ContactType.LASER || b.getBody().getUserData() == ContactType.LASER) {
+                System.out.println("scream!");
             }
         }
     }
