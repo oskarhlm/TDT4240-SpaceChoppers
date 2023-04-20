@@ -41,8 +41,10 @@ class MainMenuState(gsm: GameStateManager) : MenuBase(gsm) {
         joinButton.label.setFontScale(buttonFontScale)
         val leaderboardButton = TextButton("Leaderboard", skin)
         leaderboardButton.label.setFontScale(buttonFontScale)
-        val optionsButton = TextButton("Options", skin)
-        optionsButton.label.setFontScale(buttonFontScale)
+        val tutorialButton = TextButton("How To Play", skin)
+        tutorialButton.label.setFontScale(buttonFontScale)
+        val settingsButton = TextButton("Options", skin)
+        settingsButton.label.setFontScale(buttonFontScale)
         val exitButton = TextButton("Exit", skin)
         exitButton.label.setFontScale(buttonFontScale)
 
@@ -64,7 +66,12 @@ class MainMenuState(gsm: GameStateManager) : MenuBase(gsm) {
                 gsm.set(LeaderboardMenuState(gsm))
             }
         })
-        optionsButton.addListener(object : ClickListener() {
+        tutorialButton.addListener(object : ClickListener() {
+            override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                gsm.set(TutorialState(gsm))
+            }
+        })
+        settingsButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
 //                gsm.set(OptionsState(gsm))
                 gsm.set(OptionsState(gsm))
@@ -85,7 +92,8 @@ class MainMenuState(gsm: GameStateManager) : MenuBase(gsm) {
         mainTable.add(createButton).row()
         mainTable.add(joinButton).row()
         mainTable.add(leaderboardButton).row()
-        mainTable.add(optionsButton).row()
+        mainTable.add(tutorialButton).row()
+        mainTable.add(settingsButton).row()
         mainTable.add(exitButton).row()
 
         // Add table to
