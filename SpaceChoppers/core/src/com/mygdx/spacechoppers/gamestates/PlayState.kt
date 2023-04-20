@@ -100,7 +100,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     }
 
     override fun update(dt: Float) {
-        world.step(dt, 6, 2)
+        world.step(1/60f, 6, 2)
         // Get chopper movement
         chopperController.moveChopper(dt)
 
