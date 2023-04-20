@@ -24,7 +24,6 @@ public class BackgroundController extends Actor {
         textureRegion = new TextureRegion(texture);
 
         // Set the size of the background image.
-
         bgWidth = texture.getWidth();
         bgHeight = texture.getHeight();
 

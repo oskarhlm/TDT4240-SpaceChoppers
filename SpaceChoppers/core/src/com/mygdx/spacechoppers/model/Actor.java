@@ -41,8 +41,8 @@ public abstract class Actor implements IActor {
     public boolean isOutOfBounds() {
         return (location.x < 0 ||
                 location.y < 0 ||
-                location.x >= SpaceChoppersGame.Companion.getWidth() ||
-                location.y >= SpaceChoppersGame.Companion.getHeight()
+                location.x >= SpaceChoppersGame.Companion.getMapWidth() ||
+                location.y >= SpaceChoppersGame.Companion.getMapHeight()
         );
     }
 }

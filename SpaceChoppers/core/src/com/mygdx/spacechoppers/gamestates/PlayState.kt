@@ -19,15 +19,12 @@ import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.SpaceChoppersGame
 import com.mygdx.spacechoppers.controller.*
-import com.mygdx.spacechoppers.factories.AsteroidFactory
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
 import com.mygdx.spacechoppers.helper.Const.PIXELS_TO_METERS
-import com.mygdx.spacechoppers.model.AsteroidTextures
 import com.mygdx.spacechoppers.model.Joystick
 import com.mygdx.spacechoppers.networking.NetworkClient
 import com.mygdx.spacechoppers.utils.MenuCommon.skin
 import com.mygdx.spacechoppers.utils.Preferences
-import kotlin.random.Random
 
 
 class PlayState(gsm: GameStateManager) : GameState(gsm) {
@@ -53,13 +50,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val liveScoresController = LiveScoresController(cam)
 
     // Asteroids
-    private val asteroidTextureSize = with(manager.get("asteroid-sheet.png",
-        Texture::class.java)) {
-        Pair(width / 4, height / 4)
-    }
+    private val asteroidsController = AsteroidController()
 
-    private val asteroidFactory = AsteroidFactory(sb, AsteroidTextures(), world)
-    private val asteroids = ArrayList<AsteroidController>()
 
     private val quitButton = TextButton("Quit", skin)
     // Background
@@ -71,8 +63,6 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         // Set contact listener for the world of bodies
         world.setContactListener(gameContactListener)
-
-        createAsteroids(3)
 
         quitButton.setPosition(20f, SpaceChoppersGame.height - quitButton.height - 80f)
         quitButton.width = quitButton.width * 2 // increase width
@@ -93,32 +83,18 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         networkClient.sendScore(Preferences.lobbyID, Preferences.username, 0)
     }
 
-    private fun createAsteroids(num: Int) {
-        for (i in 0..num) {
-            asteroids.add(asteroidFactory.create())
-        }
-    }
-
     override fun update(dt: Float) {
-        // Get chopper movement
+        // Move chopper
         chopperController.moveChopper(dt)
 
+        // Move camera
         cam.position.set(chopperController.position)
 
-        val adjustedChopperX = chopperController.position.x - (chopperController.textureSize.x / 2)
-        val adjustedChopperY = chopperController.position.y - (chopperController.textureSize.y / 2)
-
-        val adjustedChopperPos = Vector3(adjustedChopperX, adjustedChopperY, 0f);
+        // Fire and move lasers
         lasersController.fireLasers(dt, cam.position, chopperController.model.currentAngle, world)
-
-
-        // Check if asteroids are out of bounds
-        if (asteroids.all { a: AsteroidController -> a.model.isOutOfBounds }) {
-            asteroids.clear()
-            createAsteroids(Random.nextInt(5)) // TODO: Dynamic number
-        }
-
-        asteroids.forEach { asteroidController: AsteroidController -> asteroidController.moveAsteroid() }
+        
+        // Spawn and move asteroids
+        asteroidsController.spawnAndMoveAsteroids(dt, world);
     }
 
     override fun render(delta: Float) {
@@ -128,20 +104,28 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         sb.projectionMatrix = cam.combined
 
         sb.begin()
+
+        // Draw background
         background.draw(sb)
 
+        // Draw lasers
         lasersController.draw(sb)
+
+        // Draw chopper
         chopperController.draw(sb)
 
+        // Draw asteroids
+        asteroidsController.draw(sb)
 
+        // Draw scores
         liveScoresController.renderScores(sb)
-        asteroids.forEach{ asteroidController: AsteroidController -> asteroidController.draw() }
+
 
         sb.end()
-
         stage.act(Gdx.graphics.deltaTime)
         stage.draw()
 
+        // Draw 2d physics boxes for all bodies
         val debugMatrix = Matrix4(cam.combined)
         debugMatrix.scale(1 / PIXELS_TO_METERS, 1 / PIXELS_TO_METERS, 1f)
 
