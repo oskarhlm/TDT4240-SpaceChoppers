@@ -10,8 +10,12 @@ import com.mygdx.spacechoppers.AssetManager
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.SpaceChoppersGame
+import com.mygdx.spacechoppers.controller.AsteroidController
+import com.mygdx.spacechoppers.factories.AsteroidFactory
+import com.mygdx.spacechoppers.model.AsteroidTextures
 import com.mygdx.spacechoppers.utils.MenuCommon
 import kotlin.math.min
+import kotlin.random.Random
 
 abstract class MenuBase(gsm: GameStateManager) : GameState(gsm) {
     protected val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
@@ -20,11 +24,30 @@ abstract class MenuBase(gsm: GameStateManager) : GameState(gsm) {
         AssetManager.manager.get("menu_bg_clean.png", Texture::class.java)
     )
 
+    // Asteroids
+    private val asteroidFactory = AsteroidFactory(sb, AsteroidTextures())
+    private val asteroids = ArrayList<AsteroidController>()
+
     init {
         Gdx.input.inputProcessor = stage
+        createAsteroids(3)
     }
 
-    override fun update(dt: Float) {}
+    private fun createAsteroids(num: Int) {
+        for (i in 0..num) {
+            asteroids.add(asteroidFactory.create())
+        }
+    }
+
+    override fun update(dt: Float) {
+
+        if (asteroids.all { a: AsteroidController -> a.model.isOutOfBounds }) {
+            asteroids.clear()
+            createAsteroids(Random.nextInt(5)) // TODO: Dynamic number
+        }
+
+        asteroids.forEach { asteroidController: AsteroidController -> asteroidController.moveAsteroid() }
+    }
 
     override fun render(delta: Float) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
@@ -32,6 +55,7 @@ abstract class MenuBase(gsm: GameStateManager) : GameState(gsm) {
 
         sb.begin()
         sb.draw(background, 0f, 0f)
+        asteroids.forEach{ asteroid: AsteroidController -> asteroid.draw() }
         sb.end()
 
         stage.act(min(delta, 1 / 30f))
