@@ -19,7 +19,7 @@ public class BackgroundController extends Actor {
 
 
     public BackgroundController(Stage stage) {
-        texture = new Texture("menu_bg_clean.png");
+        texture = new Texture("starfield_dark_bg.png");
         texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         textureRegion = new TextureRegion(texture);
 
