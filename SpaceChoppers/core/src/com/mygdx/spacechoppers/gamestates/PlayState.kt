@@ -27,6 +27,7 @@ import com.mygdx.spacechoppers.controller.ExplosionsController
 import com.mygdx.spacechoppers.controller.HealthBarController
 import com.mygdx.spacechoppers.controller.LaserController
 import com.mygdx.spacechoppers.controller.LiveScoresController
+import com.mygdx.spacechoppers.gamestates.menu.GameOverState
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
 import com.mygdx.spacechoppers.model.Joystick
 import com.mygdx.spacechoppers.networking.MessageReceiver
@@ -94,9 +95,10 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
             }
         })
 
+        lobbyLabel.setFontScale(3f)
         lobbyLabel.setPosition(
-            SpaceChoppersGame.width / 2 - lobbyLabel.width / 2,
-            SpaceChoppersGame.height - quitButton.height - 80f
+            quitButton.width + 80f,
+            SpaceChoppersGame.height - 80f
         )
 
         boostButton = ImageButton(TextureRegionDrawable(AssetManager.boostButtonActive))
@@ -169,7 +171,6 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         // Update explosions
         explosionsController.update(dt)
-
     }
 
     override fun render(delta: Float) {
@@ -200,7 +201,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
             healthBarController.draw(sb, chopperController.model.hitPoints)
         } else {
             networkClient.leaveLobby(Preferences.lobbyID, Preferences.username)
-            gsm.set(MainMenuState(gsm))
+            gsm.set(GameOverState(gsm, messageReciever.playerScore))
         }
 
         // Draw explosions
