@@ -83,9 +83,12 @@ wss.on('connection', function connection(ws) {
           });
         break;
       default:
-        console.log(`Unknown action: ${message.action}`);
+        const error = {
+          error: `Unknown action: ${message.action}`,
+        };
+        ws.send(JSON.stringify(error));
         break;
-    }
+      }
   });
 
   ws.on('close', function close() {
@@ -100,3 +103,5 @@ wss.on('connection', function connection(ws) {
     }
   });
 });
+
+export { wss };
