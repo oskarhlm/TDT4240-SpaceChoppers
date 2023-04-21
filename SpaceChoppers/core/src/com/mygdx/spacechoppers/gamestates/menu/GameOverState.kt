@@ -21,7 +21,7 @@ class GameOverState(gsm : GameStateManager, score: Int) : MenuBase(gsm) {
         gameOverLabel.setFontScale(4f)
 
         // GAME OVER TEXT
-        val scoreLabel = Label("Your score: NULL", skin)
+        val scoreLabel = Label("Your score: $score", skin)
         scoreLabel.setFontScale(4f)
 
         // BACK BUTTON
