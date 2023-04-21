@@ -52,32 +52,35 @@ export default class DBHandler {
 
   async getHighscores() {
     const db = getFirestore();
-    const q = query(collection(db, 'highscores'), orderBy('score', 'desc'), limit(10));
+    const q = query(collection(db, 'highscores'), orderBy('score', 'desc'), limit(25));
     const querySnapshot = await getDocs(q);
     const highscores = [];
-
+  
     querySnapshot.forEach((doc) => {
       const data = doc.data();
       const highscore = {
         username: doc.id,
-        score: data.score,
-      }
+        score: data.score
+      };
       highscores.push(highscore);
     });
-
-
+  
     return highscores;
   }
-
+  
   async getScores(lobbyID) {
     const db = getDatabase();
     const lobbyRef = ref(db, String(lobbyID));
     const snapshot = await get(lobbyRef);
   
     if (snapshot.exists()) {
-      return snapshot.val();
+      const scores = snapshot.val();
+      const sortedScores = Object.entries(scores)
+        .map(([username, score]) => ({ username, score }))
+        .sort((a, b) => b.score - a.score);
+      return sortedScores;
     } else {
       throw new Error(`No scores found for lobbyID: ${lobbyID}`);
     }
-  }
+  }  
 }
