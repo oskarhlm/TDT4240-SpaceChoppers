@@ -46,7 +46,7 @@ public class GameContactListener implements ContactListener {
             AsteroidController.getInstance().toDispose.add(asteroid);
 
             // Add explosion
-            ExplosionsController.getInstance().addExplosion(asteroid.getTexturePosition(), asteroid.getSize().x);
+            ExplosionsController.getInstance().addExplosion(asteroid.getLocation(), asteroid.getSize().x);
         } else if (isLaserAsteroidCollision) {
             // Cast models
             AsteroidModel asteroid = (AsteroidModel) b.getBody().getUserData();
@@ -56,7 +56,7 @@ public class GameContactListener implements ContactListener {
             AsteroidController.getInstance().toDispose.add(asteroid);
 
             // Add explosion
-            ExplosionsController.getInstance().addExplosion(asteroid.getTexturePosition(), asteroid.getSize().x);
+            ExplosionsController.getInstance().addExplosion(asteroid.getLocation(), asteroid.getSize().x);
         }
 
         if (isAsteroidLaserCollision || isLaserAsteroidCollision) {
@@ -84,7 +84,7 @@ public class GameContactListener implements ContactListener {
             chopper.takeDamage();
 
             // Create explosion
-            ExplosionsController.getInstance().addExplosion(asteroid.getTexturePosition(), asteroid.getSize().x);
+            ExplosionsController.getInstance().addExplosion(asteroid.getLocation(), asteroid.getSize().x);
 
         } else if (isChopperAsteroidCollision) {
             // Cast models
@@ -97,7 +97,7 @@ public class GameContactListener implements ContactListener {
             chopper.takeDamage();
 
             // Add explosion
-            ExplosionsController.getInstance().addExplosion(asteroid.getTexturePosition(), asteroid.getSize().x);
+            ExplosionsController.getInstance().addExplosion(asteroid.getLocation(), asteroid.getSize().x);
         }
     }
 
