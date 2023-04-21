@@ -21,6 +21,16 @@ public class AsteroidModel extends Actor {
         this.size = textureSize;
     }
 
+    public Vector2 getSize() {
+        return this.size;
+    }
+
+    public Vector3 getTexturePosition() {
+        float adjustedX = this.position.x - size.x / 2;
+        float adjustedY = this.position.y - size.y / 2;
+        return new Vector3(adjustedX, adjustedY, 0);
+    }
+
     public void updatePosition() {
         position.add(velocity.x, velocity.y, 0);
     }

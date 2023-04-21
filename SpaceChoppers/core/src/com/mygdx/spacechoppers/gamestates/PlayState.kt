@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
@@ -22,11 +21,11 @@ import com.mygdx.spacechoppers.SpaceChoppersGame
 import com.mygdx.spacechoppers.controller.AsteroidController
 import com.mygdx.spacechoppers.controller.BackgroundController
 import com.mygdx.spacechoppers.controller.ChopperController
+import com.mygdx.spacechoppers.controller.ExplosionsController
 import com.mygdx.spacechoppers.controller.HealthBarController
 import com.mygdx.spacechoppers.controller.LaserController
 import com.mygdx.spacechoppers.controller.LiveScoresController
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
-import com.mygdx.spacechoppers.model.Explosion
 import com.mygdx.spacechoppers.model.Joystick
 import com.mygdx.spacechoppers.networking.NetworkClient
 import com.mygdx.spacechoppers.utils.Preferences
@@ -51,16 +50,21 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     // Laser
     private val lasersController = LaserController()
+
+    // Live scores
     private val liveScoresController = LiveScoresController(cam)
+
+    // Background
     private val backgroundController = BackgroundController(stage)
 
     // Asteroids
-    private val asteroidsController = AsteroidController.getInstance();
+    private val asteroidsController = AsteroidController.getInstance()
 
+    // Health bar
     private val healthBarController = HealthBarController(cam)
 
     // Explosions
-    private val explosions = ArrayList<Explosion>()
+    private val explosionsController = ExplosionsController.getInstance()
 
     // Buttons
     private val quitButton = TextButton("Quit", AssetManager.menuSkin)
@@ -73,9 +77,6 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         // Set contact listener for the world of bodies
         world.setContactListener(gameContactListener)
-
-        explosions.add(Explosion(100f, 100f, 0f)) // TODO: Delete these later
-        explosions.add(Explosion(100f, 800f, 0f)) // TODO: Delete these later
 
         quitButton.setPosition(20f, SpaceChoppersGame.height - quitButton.height - 80f)
         quitButton.width *= 2 // increase width
@@ -147,7 +148,12 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         lasersController.fireLasers(dt, cam.position, chopperController.model.currentAngle, world)
         
         // Spawn and move asteroids
-        asteroidsController.spawnAndMoveAsteroids(dt, world, cam)
+
+        asteroidsController.spawnAndMoveAsteroids(dt, world, cam);
+
+        // Update explosions
+        explosionsController.update(dt)
+
     }
 
     override fun render(delta: Float) {
@@ -180,6 +186,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
             networkClient.leaveLobby(Preferences.lobbyID, Preferences.username)
             gsm.set(MainMenuState(gsm))
         }
+
+        // Draw explosions
+        explosionsController.drawExplosions(sb)
 
         sb.end()
         stage.act(Gdx.graphics.deltaTime)
