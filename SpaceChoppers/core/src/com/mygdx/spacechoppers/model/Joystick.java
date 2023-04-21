@@ -11,12 +11,11 @@ public class Joystick {
     private final float x;
     private final float y;
     private final Touchpad touchpad;
-    private final Skin skin;
 
     public Joystick(float camWidth){
         this.x = camWidth / 2 - width / 2;
         this.y = 100;
-        this.skin = AssetManager.INSTANCE.getJoystickSkin();
+        Skin skin = AssetManager.INSTANCE.getJoystickSkin();
         this.touchpad = new Touchpad(20, skin);
         touchpad.setBounds(x, y, width, height);
         touchpad.getStyle().knob.setMinWidth(20);
@@ -25,9 +24,5 @@ public class Joystick {
 
     public Touchpad getTouchpad(){
         return touchpad;
-    }
-
-    public void dispose() {
-        skin.dispose();
     }
 }
