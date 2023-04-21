@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton
+import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
@@ -28,6 +30,7 @@ import com.mygdx.spacechoppers.controller.LiveScoresController
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
 import com.mygdx.spacechoppers.model.Explosion
 import com.mygdx.spacechoppers.model.Joystick
+import com.mygdx.spacechoppers.networking.MessageReceiver
 import com.mygdx.spacechoppers.networking.NetworkClient
 import com.mygdx.spacechoppers.utils.Preferences
 
@@ -36,9 +39,10 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val joystick = Joystick(cam.viewportWidth)
     private val timer = Timer()
 
-    private val world = World(Vector2(0f,0f), false)
+    private val world = World(Vector2(0f, 0f), false)
 
-    val networkClient: NetworkClient = NetworkClient.getInstance()
+    val networkClient = NetworkClient.getInstance()
+    val messageReciever = MessageReceiver.getInstance()
 
     // Contact listener
     private val gameContactListener = GameContactListener()
@@ -64,6 +68,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     // Buttons
     private val quitButton = TextButton("Quit", AssetManager.menuSkin)
+    private val lobbyLabel = Label(messageReciever.lobbyID.toString(), AssetManager.menuSkin)
     private var boostButton: ImageButton
     private var rapidFireButton: ImageButton
 
@@ -88,6 +93,11 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
             }
         })
 
+        lobbyLabel.setPosition(
+            SpaceChoppersGame.width / 2 - lobbyLabel.width / 2,
+            SpaceChoppersGame.height - quitButton.height - 80f
+        )
+
         boostButton = ImageButton(TextureRegionDrawable(AssetManager.boostButtonActive))
         boostButton.setPosition(boostButton.width / 2, 160f)
         boostButton.addListener(object : ClickListener() {
@@ -97,7 +107,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
                 boostButton.isDisabled = true
                 val task: Timer.Task = object : Timer.Task() {
                     override fun run() {
-                        boostButton.style.imageUp = TextureRegionDrawable(AssetManager.boostButtonActive)
+                        boostButton.style.imageUp =
+                            TextureRegionDrawable(AssetManager.boostButtonActive)
                         boostButton.isDisabled = false
                     }
                 }
@@ -110,11 +121,13 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         rapidFireButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
                 lasersController.rapidFire()
-                rapidFireButton.style.imageUp = TextureRegionDrawable(AssetManager.rapidFireButtonInactive)
+                rapidFireButton.style.imageUp =
+                    TextureRegionDrawable(AssetManager.rapidFireButtonInactive)
                 rapidFireButton.isDisabled = true
                 val task: Timer.Task = object : Timer.Task() {
                     override fun run() {
-                        rapidFireButton.style.imageUp = TextureRegionDrawable(AssetManager.rapidFireButtonActive)
+                        rapidFireButton.style.imageUp =
+                            TextureRegionDrawable(AssetManager.rapidFireButtonActive)
                         rapidFireButton.isDisabled = false
                     }
                 }
@@ -122,7 +135,10 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
             }
         })
 
+        println("lobbylabel: $lobbyLabel.text")
+
         stage.addActor(quitButton)
+        stage.addActor(lobbyLabel)
         stage.addActor(boostButton)
         stage.addActor(rapidFireButton)
 
@@ -135,7 +151,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     override fun update(dt: Float) {
         // Step world
-        world.step(1/60f, 6, 2)
+        world.step(1 / 60f, 6, 2)
 
         // Move chopper
         chopperController.moveChopper(dt)
@@ -145,7 +161,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         // Fire and move lasers
         lasersController.fireLasers(dt, cam.position, chopperController.model.currentAngle, world)
-        
+
         // Spawn and move asteroids
         asteroidsController.spawnAndMoveAsteroids(dt, world, cam)
     }

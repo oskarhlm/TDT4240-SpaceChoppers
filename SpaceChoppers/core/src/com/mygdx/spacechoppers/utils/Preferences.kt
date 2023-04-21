@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 
 
 object Preferences {
+
     // Aliases
     private const val PREF_MUSIC_ENABLED = "music.enabled"
     private const val PREF_SOUND_ENABLED = "sound.enabled"
@@ -21,11 +22,11 @@ object Preferences {
         get() = prefs.getBoolean(PREF_SOUND_ENABLED, true)
         set(value) = prefs.putBoolean(PREF_SOUND_ENABLED, value).flush()
 
-    var username: String?
+    var username
         get() = prefs.getString(PREF_USERNAME, null)
         set(value) = prefs.putString(PREF_USERNAME, value).flush()
 
-    var lobbyID: Int
+    var lobbyID
         get() = prefs.getInteger(PREF_LOBBY_ID, -1)
         set(value) = prefs.putInteger(PREF_LOBBY_ID, value).flush()
 }

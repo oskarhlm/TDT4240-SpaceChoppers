@@ -33,8 +33,9 @@ class SpaceChoppersGame : ApplicationAdapter() {
         // Create network handler and fetch highscores
         val networkClient = NetworkClient.getInstance()
         networkClient.getHighscores()
+
         // Play music
-        Preferences.musicEnabled.let { AssetManager.playMusic() }
+        if (Preferences.musicEnabled) AssetManager.playMusic()
     }
 
     override fun render() {
@@ -46,7 +47,6 @@ class SpaceChoppersGame : ApplicationAdapter() {
     override fun dispose() {
         println("Closed game")
         sb.dispose()
-        //MenuCommon.skin.dispose()
         AssetManager.manager.dispose()
     }
 }

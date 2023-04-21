@@ -70,7 +70,7 @@ class OptionsState(gsm: GameStateManager) : MenuBase(gsm) {
         confirmButton.label.setFontScale(4f)
         confirmButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
-                usernameField.text.isNotBlank().let {
+                if (usernameField.text.isNotBlank()) {
                     Preferences.username = usernameField.text
                     Gdx.input.setOnscreenKeyboardVisible(false)
                     gsm.set(MainMenuState(gsm))
