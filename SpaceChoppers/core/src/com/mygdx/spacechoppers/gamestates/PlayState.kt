@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
+import com.badlogic.gdx.utils.Timer
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.GameContactListener
 import com.mygdx.spacechoppers.AssetManager
@@ -30,10 +31,10 @@ import com.mygdx.spacechoppers.model.Joystick
 import com.mygdx.spacechoppers.networking.NetworkClient
 import com.mygdx.spacechoppers.utils.Preferences
 
-
 class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
     private val joystick = Joystick(cam.viewportWidth)
+    private val timer = Timer()
 
     private val world = World(Vector2(0f,0f), false)
 
@@ -49,7 +50,6 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val chopperController = ChopperController(joystick.touchpad, world)
 
     // Laser
-
     private val lasersController = LaserController()
     private val liveScoresController = LiveScoresController(cam)
     private val backgroundController = BackgroundController(stage)
@@ -58,7 +58,6 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val asteroidsController = AsteroidController.getInstance();
 
     private val healthBarController = HealthBarController(cam)
-
 
     // Explosions
     private val explosions = ArrayList<Explosion>()
@@ -89,23 +88,37 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
             }
         })
 
-        boostButton =
-            if (chopperController.isBoostIsAvailable) ImageButton(TextureRegionDrawable(AssetManager.boostButtonActive))
-            else ImageButton(TextureRegionDrawable(AssetManager.boostButtonInactive))
+        boostButton = ImageButton(TextureRegionDrawable(AssetManager.boostButtonActive))
         boostButton.setPosition(boostButton.width / 2, 160f)
         boostButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
                 chopperController.boost()
+                boostButton.style.imageUp = TextureRegionDrawable(AssetManager.boostButtonInactive)
+                boostButton.isDisabled = true
+                val task: Timer.Task = object : Timer.Task() {
+                    override fun run() {
+                        boostButton.style.imageUp = TextureRegionDrawable(AssetManager.boostButtonActive)
+                        boostButton.isDisabled = false
+                    }
+                }
+                timer.scheduleTask(task, 30f)
             }
         })
 
-        rapidFireButton =
-            if (lasersController.isRapidFireEnabled) ImageButton(TextureRegionDrawable(AssetManager.rapidFireButtonActive))
-            else ImageButton(TextureRegionDrawable(AssetManager.rapidFireButtonInactive))
+        rapidFireButton = ImageButton(TextureRegionDrawable(AssetManager.rapidFireButtonActive))
         rapidFireButton.setPosition(SpaceChoppersGame.width - rapidFireButton.width * 1.5f, 160f)
         rapidFireButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
                 lasersController.rapidFire()
+                rapidFireButton.style.imageUp = TextureRegionDrawable(AssetManager.rapidFireButtonInactive)
+                rapidFireButton.isDisabled = true
+                val task: Timer.Task = object : Timer.Task() {
+                    override fun run() {
+                        rapidFireButton.style.imageUp = TextureRegionDrawable(AssetManager.rapidFireButtonActive)
+                        rapidFireButton.isDisabled = false
+                    }
+                }
+                timer.scheduleTask(task, 30f)
             }
         })
 
@@ -123,9 +136,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     override fun update(dt: Float) {
         // Step world
         world.step(1/60f, 6, 2)
+
         // Move chopper
         chopperController.moveChopper(dt)
-
 
         // Move camera
         cam.position.set(chopperController.position)
@@ -134,8 +147,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         lasersController.fireLasers(dt, cam.position, chopperController.model.currentAngle, world)
         
         // Spawn and move asteroids
-        asteroidsController.spawnAndMoveAsteroids(dt, world, cam);
-
+        asteroidsController.spawnAndMoveAsteroids(dt, world, cam)
     }
 
     override fun render(delta: Float) {
@@ -144,9 +156,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         cam.update()
         sb.projectionMatrix = cam.combined
 
-
         sb.begin()
-
 
         // Draw background
         backgroundController.draw(sb)
@@ -174,7 +184,6 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         sb.end()
         stage.act(Gdx.graphics.deltaTime)
         stage.draw()
-
     }
 
     override fun dispose() {
