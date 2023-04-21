@@ -5,12 +5,9 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.ScreenUtils
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
-import com.mygdx.spacechoppers.gamestates.menu.UsernamePromptState
+import com.mygdx.spacechoppers.gamestates.menu.OptionsState
 import com.mygdx.spacechoppers.utils.Preferences
 import com.mygdx.spacechoppers.networking.NetworkClient
-
-import com.mygdx.spacechoppers.utils.MenuCommon
-
 
 class SpaceChoppersGame : ApplicationAdapter() {
     lateinit var sb: SpriteBatch
@@ -31,14 +28,13 @@ class SpaceChoppersGame : ApplicationAdapter() {
         sb = SpriteBatch()
         gsm = GameStateManager(this)
         Preferences.username?.let { gsm.push(MainMenuState(gsm)) }
-            ?: run { gsm.push(UsernamePromptState(gsm)) }
+            ?: run { gsm.push(OptionsState(gsm)) }
 
         // Create network handler and fetch highscores
         val networkClient = NetworkClient.getInstance()
-        networkClient.getHighscores();
-
-        // Create music
-        AssetManager.setUpMusic()
+        networkClient.getHighscores()
+        // Play music
+        Preferences.musicEnabled.let { AssetManager.playMusic() }
     }
 
     override fun render() {
@@ -50,7 +46,7 @@ class SpaceChoppersGame : ApplicationAdapter() {
     override fun dispose() {
         println("Closed game")
         sb.dispose()
-        MenuCommon.skin.dispose()
+        //MenuCommon.skin.dispose()
         AssetManager.manager.dispose()
     }
 }

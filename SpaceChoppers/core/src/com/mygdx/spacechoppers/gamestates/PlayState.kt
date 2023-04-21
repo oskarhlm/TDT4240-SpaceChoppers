@@ -7,10 +7,14 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.Image
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.GameContactListener
+import com.mygdx.spacechoppers.AssetManager
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.SpaceChoppersGame
@@ -24,7 +28,6 @@ import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
 import com.mygdx.spacechoppers.model.Explosion
 import com.mygdx.spacechoppers.model.Joystick
 import com.mygdx.spacechoppers.networking.NetworkClient
-import com.mygdx.spacechoppers.utils.MenuCommon.skin
 import com.mygdx.spacechoppers.utils.Preferences
 
 
@@ -60,7 +63,10 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     // Explosions
     private val explosions = ArrayList<Explosion>()
 
-    private val quitButton = TextButton("Quit", skin)
+    // Buttons
+    private val quitButton = TextButton("Quit", AssetManager.menuSkin)
+    private var boostButton: ImageButton
+    private var rapidFireButton: ImageButton
 
     init {
         Gdx.input.inputProcessor = stage
@@ -73,8 +79,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         explosions.add(Explosion(100f, 800f, 0f)) // TODO: Delete these later
 
         quitButton.setPosition(20f, SpaceChoppersGame.height - quitButton.height - 80f)
-        quitButton.width = quitButton.width * 2 // increase width
-        quitButton.height = quitButton.height * 2 // increase height
+        quitButton.width *= 2 // increase width
+        quitButton.height *= 2 // increase height
         quitButton.label.setFontScale(2f)
         quitButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
@@ -82,7 +88,30 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
                 gsm.set(MainMenuState(gsm))
             }
         })
+
+        boostButton =
+            if (chopperController.isBoostIsAvailable) ImageButton(TextureRegionDrawable(AssetManager.boostButtonActive))
+            else ImageButton(TextureRegionDrawable(AssetManager.boostButtonInactive))
+        boostButton.setPosition(boostButton.width / 2, 160f)
+        boostButton.addListener(object : ClickListener() {
+            override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                chopperController.boost()
+            }
+        })
+
+        rapidFireButton =
+            if (lasersController.isRapidFireEnabled) ImageButton(TextureRegionDrawable(AssetManager.rapidFireButtonActive))
+            else ImageButton(TextureRegionDrawable(AssetManager.rapidFireButtonInactive))
+        rapidFireButton.setPosition(SpaceChoppersGame.width - rapidFireButton.width * 1.5f, 160f)
+        rapidFireButton.addListener(object : ClickListener() {
+            override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                lasersController.rapidFire()
+            }
+        })
+
         stage.addActor(quitButton)
+        stage.addActor(boostButton)
+        stage.addActor(rapidFireButton)
 
         SpaceChoppersGame.mapWidth = backgroundController.mapWidth
         SpaceChoppersGame.mapHeight = backgroundController.mapHeight

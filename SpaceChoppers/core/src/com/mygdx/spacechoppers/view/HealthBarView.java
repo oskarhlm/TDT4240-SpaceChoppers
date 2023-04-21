@@ -14,7 +14,7 @@ public class HealthBarView {
     private Texture blank;
     public HealthBarView(OrthographicCamera cam) {
         this.cam = cam;
-        this.blank = AssetManager.INSTANCE.getManager().get("blank.png", Texture.class);
+        this.blank = AssetManager.INSTANCE.getBlank();
     }
 
     public void draw(SpriteBatch sb, int hitPoints) {

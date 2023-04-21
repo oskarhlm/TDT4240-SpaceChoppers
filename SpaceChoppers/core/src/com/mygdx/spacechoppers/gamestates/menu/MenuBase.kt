@@ -10,15 +10,17 @@ import com.mygdx.spacechoppers.AssetManager
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.SpaceChoppersGame
+import com.mygdx.spacechoppers.controller.AsteroidController
+
+import com.mygdx.spacechoppers.model.AsteroidTextures
 import com.mygdx.spacechoppers.utils.MenuCommon
 import kotlin.math.min
+import kotlin.random.Random
 
 abstract class MenuBase(gsm: GameStateManager) : GameState(gsm) {
     protected val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
-    protected val skin = MenuCommon.skin
-    protected var background = TextureRegion(
-        AssetManager.manager.get("menu_bg_clean.png", Texture::class.java)
-    )
+    protected val skin = AssetManager.menuSkin
+    protected var background = TextureRegion(AssetManager.menuBackgroundClean)
 
     init {
         Gdx.input.inputProcessor = stage

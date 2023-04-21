@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.mygdx.spacechoppers.AssetManager.manager
+import com.mygdx.spacechoppers.AssetManager
 
 class Explosion(x: Float, y: Float, asteroidSize: Float) {
     var x: Float
@@ -17,7 +17,7 @@ class Explosion(x: Float, y: Float, asteroidSize: Float) {
         this.y = y - OFFSET
         statetime = 0f
         if (anim == null) {
-            val texture = manager.get("explosion.png", Texture::class.java)
+            val texture = AssetManager.explosion
             anim = Animation<Any?>(FRAME_LENGTH, *TextureRegion.split(texture, SIZE, SIZE)[0])
         }
     }
@@ -33,7 +33,7 @@ class Explosion(x: Float, y: Float, asteroidSize: Float) {
         statetime += deltaTime
         if (anim!!.isAnimationFinished(statetime)) {
             remove = true
-            statetime = 0f // TODO: Remove (only used in testing)
+            //statetime = 0f // TODO: Remove (only used in testing)
         }
     }
 
@@ -45,6 +45,4 @@ class Explosion(x: Float, y: Float, asteroidSize: Float) {
                 500f,
                 500f)
     }
-
-
 }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.spacechoppers.AssetManager;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
 import com.mygdx.spacechoppers.helper.Const;
 
@@ -21,7 +22,7 @@ public class LaserView implements Disposable {
     private final float SCALE_FACTOR = 0.5f;
 
     public LaserView() {
-        this.texture = new Texture(Gdx.files.internal("green_laser.png"));
+        this.texture = AssetManager.INSTANCE.getLaserTexture();
         // Create a new sprite from the texture
         this.sprite = new Sprite(texture);
     }
@@ -52,6 +53,6 @@ public class LaserView implements Disposable {
 
     @Override
     public void dispose() {
-        texture.dispose();
+        //texture.dispose();
     }
 }
