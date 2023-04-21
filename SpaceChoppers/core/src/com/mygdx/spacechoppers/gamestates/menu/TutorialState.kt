@@ -22,13 +22,13 @@ class TutorialState(gsm: GameStateManager) : MenuBase(gsm){
         val table = Table()
         val scroll = ScrollPane(table, skin)
 
-        val heliSprite = Sprite(AssetManager.heliTextures[0])
-        heliSprite.setScale(0.01f)
-        val heliImage = Image((heliSprite))
+        /*val asteroidTextures = AssetManager.asteroidSheet
+        val chopperTexture = AssetManager.heliTextures[0]
+
+        val chopperSprite = Sprite(chopperTexture)
+        val chopperImage = Image(chopperSprite)
 
         val asteroids = arrayListOf<Image>()
-        val asteroidTextures = AssetManager.asteroidSheet
-
         val singleTextureWidth: Int = asteroidTextures.width / 4
         val singleTextureHeight: Int = asteroidTextures.height / 4
 
@@ -42,57 +42,64 @@ class TutorialState(gsm: GameStateManager) : MenuBase(gsm){
                     singleTextureHeight
                 )
                 val asteroidSprite = Sprite(texture)
-                asteroidSprite.setScale(0.2f)
                 val asteroidImage = Image(asteroidSprite)
                 asteroids.add(asteroidImage)
             }
-        }
+        }*/
 
         table.top()
         table.row()
-        table.add(MenuCommon.scaledLabel("How To Play", 6f)).padBottom(100f)
+        table.add(MenuCommon.scaledLabel("How To Play", 6f)).padBottom(50f)
         table.row()
-        table.add(MenuCommon.scaledLabel("Entities:", 4f)).left().padBottom(50f)
+        table.add(MenuCommon.scaledLabel("Entities:", 4f)).left().padBottom(25f)
         table.row()
-        table.add(MenuCommon.scaledLabel("Chopper", 3f)).left().padBottom(25f)
+        table.add(MenuCommon.scaledLabel("Chopper", 3f)).left()
         table.row()
         table.add(MenuCommon.scaledLabel("The chopper is the playable entity.", 2f)).left()
         table.row()
-        table.add(heliImage).center()
+/*
+        table.add(chopperImage).center()
+*/
         table.row()
         table.add(MenuCommon.scaledLabel("You control the chopper in space.", 2f)).left().padBottom(25f)
         table.row()
         table.add(MenuCommon.scaledLabel("Asteroids", 3f)).left()
         table.row()
-        table.add(asteroids[0])
+        table.add(MenuCommon.scaledLabel("The asteroids are the enemies of", 2f)).left()
         table.row()
-        table.add(MenuCommon.scaledLabel("The asteroids are the enemies", 2f)).left()
+        table.add(MenuCommon.scaledLabel("the chopper.", 2f)).left()
         table.row()
-        table.add(MenuCommon.scaledLabel("of the chopper.", 2f)).left()
+/*        val asteroidRow = Table()
+        for (i in 5..10) {
+            asteroidRow.add(asteroids[i]).padRight(10f)
+        }
+        table.add(asteroidRow)*/
         table.row()
-        table.add(MenuCommon.scaledLabel("Asteroids are destroyed when", 2f)).left()
+        table.add(MenuCommon.scaledLabel("Asteroids are destroyed when in", 2f)).left()
         table.row()
-        table.add(MenuCommon.scaledLabel("in contact with lasers", 2f)).left()
+        table.add(MenuCommon.scaledLabel("contact with lasers", 2f)).left()
         table.row()
         table.add(MenuCommon.scaledLabel("or the chopper.", 2f)).left()
         table.row()
-        table.add(MenuCommon.scaledLabel("The chopper loses health when", 2f)).left()
+        table.add(MenuCommon.scaledLabel("The chopper loses health when in", 2f)).left()
         table.row()
-        table.add(MenuCommon.scaledLabel("when in contact with asteroids.", 2f)).left().padBottom(25f)
+        table.add(MenuCommon.scaledLabel("contact with asteroids.", 2f)).left().padBottom(25f)
         table.row()
-        table.add(MenuCommon.scaledLabel("Laser", 3f)).left().padBottom(25f)
+        table.add(MenuCommon.scaledLabel("Lasers", 3f)).left()
         table.row()
-        table.add(MenuCommon.scaledLabel("Lasers are fired from the chopper", 2f)).left()
+        table.add(MenuCommon.scaledLabel("Lasers are automatically fired", 2f)).left()
         table.row()
-        table.add(MenuCommon.scaledLabel("in the direction it is facing", 2f)).left().padBottom(25f)
+        table.add(MenuCommon.scaledLabel("from the chopper", 2f)).left()
         table.row()
-        table.add(MenuCommon.scaledLabel("Controls:", 4f)).left().padBottom(50f)
+        table.add(MenuCommon.scaledLabel("in the direction it is facing.", 2f)).left().padBottom(25f)
+        table.row()
+        table.add(MenuCommon.scaledLabel("Controls:", 4f)).left().padBottom(25f)
         table.row()
         table.add(MenuCommon.scaledLabel("Hold and drag the joystick to move", 2f)).left()
         table.row()
-        table.add(MenuCommon.scaledLabel("the chopper", 2f)).left().padBottom(50f)
+        table.add(MenuCommon.scaledLabel("the chopper", 2f)).left().padBottom(25f)
         table.row()
-        table.add(MenuCommon.scaledLabel("Objective:", 4f)).left().padBottom(50f)
+        table.add(MenuCommon.scaledLabel("Objective:", 4f)).left().padBottom(25f)
         table.row()
         table.add(MenuCommon.scaledLabel("Survive for as long as you can.", 2f)).left()
         table.row()
