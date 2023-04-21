@@ -62,7 +62,7 @@ public class NetworkClient {
         // wait for the WebSocket connection to be established
         latch.await();
         handler.send(leaveLobby);
-        handler.close();
+        //handler.close();
     }
 
     public void sendScore(int lobbyID, String username, int score) throws InterruptedException {
