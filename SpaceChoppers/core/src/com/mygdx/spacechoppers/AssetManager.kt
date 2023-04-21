@@ -66,18 +66,14 @@ object AssetManager {
     val blank get() = manager.get<Texture>(BLANK)
     val asteroidSheet get() = manager.get<Texture>(ASTEROID_SHEET)
     val laserTexture get() = manager.get<Texture>(LASER)
-    val boostButtonActive
-        get() = manager.get<Texture>(BOOST_BTN_ACTIVE)
-    val boostButtonInactive
-        get() = manager.get<Texture>(BOOST_BTN_INACTIVE)
-    val rapidFireButtonActive
-        get() = manager.get<Texture>(RAPID_FIRE_BTN_ACTIVE)
-    val rapidFireButtonInactive
-        get() = manager.get<Texture>(RAPID_FIRE_BTN_INACTIVE)
+    val boostButtonActive get() = manager.get<Texture>(BOOST_BTN_ACTIVE)
+    val boostButtonInactive get() = manager.get<Texture>(BOOST_BTN_INACTIVE)
+    val rapidFireButtonActive get() = manager.get<Texture>(RAPID_FIRE_BTN_ACTIVE)
+    val rapidFireButtonInactive get() = manager.get<Texture>(RAPID_FIRE_BTN_INACTIVE)
 
     // Music
     private val backgroundMusic: Music get() = manager.get<Music>(BG_MUSIC)
-    private val laserSound: Music get() = manager.get<Music>(LASER_SOUND)
+    private val laserSound: Sound get() = manager.get<Sound>(LASER_SOUND)
 
     // Skins
     val menuSkin get() = manager.get<Skin>(MENU_SKIN)
@@ -94,7 +90,6 @@ object AssetManager {
 
     fun playLaserSound() {
         if (!playSoundEffects) return
-        val laserSound = manager.get("sounds/laser.mp3", Sound::class.java)
         laserSound.play()
     }
 }

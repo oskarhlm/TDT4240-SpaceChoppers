@@ -17,7 +17,6 @@ public class LaserController {
     private float dt;
     private float initialFireRate = 1;
     private float fireRate = initialFireRate;
-    private boolean rapidFireEnabled = true;
     private float maxFireRate = 8;
     private float rapidFireDuration;
 
@@ -74,17 +73,11 @@ public class LaserController {
 
     public void rapidFire() {
         fireRate = maxFireRate;
-        rapidFireEnabled = false;
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
                 fireRate = initialFireRate;
-                rapidFireEnabled = true;
             }
         }, 10);
-    }
-
-    public boolean isRapidFireEnabled() {
-        return rapidFireEnabled;
     }
 }
