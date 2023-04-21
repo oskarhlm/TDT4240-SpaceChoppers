@@ -188,6 +188,5 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     override fun dispose() {
         stage.dispose()
-        joystick.dispose()
     }
 }
