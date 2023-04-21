@@ -105,6 +105,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         boostButton.setPosition(boostButton.width / 2, 160f)
         boostButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                if (boostButton.isDisabled) return
                 chopperController.boost()
                 boostButton.style.imageUp = TextureRegionDrawable(AssetManager.boostButtonInactive)
                 boostButton.isDisabled = true
@@ -123,6 +124,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         rapidFireButton.setPosition(SpaceChoppersGame.width - rapidFireButton.width * 1.5f, 160f)
         rapidFireButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                if (rapidFireButton.isDisabled) return
                 lasersController.rapidFire()
                 rapidFireButton.style.imageUp =
                     TextureRegionDrawable(AssetManager.rapidFireButtonInactive)
