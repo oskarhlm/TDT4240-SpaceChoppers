@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.spacechoppers.controller.AsteroidController;
+import com.mygdx.spacechoppers.controller.ExplosionsController;
 import com.mygdx.spacechoppers.helper.ContactType;
 import com.mygdx.spacechoppers.model.Actor;
 import com.mygdx.spacechoppers.model.AsteroidModel;
@@ -44,7 +45,8 @@ public class GameContactListener implements ContactListener {
             // Destroy asteroid
             AsteroidController.getInstance().toDispose.add(asteroid);
 
-            // Create explosion
+            // Add explosion
+            ExplosionsController.getInstance().addExplosion(asteroid.getTexturePosition(), asteroid.getSize().x);
         } else if (isLaserAsteroidCollision) {
             // Cast models
             AsteroidModel asteroid = (AsteroidModel) b.getBody().getUserData();
@@ -52,6 +54,9 @@ public class GameContactListener implements ContactListener {
 
             // Destroy asteroid
             AsteroidController.getInstance().toDispose.add(asteroid);
+
+            // Add explosion
+            ExplosionsController.getInstance().addExplosion(asteroid.getTexturePosition(), asteroid.getSize().x);
         }
 
         if (isAsteroidLaserCollision || isLaserAsteroidCollision) {
@@ -79,6 +84,8 @@ public class GameContactListener implements ContactListener {
             chopper.takeDamage();
 
             // Create explosion
+            ExplosionsController.getInstance().addExplosion(asteroid.getTexturePosition(), asteroid.getSize().x);
+
         } else if (isChopperAsteroidCollision) {
             // Cast models
             AsteroidModel asteroid = (AsteroidModel) b.getBody().getUserData();
@@ -88,27 +95,10 @@ public class GameContactListener implements ContactListener {
             AsteroidController.getInstance().toDispose.add(asteroid);
 
             chopper.takeDamage();
+
+            // Add explosion
+            ExplosionsController.getInstance().addExplosion(asteroid.getTexturePosition(), asteroid.getSize().x);
         }
-
-//            if (a.getBody().getUserData(). || b.getBody().getUserData() == ContactType.ASTEROID) {
-//                // Fetch asteroid that was contacted
-//                AsteroidModel asteroid = AsteroidController.getInstance().fetchAsteroid(b.getBody());
-//                ArrayList<AsteroidModel> list = new ArrayList<>();
-//                list.add(asteroid);
-//
-//                // Destroy asteroid
-//                AsteroidController.getInstance().disposeAsteroids(list);
-//
-//
-//
-//
-//
-//
-//
-//                // Add 10 to score
-//
-//            }
-
     }
 
     @Override

@@ -1,20 +1,19 @@
 package com.mygdx.spacechoppers.model
 
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.mygdx.spacechoppers.AssetManager
 
-class Explosion(x: Float, y: Float, asteroidSize: Float) {
+class ExplosionModel(x: Float, y: Float, asteroidSize: Float) {
     var x: Float
     var y: Float
     var statetime: Float
     var remove = false
 
     init {
-        this.x = x - OFFSET
-        this.y = y - OFFSET
+        this.x = x
+        this.y = y
         statetime = 0f
         if (anim == null) {
             val texture = AssetManager.explosion
@@ -24,7 +23,6 @@ class Explosion(x: Float, y: Float, asteroidSize: Float) {
 
     companion object {
         const val FRAME_LENGTH = .2f
-        const val OFFSET = 8 // TODO: 1/2 of heli width
         const val SIZE = 32
         private var anim: Animation<*>? = null
     }
@@ -33,7 +31,6 @@ class Explosion(x: Float, y: Float, asteroidSize: Float) {
         statetime += deltaTime
         if (anim!!.isAnimationFinished(statetime)) {
             remove = true
-            //statetime = 0f // TODO: Remove (only used in testing)
         }
     }
 
