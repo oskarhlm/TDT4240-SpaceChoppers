@@ -3,70 +3,71 @@ package com.mygdx.spacechoppers.networking;
 import com.mygdx.spacechoppers.data.networking.Message;
 import com.mygdx.spacechoppers.data.networking.MessageAction;
 
-import java.io.IOException;
-import java.net.InetAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.UnknownHostException;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-
+import java.util.concurrent.TimeUnit;
 
 public class NetworkClient {
 
     private static NetworkClient instance = null;
     private final NetworkHandler handler;
     private final CountDownLatch latch;
+    private URI websocketURI;
 
-    private NetworkClient() throws URISyntaxException {
+    private NetworkClient() throws URISyntaxException, InterruptedException {
         latch = new CountDownLatch(1);
-        URI websocketURI1 = new URI("ws://sc.hjelmtvedt.io:6968");
-        URI websocketURI2 = new URI("ws://sc.holter.tech:6968");
-
-        List<URI> uris = Arrays.asList(websocketURI1, websocketURI2);
-        URI bestURI = null;
-        long bestPingRTT = Long.MAX_VALUE;
-
-        for (URI uri : uris) {
-            long currentPingRTT = getPingRTT(uri);
-            if (currentPingRTT < bestPingRTT) {
-                bestPingRTT = currentPingRTT;
-                bestURI = uri;
-            }
-        }
-
-        if (bestURI == null) {
-            throw new RuntimeException("No available URIs");
-        }
-
-        handler = new NetworkHandler(bestURI, latch);
-        System.out.println("Connected to: " + bestURI);
+        websocketURI = getBestServerURI();
+        handler = new NetworkHandler(websocketURI, latch);
+        System.out.println("Connected to: " + websocketURI);
         handler.connect();
     }
 
-
-
-    public static NetworkClient getInstance() throws URISyntaxException {
+    public static NetworkClient getInstance() throws URISyntaxException, InterruptedException {
         if (instance == null) {
             instance = new NetworkClient();
         }
         return instance;
     }
 
-    private long getPingRTT(URI uri) {
-        try {
-            InetAddress inetAddress = InetAddress.getByName(uri.getHost());
-            long startTime = System.currentTimeMillis();
-            if (inetAddress.isReachable(1000)) {
-                long endTime = System.currentTimeMillis();
-                return endTime - startTime;
+    // Method to measure latency and return the best server URI
+    private URI getBestServerURI() throws URISyntaxException, InterruptedException {
+        List<URI> serverURIs = Arrays.asList(
+                new URI("ws://sc.holter.tech:6968"),
+                new URI("ws://sc.hjelmtvedt.io:6968")
+        );
+
+        URI bestServerURI = null;
+        long bestLatency = Long.MAX_VALUE;
+
+        for (URI serverURI : serverURIs) {
+            long latency = getServerLatency(serverURI);
+
+            if (latency < bestLatency) {
+                bestServerURI = serverURI;
+                bestLatency = latency;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return Long.MAX_VALUE;
+
+        return bestServerURI;
+    }
+
+    private long getServerLatency(URI serverURI) throws InterruptedException {
+        NetworkHandler tempHandler = new NetworkHandler(serverURI, new CountDownLatch(1));
+
+        long startTime = System.nanoTime();
+        boolean isConnected = tempHandler.connectBlocking();
+
+        if (!isConnected) {
+            return Long.MAX_VALUE;
+        }
+        long endTime = System.nanoTime();
+
+        tempHandler.close();
+
+        return TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
     }
 
 
