@@ -3,10 +3,15 @@ package com.mygdx.spacechoppers.view;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.spacechoppers.AssetManager;
+import com.mygdx.spacechoppers.interfaces.IView;
+import com.mygdx.spacechoppers.model.ExplosionModel;
 
-public class ExplosionView {
+import org.jetbrains.annotations.NotNull;
+
+public class ExplosionView implements IView<ExplosionModel> {
 
     private static final float FRAME_LENGTH = 0.2f;
     private final int FRAME_SIZE = 32;
@@ -35,7 +40,9 @@ public class ExplosionView {
         }
     }
 
-    public void draw(SpriteBatch sb, Vector3 position) {
+    @Override
+    public void draw(@NotNull SpriteBatch sb, ExplosionModel explosionModel) {
+        Vector3 position = explosionModel.getPosition();
         sb.draw(anim.getKeyFrame(stateTime), position.x, position.y, explosionSize, explosionSize);
     }
 }

@@ -11,11 +11,14 @@ import com.badlogic.gdx.utils.Timer;
 import com.mygdx.spacechoppers.AssetManager;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
 import com.mygdx.spacechoppers.helper.Const;
+import com.mygdx.spacechoppers.interfaces.IView;
 import com.mygdx.spacechoppers.model.ChopperModel;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class ChopperView implements Disposable {
+public class ChopperView implements IView<ChopperModel>, Disposable {
     private final Sprite sprite;
     private int spriteIndex = 0;
     private final List<Texture> textureList;
@@ -38,8 +41,8 @@ public class ChopperView implements Disposable {
     }
 
 
-    public void draw(SpriteBatch sb, ChopperModel model, Body chopperBody) {
-
+    public void draw(SpriteBatch sb, ChopperModel model) {
+        Body chopperBody = model.getBody();
         Vector3 location = model.getLocation();
         float drawX = location.x - sprite.getTexture().getWidth() / 2.0f;
         float drawY = location.y - sprite.getTexture().getHeight() / 2.0f;

@@ -107,7 +107,7 @@ public class AsteroidController {
     public void draw(SpriteBatch sb) {
         for (AsteroidModel asteroid : modelAndViews.keySet()) {
             AsteroidView correspondingView = modelAndViews.get(asteroid);
-            correspondingView.draw(sb, asteroid.getLocation(), asteroid.getBody());
+            correspondingView.draw(sb, asteroid);
         }
     }
 }

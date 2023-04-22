@@ -17,7 +17,6 @@ public class BackgroundController extends Actor {
     private int repetitionsX;
     private int repetitionsY;
 
-
     public BackgroundController(Stage stage) {
         texture = new Texture("starfield_dark_bg.png");
         texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);

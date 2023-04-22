@@ -7,14 +7,14 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.mygdx.spacechoppers.helper.ContactType;
 
-public class ChopperModel extends Actor{
+public class ChopperModel extends Actor {
     private final int speedScaler = 5;
     private Vector2 velocityVector;
 
     public ChopperModel(int HP, Vector3 Location, Vector2 textureSize, World world) {
         super(HP, Location, textureSize, world);
 
-        velocityVector = new Vector2(0,0);
+        velocityVector = new Vector2(0, 0);
     }
 
     public Body getBody() {
@@ -25,5 +25,7 @@ public class ChopperModel extends Actor{
         return velocityVector.angleDeg();
     }
 
-    public void setVelocityVector(Vector2 value) { this.velocityVector = value; }
+    public void setVelocityVector(Vector2 value) {
+        this.velocityVector = value;
+    }
 }

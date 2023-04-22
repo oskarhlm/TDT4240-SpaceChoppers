@@ -18,7 +18,6 @@ public class LaserController {
     private float initialFireRate = 1;
     private float fireRate = initialFireRate;
     private float maxFireRate = 8;
-    private float rapidFireDuration;
 
     public LaserController() {
         laserAndViews = new HashMap<>();
@@ -29,7 +28,6 @@ public class LaserController {
         // Create new laser if certain time has passed
         if (this.dt > 1 / fireRate) {
             this.dt = 0;
-
             LaserView view = new LaserView();
             float xPosition = camPos.x - view.getTextureSize().x;
             float yPosition = camPos.y - view.getTextureSize().y;
@@ -67,7 +65,7 @@ public class LaserController {
     public void draw(SpriteBatch sb) {
         for (LaserModel laserModel : laserAndViews.keySet()) {
             LaserView correspondingView = laserAndViews.get(laserModel);
-            correspondingView.draw(sb, laserModel.getPosition(), laserModel.getInitialRotation(), laserModel.getBody());
+            correspondingView.draw(sb, laserModel);
         }
     }
 

@@ -62,8 +62,8 @@ class ChopperController(touchpad: Touchpad, world: World?) {
     val textureSize: Vector2 get() = view.textureSize
     val position: Vector3 get() = model.location
 
-    fun draw(sb: SpriteBatch?) {
-        view.draw(sb, model, model.body)
+    fun draw(sb: SpriteBatch) {
+        view.draw(sb, model)
     }
 
     fun boost() {

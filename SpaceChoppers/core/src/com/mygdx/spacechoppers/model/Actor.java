@@ -35,14 +35,14 @@ public abstract class Actor implements IActor {
 
     @Override
     public void takeDamage() {
-        this.hitPoints-=10;
+        this.hitPoints -= 10;
     }
 
     public boolean isOutOfBounds() {
         return (location.x < -SpaceChoppersGame.Companion.getMapWidth() ||
                 location.y < -SpaceChoppersGame.Companion.getMapHeight() ||
-                location.x >= SpaceChoppersGame.Companion.getMapWidth()*2 ||
-                location.y >= SpaceChoppersGame.Companion.getMapHeight()*2
+                location.x >= SpaceChoppersGame.Companion.getMapWidth() * 2 ||
+                location.y >= SpaceChoppersGame.Companion.getMapHeight() * 2
         );
     }
 }

@@ -13,8 +13,12 @@ import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.spacechoppers.AssetManager;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
 import com.mygdx.spacechoppers.helper.Const;
+import com.mygdx.spacechoppers.interfaces.IView;
+import com.mygdx.spacechoppers.model.LaserModel;
 
-public class LaserView implements Disposable {
+import org.jetbrains.annotations.NotNull;
+
+public class LaserView implements IView<LaserModel>, Disposable {
 
     private final Texture texture;
     private final Sprite sprite;
@@ -23,11 +27,14 @@ public class LaserView implements Disposable {
 
     public LaserView() {
         this.texture = AssetManager.INSTANCE.getLaserTexture();
-        // Create a new sprite from the texture
         this.sprite = new Sprite(texture);
     }
 
-    public void draw(SpriteBatch sb, Vector3 position, float angle, Body laserBody) {
+    @Override
+    public void draw(@NotNull SpriteBatch sb, LaserModel laserModel) {
+        Vector3 position = laserModel.getPosition();
+        float angle = laserModel.getInitialRotation();
+        Body laserBody = laserModel.getBody();
         sb.draw(sprite, position.x, position.y,
                 sprite.getOriginX(),
                 sprite.getOriginY(),
@@ -53,6 +60,6 @@ public class LaserView implements Disposable {
 
     @Override
     public void dispose() {
-        //texture.dispose();
+
     }
 }

@@ -6,23 +6,28 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.spacechoppers.AssetManager;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
+import com.mygdx.spacechoppers.interfaces.IView;
+import com.mygdx.spacechoppers.model.HealthBarModel;
 
-public class HealthBarView {
+import org.jetbrains.annotations.NotNull;
+
+public class HealthBarView implements IView<HealthBarModel> {
 
     OrthographicCamera cam;
 
     private Texture blank;
+
     public HealthBarView(OrthographicCamera cam) {
         this.cam = cam;
         this.blank = AssetManager.INSTANCE.getBlank();
     }
 
-    public void draw(SpriteBatch sb, int hitPoints) {
-
-        if (hitPoints > 75){
+    @Override
+    public void draw(@NotNull SpriteBatch sb, HealthBarModel healthBarModel) {
+        int hitPoints = healthBarModel.getHitPoints();
+        if (hitPoints > 75) {
             sb.setColor(Color.GREEN);
-        }
-        else if(hitPoints > 25){
+        } else if (hitPoints > 25) {
             sb.setColor(Color.ORANGE);
         } else {
             sb.setColor(Color.RED);
@@ -34,6 +39,5 @@ public class HealthBarView {
                 SpaceChoppersGame.Companion.getWidth() * (hitPoints / 100f),
                 20F);
         sb.setColor(Color.WHITE);
-
     }
 }
