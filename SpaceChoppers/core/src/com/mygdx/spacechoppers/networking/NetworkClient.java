@@ -58,7 +58,7 @@ public class NetworkClient {
         NetworkHandler tempHandler = new NetworkHandler(serverURI, new CountDownLatch(1));
 
         long startTime = System.nanoTime();
-        boolean isConnected = tempHandler.connectBlocking();
+        boolean isConnected = tempHandler.connectBlocking(2000, TimeUnit.MILLISECONDS);
 
         if (!isConnected) {
             return Long.MAX_VALUE;
@@ -69,7 +69,6 @@ public class NetworkClient {
 
         return TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
     }
-
 
     public void createLobby(String username) throws InterruptedException {
         String createLobby = new Message.Builder()
