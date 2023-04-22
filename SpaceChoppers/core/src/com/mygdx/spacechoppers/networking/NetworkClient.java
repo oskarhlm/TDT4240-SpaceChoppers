@@ -5,8 +5,10 @@ import com.mygdx.spacechoppers.data.networking.MessageAction;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
-
+import java.util.concurrent.TimeUnit;
 
 public class NetworkClient {
 
@@ -15,18 +17,57 @@ public class NetworkClient {
     private final CountDownLatch latch;
     private URI websocketURI;
 
-    private NetworkClient() throws URISyntaxException {
+    private NetworkClient() throws URISyntaxException, InterruptedException {
         latch = new CountDownLatch(1);
-        websocketURI = new URI("ws://sc.hjelmtvedt.io:6968");
+        websocketURI = getBestServerURI();
         handler = new NetworkHandler(websocketURI, latch);
+        System.out.println("Connected to: " + websocketURI);
         handler.connect();
     }
 
-    public static NetworkClient getInstance() throws URISyntaxException {
+    public static NetworkClient getInstance() throws URISyntaxException, InterruptedException {
         if (instance == null) {
             instance = new NetworkClient();
         }
         return instance;
+    }
+
+    // Method to measure latency and return the best server URI
+    private URI getBestServerURI() throws URISyntaxException, InterruptedException {
+        List<URI> serverURIs = Arrays.asList(
+                new URI("ws://sc.holter.tech:6968"),
+                new URI("ws://sc.hjelmtvedt.io:6968")
+        );
+
+        URI bestServerURI = null;
+        long bestLatency = Long.MAX_VALUE;
+
+        for (URI serverURI : serverURIs) {
+            long latency = getServerLatency(serverURI);
+
+            if (latency < bestLatency) {
+                bestServerURI = serverURI;
+                bestLatency = latency;
+            }
+        }
+
+        return bestServerURI;
+    }
+
+    private long getServerLatency(URI serverURI) throws InterruptedException {
+        NetworkHandler tempHandler = new NetworkHandler(serverURI, new CountDownLatch(1));
+
+        long startTime = System.nanoTime();
+        boolean isConnected = tempHandler.connectBlocking(2000, TimeUnit.MILLISECONDS);
+
+        if (!isConnected) {
+            return Long.MAX_VALUE;
+        }
+        long endTime = System.nanoTime();
+
+        tempHandler.close();
+
+        return TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
     }
 
     public void createLobby(String username) throws InterruptedException {
