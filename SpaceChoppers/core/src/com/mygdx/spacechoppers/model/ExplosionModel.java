@@ -1,8 +1,9 @@
 package com.mygdx.spacechoppers.model;
 
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.spacechoppers.interfaces.IModel;
 
-public class ExplosionModel {
+public class ExplosionModel implements IModel {
 
     private Vector3 position;
 

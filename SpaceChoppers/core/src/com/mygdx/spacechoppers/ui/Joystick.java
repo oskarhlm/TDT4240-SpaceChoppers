@@ -1,22 +1,19 @@
-package com.mygdx.spacechoppers.model;
+package com.mygdx.spacechoppers.ui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.mygdx.spacechoppers.AssetManager;
+import com.mygdx.spacechoppers.utils.AssetManager;
 
 public class Joystick {
-    private final float width = 300;
-    private final float height = 300;
-    private final float x;
-    private final float y;
     private final Touchpad touchpad;
 
     public Joystick(float camWidth){
-        this.x = camWidth / 2 - width / 2;
-        this.y = 100;
+        float width = 300;
+        float x = camWidth / 2 - width / 2;
+        float y = 100;
         Skin skin = AssetManager.INSTANCE.getJoystickSkin();
         this.touchpad = new Touchpad(20, skin);
+        float height = 300;
         touchpad.setBounds(x, y, width, height);
         touchpad.getStyle().knob.setMinWidth(20);
         touchpad.getStyle().knob.setMinHeight(20);

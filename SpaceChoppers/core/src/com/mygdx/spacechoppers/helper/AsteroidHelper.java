@@ -1,4 +1,4 @@
-package com.mygdx.spacechoppers.model;
+package com.mygdx.spacechoppers.helper;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;

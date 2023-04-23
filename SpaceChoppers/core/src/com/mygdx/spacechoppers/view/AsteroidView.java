@@ -8,14 +8,18 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Disposable;
-import com.mygdx.spacechoppers.AssetManager;
+import com.mygdx.spacechoppers.utils.AssetManager;
 import com.mygdx.spacechoppers.helper.Const;
+import com.mygdx.spacechoppers.interfaces.IView;
+import com.mygdx.spacechoppers.model.AsteroidModel;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class AsteroidView implements Disposable {
+public class AsteroidView implements IView<AsteroidModel>, Disposable {
 
     private final Random random;
     private final TextureRegion currentTexture;
@@ -60,15 +64,15 @@ public class AsteroidView implements Disposable {
         return region;
     }
 
-
-    public void draw(SpriteBatch sb, Vector3 position, Body asteroidBody){
+    public void draw(@NotNull SpriteBatch sb, AsteroidModel asteroidModel) {
+        Vector3 position = asteroidModel.getLocation();
+        Body asteroidBody = asteroidModel.getBody();
         sb.draw(sprite, position.x, position.y,
                 sprite.getOriginX(),
                 sprite.getOriginY(),
                 textureSize.x,
                 textureSize.y,
                 (float) 1, (float) 1, 0);
-
         drawBody(position, asteroidBody);
     }
 
@@ -79,6 +83,8 @@ public class AsteroidView implements Disposable {
         asteroidBody.setTransform(adjustedX, adjustedY, 0);
     }
 
+
+
     @Override
     public void dispose() {
 //        for (TextureRegion tr : asteroids) {
@@ -87,4 +93,6 @@ public class AsteroidView implements Disposable {
 //            }
 //        }
     }
+
+
 }

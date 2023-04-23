@@ -4,15 +4,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.spacechoppers.model.AsteroidHelper;
+import com.mygdx.spacechoppers.helper.AsteroidHelper;
+import com.mygdx.spacechoppers.interfaces.IController;
 import com.mygdx.spacechoppers.model.AsteroidModel;
-import com.mygdx.spacechoppers.networking.NetworkClient;
 import com.mygdx.spacechoppers.view.AsteroidView;
 
-import java.net.URISyntaxException;
-import java.util.ArrayList;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +19,7 @@ import java.util.Set;
 import kotlin.Pair;
 
 
-public class AsteroidController {
+public class AsteroidController implements IController<AsteroidModel, AsteroidView> {
 
     private static AsteroidController INSTANCE = null;
     private final HashMap<AsteroidModel, AsteroidView> modelAndViews;
@@ -103,11 +102,14 @@ public class AsteroidController {
         toDispose.clear();
     }
 
+    @Override
+    public void updateModel(float dt) {}
 
-    public void draw(SpriteBatch sb) {
+    @Override
+    public void updateView(@NotNull SpriteBatch sb) {
         for (AsteroidModel asteroid : modelAndViews.keySet()) {
             AsteroidView correspondingView = modelAndViews.get(asteroid);
-            correspondingView.draw(sb, asteroid.getLocation(), asteroid.getBody());
+            correspondingView.draw(sb, asteroid);
         }
     }
 }

@@ -7,8 +7,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
 import com.mygdx.spacechoppers.helper.Const;
 import com.mygdx.spacechoppers.helper.ContactType;
+import com.mygdx.spacechoppers.interfaces.IModel;
 
-public class LaserModel extends Actor {
+public class LaserModel extends Actor implements IModel {
 
     private Vector3 position;
     private Vector2 velocity;
@@ -45,10 +46,8 @@ public class LaserModel extends Actor {
     public boolean isLaserOutsideOfCamera() {
         if (position.x < -1000 || position.x > SpaceChoppersGame.Companion.getMapWidth() + 1000) {
             return true;
-        } else if (position.y < -1000 || position.y > SpaceChoppersGame.Companion.getMapHeight() + 1000) {
-            return true;
-        }
-        return false;
+        } else
+            return position.y < -1000 || position.y > SpaceChoppersGame.Companion.getMapHeight() + 1000;
     }
 
     public Body getBody() {

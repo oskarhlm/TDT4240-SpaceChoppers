@@ -13,11 +13,11 @@ import com.mygdx.spacechoppers.helper.BodyHelper;
 import com.mygdx.spacechoppers.helper.Const;
 import com.mygdx.spacechoppers.helper.ContactType;
 
-public abstract class Actor implements IActor {
+public abstract class Actor {
 
-    protected int hitPoints;
-    protected Vector3 location;
-    protected Body body;
+    public int hitPoints;
+    public Vector3 location;
+    public Body body;
 
     public Actor(int hitPoints, Vector3 location, Vector2 textureSize, World world) {
         this.hitPoints = hitPoints;
@@ -28,21 +28,19 @@ public abstract class Actor implements IActor {
     public int getHitPoints() {
         return hitPoints;
     }
+    public void takeDamage() {
+        this.hitPoints -= 10;
+    }
 
     public Vector3 getLocation() {
         return location;
     }
 
-    @Override
-    public void takeDamage() {
-        this.hitPoints-=10;
-    }
-
     public boolean isOutOfBounds() {
         return (location.x < -SpaceChoppersGame.Companion.getMapWidth() ||
                 location.y < -SpaceChoppersGame.Companion.getMapHeight() ||
-                location.x >= SpaceChoppersGame.Companion.getMapWidth()*2 ||
-                location.y >= SpaceChoppersGame.Companion.getMapHeight()*2
+                location.x >= SpaceChoppersGame.Companion.getMapWidth() * 2 ||
+                location.y >= SpaceChoppersGame.Companion.getMapHeight() * 2
         );
     }
 }

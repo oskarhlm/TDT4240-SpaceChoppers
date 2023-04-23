@@ -2,19 +2,29 @@ package com.mygdx.spacechoppers.controller;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.spacechoppers.interfaces.IController;
+import com.mygdx.spacechoppers.model.ChopperModel;
 import com.mygdx.spacechoppers.model.HealthBarModel;
 import com.mygdx.spacechoppers.view.HealthBarView;
 
-public class HealthBarController {
+import org.jetbrains.annotations.NotNull;
+
+public class HealthBarController implements IController<HealthBarModel, HealthBarView> {
 
     HealthBarView view;
+    ChopperModel chopperModel;
 
-    public HealthBarController(OrthographicCamera cam) {
+    public HealthBarController(OrthographicCamera cam, ChopperModel chopperModel) {
         this.view = new HealthBarView(cam);
+        this.chopperModel = chopperModel;
     }
 
-    public void draw(SpriteBatch sb, int hitPoints){
-        view.draw(sb, hitPoints);
+    @Override
+    public void updateModel(float dt) {
     }
 
+    @Override
+    public void updateView(@NotNull SpriteBatch sb) {
+        view.draw(sb, chopperModel.hitPoints);
+    }
 }

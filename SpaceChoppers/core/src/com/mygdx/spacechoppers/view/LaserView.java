@@ -2,7 +2,6 @@ package com.mygdx.spacechoppers.view;
 
 import static java.lang.Math.PI;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,11 +9,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Disposable;
-import com.mygdx.spacechoppers.AssetManager;
-import com.mygdx.spacechoppers.SpaceChoppersGame;
+import com.mygdx.spacechoppers.utils.AssetManager;
 import com.mygdx.spacechoppers.helper.Const;
+import com.mygdx.spacechoppers.interfaces.IView;
+import com.mygdx.spacechoppers.model.LaserModel;
 
-public class LaserView implements Disposable {
+import org.jetbrains.annotations.NotNull;
+
+public class LaserView implements IView<LaserModel>, Disposable {
 
     private final Texture texture;
     private final Sprite sprite;
@@ -23,11 +25,10 @@ public class LaserView implements Disposable {
 
     public LaserView() {
         this.texture = AssetManager.INSTANCE.getLaserTexture();
-        // Create a new sprite from the texture
         this.sprite = new Sprite(texture);
     }
 
-    public void draw(SpriteBatch sb, Vector3 position, float angle, Body laserBody) {
+    public void draw(@NotNull SpriteBatch sb, Vector3 position, float angle, Body laserBody) {
         sb.draw(sprite, position.x, position.y,
                 sprite.getOriginX(),
                 sprite.getOriginY(),
@@ -52,7 +53,5 @@ public class LaserView implements Disposable {
     }
 
     @Override
-    public void dispose() {
-        //texture.dispose();
-    }
+    public void dispose() {}
 }

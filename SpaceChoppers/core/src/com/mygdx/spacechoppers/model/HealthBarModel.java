@@ -1,6 +1,8 @@
 package com.mygdx.spacechoppers.model;
 
-public class HealthBarModel {
+import com.mygdx.spacechoppers.interfaces.IModel;
+
+public class HealthBarModel implements IModel {
 
     ChopperModel model;
 
