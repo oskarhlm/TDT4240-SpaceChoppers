@@ -14,32 +14,31 @@ class ChopperController(
     world: World
 ) : IController<ChopperModel, ChopperView> {
 
-    private val view = ChopperView()
-    private val model = ChopperModel(
+    val model = ChopperModel(
         100, Vector3(
             SpaceChoppersGame.width / 2 - ChopperView.sprite.width / 2,
             SpaceChoppersGame.height / 2 - ChopperView.sprite.height / 2,
             100f
         ), ChopperView.getTextureSize(), world
     )
-
-    override fun updateModel(dt: Float) {
-        model.moveChopper(touchpad.knobPercentX, touchpad.knobPercentY)
-    }
-
-    fun boost() {
-        model.boost()
-    }
-
+    private val view = ChopperView()
     private val touchpad: Touchpad
+
+    val position: Vector3 get() = model.location
 
     init {
         this.touchpad = touchpad
     }
 
-    val position: Vector3 get() = model.location
+    override fun updateModel(dt: Float) {
+        model.moveChopper(touchpad.knobPercentX, touchpad.knobPercentY)
+    }
 
     override fun updateView(sb: SpriteBatch) {
         view.draw(sb, model.body, model.location, model.currentAngle)
+    }
+
+    fun boost() {
+        model.boost()
     }
 }

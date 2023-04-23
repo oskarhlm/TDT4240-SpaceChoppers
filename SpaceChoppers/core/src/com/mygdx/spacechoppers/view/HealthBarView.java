@@ -15,15 +15,14 @@ public class HealthBarView implements IView<HealthBarModel> {
 
     OrthographicCamera cam;
 
-    private Texture blank;
+    private final Texture blank;
 
     public HealthBarView(OrthographicCamera cam) {
         this.cam = cam;
         this.blank = AssetManager.INSTANCE.getBlank();
     }
 
-    public void draw(@NotNull SpriteBatch sb, HealthBarModel healthBarModel) {
-        int hitPoints = healthBarModel.getHitPoints();
+    public void draw(@NotNull SpriteBatch sb, int hitPoints) {
         if (hitPoints > 75) {
             sb.setColor(Color.GREEN);
         } else if (hitPoints > 25) {

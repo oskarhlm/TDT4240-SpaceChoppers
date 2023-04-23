@@ -45,10 +45,8 @@ public class LaserModel extends Actor {
     public boolean isLaserOutsideOfCamera() {
         if (position.x < -1000 || position.x > SpaceChoppersGame.Companion.getMapWidth() + 1000) {
             return true;
-        } else if (position.y < -1000 || position.y > SpaceChoppersGame.Companion.getMapHeight() + 1000) {
-            return true;
-        }
-        return false;
+        } else
+            return position.y < -1000 || position.y > SpaceChoppersGame.Companion.getMapHeight() + 1000;
     }
 
     public Body getBody() {

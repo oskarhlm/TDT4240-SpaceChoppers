@@ -160,13 +160,13 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         cam.position.set(chopperController.position)
 
         // Fire and move lasers
-        lasersController.fireLasers(dt, cam.position, chopperModel.currentAngle, world)
+        lasersController.fireLasers(dt, cam.position, chopperController.model.currentAngle, world)
 
         // Spawn and move asteroids
         asteroidsController.spawnAndMoveAsteroids(dt, world, cam);
 
         // Update explosions
-        explosionsController.update(dt)
+        explosionsController.updateModel(dt)
     }
 
     override fun render(delta: Float) {
@@ -181,7 +181,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         backgroundController.draw(sb)
 
         // Draw lasers
-        lasersController.draw(sb)
+        lasersController.updateView(sb)
 
         // Draw chopper
         chopperController.updateView(sb)
@@ -193,15 +193,15 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         liveScoresController.renderScores(sb)
 
         // Draw health bar
-        if (chopperModel.hitPoints > 0) {
-            healthBarController.draw(sb, chopperModel.hitPoints)
+        if (chopperController.model.hitPoints > 0) {
+            healthBarController.draw(sb, chopperController.model.hitPoints)
         } else {
             networkClient?.leaveLobby(Preferences.lobbyID, Preferences.username)
             gsm.set(GameOverState(gsm, messageReceiver?.playerScore ?: -1))
         }
 
         // Draw explosions
-        explosionsController.drawExplosions(sb)
+        explosionsController.updateView(sb)
 
         sb.end()
         stage.act(Gdx.graphics.deltaTime)

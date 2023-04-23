@@ -40,8 +40,7 @@ public class ExplosionView implements IView<ExplosionModel> {
         }
     }
 
-    public void draw(@NotNull SpriteBatch sb, ExplosionModel explosionModel) {
-        Vector3 position = explosionModel.getPosition();
+    public void draw(@NotNull SpriteBatch sb, Vector3 position) {
         sb.draw(anim.getKeyFrame(stateTime), position.x, position.y, explosionSize, explosionSize);
     }
 }
