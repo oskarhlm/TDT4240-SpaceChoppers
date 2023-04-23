@@ -2,17 +2,9 @@
 
 Welcome to the Space Choppers multiplayer game for Android! Developed as part of the TDT4240 Software Architecture course in the spring semester of 2023 at the Norwegian University of Science and Technology (NTNU). In this game, you will be able to compete with friends to get the highest score traveling with your chopper through space. SpaceChoppers is developed using the LibGDX framework.
 
-<table>
-  <tr>
-    <td>
-      <<img src="img/mainmenu.png" alt="Space Choppers main menu" width="50%" />
-    </td>
-    <td>
-      <img src="img/gameplay.png" alt="Space Choppers gameplay" width="50%" />
-    </td>
-  </tr>
-</table>
-
+Main menu             |  Gameplay
+:-------------------------:|:-------------------------:
+![Space Choppers main menu](img/mainmenu.png)  |  ![Space Choppers gameplay](img/gameplay.png)
 
 This README file will guide you through the process of running and building the SpaceChoppers game in Android Studio.
 
