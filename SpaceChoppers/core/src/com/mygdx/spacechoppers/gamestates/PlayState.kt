@@ -167,6 +167,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
         // Update explosions
         explosionsController.updateModel(dt)
+        
+        // Update scores
+        liveScoresController.updateModel(dt)
 
         // Check if player is out of HP and if so leave the lobby
         if (chopperController.model.hitPoints <= 0) {
