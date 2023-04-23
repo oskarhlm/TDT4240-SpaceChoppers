@@ -14,7 +14,6 @@ public class AsteroidModel extends Actor implements IModel {
     private Vector2 velocity;
     private Vector2 size;
 
-
     public AsteroidModel(int HP, Vector3 position, Vector2 velocity, Vector2 textureSize, World world) {
         super(HP, position, textureSize, world);
         this.position = position;
