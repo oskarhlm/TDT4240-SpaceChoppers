@@ -68,7 +68,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     // Buttons
     private val quitButton = TextButton("Quit", AssetManager.menuSkin)
-    private val lobbyLabel = Label(messageReceiver?.lobbyID.toString(), AssetManager.menuSkin)
+    private val lobbyLabel = Label(Preferences.lobbyID.toString(), AssetManager.menuSkin)
     private var boostButton: ImageButton
     private var rapidFireButton: ImageButton
 

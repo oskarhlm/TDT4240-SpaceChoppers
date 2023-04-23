@@ -10,7 +10,7 @@ import com.mygdx.spacechoppers.utils.AssetManager
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.utils.Preferences
 
-class OptionsState(gsm: GameStateManager) : MenuBase(gsm) {
+class SetUsernameState(gsm: GameStateManager) : MenuBase(gsm) {
     private val table = Table()
 
     private fun createCheckbox(labelText: String): CheckBox {
@@ -30,25 +30,6 @@ class OptionsState(gsm: GameStateManager) : MenuBase(gsm) {
     init {
         table.setFillParent(true)
         table.center().pad(20f).defaults().space(10f)
-
-        val musicCheckbox = createCheckbox("Music")
-        musicCheckbox.isChecked = Preferences.musicEnabled
-        musicCheckbox.addListener(object : ChangeListener() {
-            override fun changed(event: ChangeEvent?, actor: Actor?) {
-                Preferences.musicEnabled = musicCheckbox.isChecked
-                if (musicCheckbox.isChecked) AssetManager.playMusic()
-                else AssetManager.muteMusic()
-            }
-        })
-
-        val soundEffectCheckbox = createCheckbox("Sound")
-        soundEffectCheckbox.isChecked = Preferences.soundEnabled
-        soundEffectCheckbox.addListener(object : ChangeListener() {
-            override fun changed(event: ChangeEvent?, actor: Actor?) {
-                Preferences.soundEnabled = soundEffectCheckbox.isChecked
-                AssetManager.playSoundEffects = !AssetManager.playSoundEffects
-            }
-        })
 
         val usernamePromptLabel = Label("Set username:", skin)
         usernamePromptLabel.setFontScale(4f)
@@ -76,13 +57,9 @@ class OptionsState(gsm: GameStateManager) : MenuBase(gsm) {
             }
         })
 
-        table.add(musicCheckbox).fill().uniformX().expandX().padBottom(60f)
-        table.add(soundEffectCheckbox).fill().uniformX().expandX().padBottom(60f)
-        table.row()
         table.add(usernamePromptLabel).expandX().fillX().colspan(2).row()
         table.add(usernameField).height(80f).expandX().fill().padBottom(80f).colspan(2).row()
-        table.add(backButton).fill().uniformX().expandX()
-        table.add(confirmButton).fill().uniformX().expandX()
+        table.add(confirmButton).expandX().fill()
 
         stage.addActor(table)
     }
