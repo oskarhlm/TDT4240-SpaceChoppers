@@ -64,7 +64,6 @@ public class AsteroidView implements IView<AsteroidModel>, Disposable {
         return region;
     }
 
-    @Override
     public void draw(@NotNull SpriteBatch sb, AsteroidModel asteroidModel) {
         Vector3 position = asteroidModel.getLocation();
         Body asteroidBody = asteroidModel.getBody();

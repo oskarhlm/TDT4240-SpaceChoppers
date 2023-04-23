@@ -30,7 +30,6 @@ public class LaserView implements IView<LaserModel>, Disposable {
         this.sprite = new Sprite(texture);
     }
 
-    @Override
     public void draw(@NotNull SpriteBatch sb, LaserModel laserModel) {
         Vector3 position = laserModel.getPosition();
         float angle = laserModel.getInitialRotation();

@@ -31,7 +31,6 @@ public class LiveScoresView implements IView<LiveScoresModel>, Disposable {
 
     }
 
-    @Override
     public void draw(@NotNull SpriteBatch sb, LiveScoresModel liveScoresModel) {
         List<Score> liveScores = liveScoresModel.getScores();
 

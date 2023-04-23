@@ -15,9 +15,9 @@ import com.mygdx.spacechoppers.helper.ContactType;
 
 public abstract class Actor {
 
-    protected int hitPoints;
-    protected Vector3 location;
-    protected Body body;
+    public int hitPoints;
+    public Vector3 location;
+    public Body body;
 
     public Actor(int hitPoints, Vector3 location, Vector2 textureSize, World world) {
         this.hitPoints = hitPoints;

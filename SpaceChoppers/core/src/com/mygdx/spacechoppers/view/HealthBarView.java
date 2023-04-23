@@ -22,7 +22,6 @@ public class HealthBarView implements IView<HealthBarModel> {
         this.blank = AssetManager.INSTANCE.getBlank();
     }
 
-    @Override
     public void draw(@NotNull SpriteBatch sb, HealthBarModel healthBarModel) {
         int hitPoints = healthBarModel.getHitPoints();
         if (hitPoints > 75) {

@@ -24,12 +24,10 @@ public class ChopperView implements IView<ChopperModel>, Disposable {
     static private int spriteIndex = 0;
     static Texture currentTexture = textureList.get(spriteIndex);
     public static Sprite sprite = new Sprite(currentTexture);
-    private ChopperModel model;
 
     private static final int SCALE_FACTOR = 1;
 
-    public ChopperView(ChopperModel model) {
-        this.model = model;
+    public ChopperView() {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
@@ -39,13 +37,10 @@ public class ChopperView implements IView<ChopperModel>, Disposable {
         }, 0, 0.1f);
     }
 
-    public void draw(SpriteBatch sb) {
-        Body chopperBody = model.getBody();
-        Vector3 location = model.getLocation();
+    public void draw(SpriteBatch sb, Body chopperBody, Vector3 location, float angle) {
         float drawX = location.x - sprite.getTexture().getWidth() / 2.0f;
         float drawY = location.y - sprite.getTexture().getHeight() / 2.0f;
 
-        float angle = model.getCurrentAngle();
         sb.draw(sprite, drawX, drawY,
                 sprite.getOriginX(),
                 sprite.getOriginY(),
@@ -59,7 +54,6 @@ public class ChopperView implements IView<ChopperModel>, Disposable {
         chopperBody.setTransform(adjustedX, adjustedY, 0);
     }
 
-
     public Sprite getSprite() {
         return sprite;
     }
@@ -72,10 +66,5 @@ public class ChopperView implements IView<ChopperModel>, Disposable {
 
     @Override
     public void dispose() {
-    }
-
-    @Override
-    public void setModel(ChopperModel model) {
-        this.model = model;
     }
 }

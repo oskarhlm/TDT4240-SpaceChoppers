@@ -3,14 +3,11 @@ package com.mygdx.spacechoppers.gamestates
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.math.Vector3
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton
 import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
@@ -30,12 +27,10 @@ import com.mygdx.spacechoppers.controller.LaserController
 import com.mygdx.spacechoppers.controller.LiveScoresController
 import com.mygdx.spacechoppers.gamestates.menu.GameOverState
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
-import com.mygdx.spacechoppers.model.ChopperModel
 import com.mygdx.spacechoppers.model.Joystick
 import com.mygdx.spacechoppers.networking.MessageReceiver
 import com.mygdx.spacechoppers.networking.NetworkClient
 import com.mygdx.spacechoppers.utils.Preferences
-import com.mygdx.spacechoppers.view.ChopperView
 
 class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
@@ -44,22 +39,14 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     private val world = World(Vector2(0f, 0f), false)
 
-    val networkClient = NetworkClient.getInstance()
-    val messageReciever = MessageReceiver.getInstance()
+    private val networkClient: NetworkClient? = NetworkClient.getInstance()
+    private val messageReceiver: MessageReceiver? = MessageReceiver.getInstance()
 
     // Contact listener
     private val gameContactListener = GameContactListener()
 
     // Chopper
-    private val chopperModel = ChopperModel(
-        100, Vector3(
-            SpaceChoppersGame.width / 2 - ChopperView.sprite.width / 2,
-            SpaceChoppersGame.height / 2 - ChopperView.sprite.height / 2,
-            100f
-        ), ChopperView.getTextureSize(), world
-    )
-    private val chopperView = ChopperView(chopperModel)
-    private val chopperController = ChopperController(chopperModel, chopperView, joystick.touchpad)
+    private val chopperController = ChopperController(joystick.touchpad, world)
 
     // Laser
     private val lasersController = LaserController()
@@ -81,7 +68,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
 
     // Buttons
     private val quitButton = TextButton("Quit", AssetManager.menuSkin)
-    private val lobbyLabel = Label(messageReciever.lobbyID.toString(), AssetManager.menuSkin)
+    private val lobbyLabel = Label(messageReceiver?.lobbyID.toString(), AssetManager.menuSkin)
     private var boostButton: ImageButton
     private var rapidFireButton: ImageButton
 
@@ -98,7 +85,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         quitButton.label.setFontScale(2f)
         quitButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
-                networkClient.leaveLobby(Preferences.lobbyID, Preferences.username)
+                networkClient?.leaveLobby(Preferences.lobbyID, Preferences.username)
                 gsm.set(MainMenuState(gsm))
             }
         })
@@ -159,7 +146,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         SpaceChoppersGame.mapHeight = backgroundController.mapHeight
 
         // Send scores in order to draw on screen on startup
-        networkClient.sendScore(Preferences.lobbyID, Preferences.username, 0)
+        networkClient?.sendScore(Preferences.lobbyID, Preferences.username, 0)
     }
 
     override fun update(dt: Float) {
@@ -167,7 +154,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         world.step(1 / 60f, 6, 2)
 
         // Move chopper
-        chopperController.moveChopper(dt)
+        chopperController.updateModel(dt)
 
         // Move camera
         cam.position.set(chopperController.position)
@@ -197,7 +184,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         lasersController.draw(sb)
 
         // Draw chopper
-        chopperController.updateView()
+        chopperController.updateView(sb)
 
         // Draw asteroids
         asteroidsController.draw(sb)
@@ -209,8 +196,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         if (chopperModel.hitPoints > 0) {
             healthBarController.draw(sb, chopperModel.hitPoints)
         } else {
-            networkClient.leaveLobby(Preferences.lobbyID, Preferences.username)
-            gsm.set(GameOverState(gsm, messageReciever.playerScore))
+            networkClient?.leaveLobby(Preferences.lobbyID, Preferences.username)
+            gsm.set(GameOverState(gsm, messageReceiver?.playerScore ?: -1))
         }
 
         // Draw explosions
