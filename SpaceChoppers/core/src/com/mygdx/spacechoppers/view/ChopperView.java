@@ -8,14 +8,10 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Timer;
-import com.mygdx.spacechoppers.AssetManager;
-import com.mygdx.spacechoppers.SpaceChoppersGame;
+import com.mygdx.spacechoppers.utils.AssetManager;
 import com.mygdx.spacechoppers.helper.Const;
 import com.mygdx.spacechoppers.interfaces.IView;
 import com.mygdx.spacechoppers.model.ChopperModel;
-import com.mygdx.spacechoppers.model.Joystick;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 

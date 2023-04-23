@@ -6,8 +6,9 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.spacechoppers.helper.Const;
 import com.mygdx.spacechoppers.helper.ContactType;
+import com.mygdx.spacechoppers.interfaces.IModel;
 
-public class AsteroidModel extends Actor {
+public class AsteroidModel extends Actor implements IModel {
 
     private Vector3 position;
     private Vector2 velocity;

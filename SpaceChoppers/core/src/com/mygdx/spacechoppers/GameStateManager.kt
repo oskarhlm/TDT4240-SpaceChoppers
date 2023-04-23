@@ -2,10 +2,8 @@ package com.mygdx.spacechoppers
 
 import java.util.Stack
 
-class GameStateManager(var game: SpaceChoppersGame) {
-    /*
-    * Maybe singletonize this class idk
-    * */
+class GameStateManager(val game: SpaceChoppersGame) {
+
     private val gameStates = Stack<GameState>()
 
     fun update(dt: Float) {

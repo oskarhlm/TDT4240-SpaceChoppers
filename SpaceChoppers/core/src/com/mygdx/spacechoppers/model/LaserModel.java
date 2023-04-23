@@ -7,8 +7,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
 import com.mygdx.spacechoppers.helper.Const;
 import com.mygdx.spacechoppers.helper.ContactType;
+import com.mygdx.spacechoppers.interfaces.IModel;
 
-public class LaserModel extends Actor {
+public class LaserModel extends Actor implements IModel {
 
     private Vector3 position;
     private Vector2 velocity;

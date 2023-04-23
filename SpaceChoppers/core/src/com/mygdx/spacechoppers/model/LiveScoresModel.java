@@ -1,16 +1,22 @@
 package com.mygdx.spacechoppers.model;
 
 import com.mygdx.spacechoppers.data.networking.Score;
+import com.mygdx.spacechoppers.interfaces.IModel;
 import com.mygdx.spacechoppers.networking.MessageReceiver;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class LiveScoresModel {
+public class LiveScoresModel implements IModel {
 
-    public LiveScoresModel() {
-    }
+    private List<Score> scores = new ArrayList<>();
+    private final MessageReceiver messageReceiver = MessageReceiver.getInstance();
 
     public List<Score> getScores() {
-        MessageReceiver messageReceiver = MessageReceiver.getInstance();
-        return messageReceiver.getLiveScores();
+        return scores;
+    }
+
+    public void updateScores() {
+        scores = messageReceiver.getLiveScores();
     }
 }

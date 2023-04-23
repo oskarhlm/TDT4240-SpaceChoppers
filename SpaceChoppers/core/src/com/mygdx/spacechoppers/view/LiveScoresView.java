@@ -28,12 +28,9 @@ public class LiveScoresView implements IView<LiveScoresModel>, Disposable {
         font.setColor(Color.WHITE); // set the font color to white
         float scaleFactor = 4.0f; // set the font scale factor to 2.0 (you can adjust this as needed)
         font.getData().setScale(scaleFactor); // set the font scale using the scale factor
-
     }
 
-    public void draw(@NotNull SpriteBatch sb, LiveScoresModel liveScoresModel) {
-        List<Score> liveScores = liveScoresModel.getScores();
-
+    public void draw(@NotNull SpriteBatch sb, List<Score> liveScores) {
         // Iterate through the scores and draw them on the screen
         float x = cam.position.x + cam.viewportWidth / 2 - 60;
         float y = cam.position.y + cam.viewportHeight / 2 - 60;

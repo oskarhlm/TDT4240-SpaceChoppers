@@ -3,9 +3,8 @@ package com.mygdx.spacechoppers.view;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.spacechoppers.AssetManager;
+import com.mygdx.spacechoppers.utils.AssetManager;
 import com.mygdx.spacechoppers.interfaces.IView;
 import com.mygdx.spacechoppers.model.ExplosionModel;
 

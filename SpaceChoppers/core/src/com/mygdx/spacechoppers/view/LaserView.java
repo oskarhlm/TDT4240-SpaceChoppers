@@ -2,7 +2,6 @@ package com.mygdx.spacechoppers.view;
 
 import static java.lang.Math.PI;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,8 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Disposable;
-import com.mygdx.spacechoppers.AssetManager;
-import com.mygdx.spacechoppers.SpaceChoppersGame;
+import com.mygdx.spacechoppers.utils.AssetManager;
 import com.mygdx.spacechoppers.helper.Const;
 import com.mygdx.spacechoppers.interfaces.IView;
 import com.mygdx.spacechoppers.model.LaserModel;
@@ -55,7 +53,5 @@ public class LaserView implements IView<LaserModel>, Disposable {
     }
 
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() {}
 }

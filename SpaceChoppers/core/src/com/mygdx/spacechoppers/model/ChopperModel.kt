@@ -5,11 +5,12 @@ import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.Timer
 import com.mygdx.spacechoppers.SpaceChoppersGame
+import com.mygdx.spacechoppers.interfaces.IModel
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 class ChopperModel(HP: Int, Location: Vector3?, textureSize: Vector2?, world: World?) :
-    Actor(HP, Location, textureSize, world) {
+    Actor(HP, Location, textureSize, world), IModel {
 
     private var velocityVector: Vector2
     private val initialSpeedScale = 10f

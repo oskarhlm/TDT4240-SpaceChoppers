@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.spacechoppers.AssetManager;
+import com.mygdx.spacechoppers.utils.AssetManager;
 import com.mygdx.spacechoppers.SpaceChoppersGame;
 import com.mygdx.spacechoppers.interfaces.IView;
 import com.mygdx.spacechoppers.model.HealthBarModel;

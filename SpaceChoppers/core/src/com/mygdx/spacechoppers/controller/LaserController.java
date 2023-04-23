@@ -1,13 +1,11 @@
 package com.mygdx.spacechoppers.controller;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
-import com.mygdx.spacechoppers.AssetManager;
+import com.mygdx.spacechoppers.utils.AssetManager;
 import com.mygdx.spacechoppers.interfaces.IController;
-import com.mygdx.spacechoppers.model.ChopperModel;
 import com.mygdx.spacechoppers.model.LaserModel;
 import com.mygdx.spacechoppers.view.LaserView;
 

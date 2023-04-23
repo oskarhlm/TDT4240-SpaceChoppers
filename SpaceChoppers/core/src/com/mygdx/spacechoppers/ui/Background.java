@@ -1,13 +1,12 @@
-package com.mygdx.spacechoppers.controller;
+package com.mygdx.spacechoppers.ui;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 
 
-public class BackgroundController extends Actor {
+public class Background extends Actor {
 
     private final Texture texture;
     private final TextureRegion textureRegion;
@@ -17,7 +16,7 @@ public class BackgroundController extends Actor {
     private final int repetitionsX;
     private final int repetitionsY;
 
-    public BackgroundController() {
+    public Background() {
         texture = new Texture("starfield_dark_bg.png");
         texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         textureRegion = new TextureRegion(texture);

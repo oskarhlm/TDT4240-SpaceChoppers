@@ -2,20 +2,14 @@ package com.mygdx.spacechoppers.gamestates.menu
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
-import com.mygdx.spacechoppers.AssetManager
+import com.mygdx.spacechoppers.utils.AssetManager
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
-import com.mygdx.spacechoppers.SpaceChoppersGame
-import com.mygdx.spacechoppers.controller.AsteroidController
 
-import com.mygdx.spacechoppers.model.AsteroidTextures
-import com.mygdx.spacechoppers.utils.MenuCommon
 import kotlin.math.min
-import kotlin.random.Random
 
 abstract class MenuBase(gsm: GameStateManager) : GameState(gsm) {
     protected val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)

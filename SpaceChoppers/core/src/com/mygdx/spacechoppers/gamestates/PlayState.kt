@@ -14,12 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.Timer
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.mygdx.spacechoppers.GameContactListener
-import com.mygdx.spacechoppers.AssetManager
+import com.mygdx.spacechoppers.utils.AssetManager
 import com.mygdx.spacechoppers.GameState
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.SpaceChoppersGame
 import com.mygdx.spacechoppers.controller.AsteroidController
-import com.mygdx.spacechoppers.controller.BackgroundController
+import com.mygdx.spacechoppers.ui.Background
 import com.mygdx.spacechoppers.controller.ChopperController
 import com.mygdx.spacechoppers.controller.ExplosionsController
 import com.mygdx.spacechoppers.controller.HealthBarController
@@ -27,7 +27,7 @@ import com.mygdx.spacechoppers.controller.LaserController
 import com.mygdx.spacechoppers.controller.LiveScoresController
 import com.mygdx.spacechoppers.gamestates.menu.GameOverState
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
-import com.mygdx.spacechoppers.model.Joystick
+import com.mygdx.spacechoppers.ui.Joystick
 import com.mygdx.spacechoppers.networking.MessageReceiver
 import com.mygdx.spacechoppers.networking.NetworkClient
 import com.mygdx.spacechoppers.utils.Preferences
@@ -55,13 +55,13 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val liveScoresController = LiveScoresController(cam)
 
     // Background
-    private val backgroundController = BackgroundController()
+    private val background = Background()
 
     // Asteroids
     private val asteroidsController = AsteroidController.getInstance()
 
     // Health bar
-    private val healthBarController = HealthBarController(cam)
+    private val healthBarController = HealthBarController(cam, chopperController.model)
 
     // Explosions
     private val explosionsController = ExplosionsController.getInstance()
@@ -135,15 +135,15 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
             }
         })
 
-        println("lobbylabel: $lobbyLabel.text")
+        println("lobby label: $lobbyLabel.text")
 
         stage.addActor(quitButton)
         stage.addActor(lobbyLabel)
         stage.addActor(boostButton)
         stage.addActor(rapidFireButton)
 
-        SpaceChoppersGame.mapWidth = backgroundController.mapWidth
-        SpaceChoppersGame.mapHeight = backgroundController.mapHeight
+        SpaceChoppersGame.mapWidth = background.mapWidth
+        SpaceChoppersGame.mapHeight = background.mapHeight
 
         // Send scores in order to draw on screen on startup
         networkClient?.sendScore(Preferences.lobbyID, Preferences.username, 0)
@@ -163,22 +163,26 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         lasersController.fireLasers(dt, cam.position, chopperController.model.currentAngle, world)
 
         // Spawn and move asteroids
-        asteroidsController.spawnAndMoveAsteroids(dt, world, cam);
+        asteroidsController.spawnAndMoveAsteroids(dt, world, cam)
 
         // Update explosions
         explosionsController.updateModel(dt)
+
+        // Check if player is out of HP and if so leave the lobby
+        if (chopperController.model.hitPoints <= 0) {
+            networkClient?.leaveLobby(Preferences.lobbyID, Preferences.username)
+            gsm.set(GameOverState(gsm, messageReceiver?.playerScore ?: -1))
+        }
     }
 
     override fun render(delta: Float) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-
         cam.update()
         sb.projectionMatrix = cam.combined
-
         sb.begin()
 
         // Draw background
-        backgroundController.draw(sb)
+        background.draw(sb)
 
         // Draw lasers
         lasersController.updateView(sb)
@@ -187,18 +191,13 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         chopperController.updateView(sb)
 
         // Draw asteroids
-        asteroidsController.draw(sb)
+        asteroidsController.updateView(sb)
 
         // Draw scores
-        liveScoresController.renderScores(sb)
+        liveScoresController.updateView(sb)
 
         // Draw health bar
-        if (chopperController.model.hitPoints > 0) {
-            healthBarController.draw(sb, chopperController.model.hitPoints)
-        } else {
-            networkClient?.leaveLobby(Preferences.lobbyID, Preferences.username)
-            gsm.set(GameOverState(gsm, messageReceiver?.playerScore ?: -1))
-        }
+        healthBarController.updateView(sb)
 
         // Draw explosions
         explosionsController.updateView(sb)

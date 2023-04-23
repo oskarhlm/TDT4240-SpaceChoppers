@@ -9,10 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.Align
 import com.mygdx.spacechoppers.GameStateManager
 import com.mygdx.spacechoppers.gamestates.PlayState
-import com.mygdx.spacechoppers.utils.MenuCommon.scaledLabel
+import com.mygdx.spacechoppers.utils.MenuUtils.scaledLabel
 import com.mygdx.spacechoppers.utils.Preferences
 import com.mygdx.spacechoppers.networking.MessageReceiver
-import kotlin.random.Random
 
 
 class CreateLobbyState(gsm: GameStateManager) : MenuBase(gsm) {
