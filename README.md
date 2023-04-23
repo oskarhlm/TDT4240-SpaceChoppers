@@ -60,10 +60,10 @@ To build the app using the command line, follow these steps:
 2. Run the following command to build the app:
 
 ```
-./gradlew `filename`
+./gradlew assembleDebug
 ```
 
-3. Wait for the build to complete. The generated APK file will be located in the `SpaceChoppers/android/build/outputs/apk/` directory.
+3. Wait for the build to complete. The generated APK file will be located in the `SpaceChoppers/android/build/outputs/apk/debug` directory.
 
 ### 3.2 Building with Android Studio
 
@@ -73,7 +73,7 @@ To build the app using Android Studio, follow these steps:
 
 2. Click "Build" in the menu bar and then click "Build Bundle(s) / APK(s)" > "Build APK(s)".
 
-3. Wait for the build to complete. The generated APK file will be located in the `SpaceChoppers/android/build/outputs/apk/` directory.
+3. Wait for the build to complete. The generated APK file will be located in the `SpaceChoppers/android/build/outputs/apk/debug` directory.
 
 ## 4. Known Bugs
 
