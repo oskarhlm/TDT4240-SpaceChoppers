@@ -10,38 +10,34 @@ import com.mygdx.spacechoppers.SpaceChoppersGame.Companion.height
 import com.mygdx.spacechoppers.SpaceChoppersGame.Companion.mapHeight
 import com.mygdx.spacechoppers.SpaceChoppersGame.Companion.mapWidth
 import com.mygdx.spacechoppers.SpaceChoppersGame.Companion.width
+import com.mygdx.spacechoppers.interfaces.IController
 import com.mygdx.spacechoppers.model.ChopperModel
 import com.mygdx.spacechoppers.view.ChopperView
+import kotlin.math.pow
 
-class ChopperController(touchpad: Touchpad, world: World?) {
-    val model: ChopperModel
-    private val view: ChopperView
+class ChopperController(
+    private val model: ChopperModel,
+    private val view: ChopperView,
+    touchpad: Touchpad,
+    world: World?
+) : IController<ChopperModel, ChopperView> {
+
     private val touchpad: Touchpad
     private val initialSpeedScaler = 10f
     private var speedScaler = initialSpeedScaler
     private val boostMultiplier = 3f
-    private val boostDurationSeconds = 0f
     private val timer: Timer
-//    val boostListeners = mutableListOf<>()
 
     init {
-        view = ChopperView()
         this.touchpad = touchpad
         timer = Timer()
-        model = ChopperModel(
-            100, Vector3(
-                width / 2 - view.sprite.width / 2,
-                height / 2 - view.sprite.height / 2,
-                100f
-            ), view.textureSize, world
-        )
     }
 
     fun moveChopper(dt: Float) {
         val deltaX = touchpad.knobPercentX
         val deltaY = touchpad.knobPercentY
         val movementMagnitude =
-            Math.sqrt(Math.pow(deltaX.toDouble(), 2.0) + Math.pow(deltaY.toDouble(), 2.0))
+            Math.sqrt(deltaX.toDouble().pow(2.0) + deltaY.toDouble().pow(2.0))
                 .toFloat() * speedScaler
         if (movementMagnitude > 0) {
             val movementNormalizedX = deltaX / movementMagnitude
@@ -59,12 +55,7 @@ class ChopperController(touchpad: Touchpad, world: World?) {
         }
     }
 
-    val textureSize: Vector2 get() = view.textureSize
     val position: Vector3 get() = model.location
-
-    fun draw(sb: SpriteBatch) {
-        view.draw(sb, model)
-    }
 
     fun boost() {
         speedScaler *= boostMultiplier
@@ -78,5 +69,9 @@ class ChopperController(touchpad: Touchpad, world: World?) {
             }
         }
         timer.scheduleTask(task, 0f, 0.1f)
+    }
+
+    override fun updateView() {
+        TODO("Not yet implemented")
     }
 }

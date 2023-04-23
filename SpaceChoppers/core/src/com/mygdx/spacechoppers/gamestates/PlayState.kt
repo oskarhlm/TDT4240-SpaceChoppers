@@ -3,6 +3,7 @@ package com.mygdx.spacechoppers.gamestates
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.InputEvent
@@ -29,10 +30,12 @@ import com.mygdx.spacechoppers.controller.LaserController
 import com.mygdx.spacechoppers.controller.LiveScoresController
 import com.mygdx.spacechoppers.gamestates.menu.GameOverState
 import com.mygdx.spacechoppers.gamestates.menu.MainMenuState
+import com.mygdx.spacechoppers.model.ChopperModel
 import com.mygdx.spacechoppers.model.Joystick
 import com.mygdx.spacechoppers.networking.MessageReceiver
 import com.mygdx.spacechoppers.networking.NetworkClient
 import com.mygdx.spacechoppers.utils.Preferences
+import com.mygdx.spacechoppers.view.ChopperView
 
 class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val stage = Stage(FitViewport(cam.viewportWidth, cam.viewportHeight), sb)
@@ -47,11 +50,16 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     // Contact listener
     private val gameContactListener = GameContactListener()
 
-    // Debug renderer
-    private val box2DDebugRenderer = Box2DDebugRenderer()
-
     // Chopper
-    private val chopperController = ChopperController(joystick.touchpad, world)
+    private val chopperModel = ChopperModel(
+        100, Vector3(
+            SpaceChoppersGame.width / 2 - ChopperView.sprite.width / 2,
+            SpaceChoppersGame.height / 2 - ChopperView.sprite.height / 2,
+            100f
+        ), ChopperView.getTextureSize(), world
+    )
+    private val chopperView = ChopperView(chopperModel)
+    private val chopperController = ChopperController(chopperModel, chopperView, joystick.touchpad)
 
     // Laser
     private val lasersController = LaserController()
@@ -60,7 +68,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
     private val liveScoresController = LiveScoresController(cam)
 
     // Background
-    private val backgroundController = BackgroundController(stage)
+    private val backgroundController = BackgroundController()
 
     // Asteroids
     private val asteroidsController = AsteroidController.getInstance()
@@ -165,10 +173,9 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         cam.position.set(chopperController.position)
 
         // Fire and move lasers
-        lasersController.fireLasers(dt, cam.position, chopperController.model.currentAngle, world)
+        lasersController.fireLasers(dt, cam.position, chopperModel.currentAngle, world)
 
         // Spawn and move asteroids
-
         asteroidsController.spawnAndMoveAsteroids(dt, world, cam);
 
         // Update explosions
@@ -190,7 +197,7 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         lasersController.draw(sb)
 
         // Draw chopper
-        chopperController.draw(sb)
+        chopperController.updateView()
 
         // Draw asteroids
         asteroidsController.draw(sb)
@@ -199,8 +206,8 @@ class PlayState(gsm: GameStateManager) : GameState(gsm) {
         liveScoresController.renderScores(sb)
 
         // Draw health bar
-        if (chopperController.model.hitPoints > 0) {
-            healthBarController.draw(sb, chopperController.model.hitPoints)
+        if (chopperModel.hitPoints > 0) {
+            healthBarController.draw(sb, chopperModel.hitPoints)
         } else {
             networkClient.leaveLobby(Preferences.lobbyID, Preferences.username)
             gsm.set(GameOverState(gsm, messageReciever.playerScore))

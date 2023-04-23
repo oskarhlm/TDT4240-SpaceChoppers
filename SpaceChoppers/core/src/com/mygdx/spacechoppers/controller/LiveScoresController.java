@@ -25,7 +25,6 @@ public class LiveScoresController {
     }
 
     public void renderScores(SpriteBatch sb) {
-        List<Score> scoreList = model.getScores();
-        view.draw(sb, scoreList);
+        view.draw(sb, model);
     }
 }

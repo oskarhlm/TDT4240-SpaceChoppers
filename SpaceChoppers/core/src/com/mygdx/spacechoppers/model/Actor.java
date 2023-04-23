@@ -13,7 +13,7 @@ import com.mygdx.spacechoppers.helper.BodyHelper;
 import com.mygdx.spacechoppers.helper.Const;
 import com.mygdx.spacechoppers.helper.ContactType;
 
-public abstract class Actor implements IActor {
+public abstract class Actor {
 
     protected int hitPoints;
     protected Vector3 location;
@@ -28,14 +28,12 @@ public abstract class Actor implements IActor {
     public int getHitPoints() {
         return hitPoints;
     }
+    public void takeDamage() {
+        this.hitPoints -= 10;
+    }
 
     public Vector3 getLocation() {
         return location;
-    }
-
-    @Override
-    public void takeDamage() {
-        this.hitPoints -= 10;
     }
 
     public boolean isOutOfBounds() {

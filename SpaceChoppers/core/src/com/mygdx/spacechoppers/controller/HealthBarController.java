@@ -7,14 +7,15 @@ import com.mygdx.spacechoppers.view.HealthBarView;
 
 public class HealthBarController {
 
+    HealthBarModel model;
     HealthBarView view;
 
-    public HealthBarController(OrthographicCamera cam) {
+    public HealthBarController( OrthographicCamera cam) {
         this.view = new HealthBarView(cam);
     }
 
     public void draw(SpriteBatch sb, int hitPoints){
-        view.draw(sb, hitPoints);
+        view.draw(sb, model);
     }
 
 }

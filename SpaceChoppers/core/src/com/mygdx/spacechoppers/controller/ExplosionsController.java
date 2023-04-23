@@ -53,7 +53,7 @@ public class ExplosionsController {
     public void drawExplosions(SpriteBatch sb) {
         for (ExplosionModel explosionModel : explosionList.keySet()) {
             // Draw in the correct view
-            explosionList.get(explosionModel).draw(sb, explosionModel.getPosition());
+            explosionList.get(explosionModel).draw(sb, explosionModel);
         }
     }
 

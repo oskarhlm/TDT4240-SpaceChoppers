@@ -13,24 +13,23 @@ import com.mygdx.spacechoppers.SpaceChoppersGame;
 import com.mygdx.spacechoppers.helper.Const;
 import com.mygdx.spacechoppers.interfaces.IView;
 import com.mygdx.spacechoppers.model.ChopperModel;
+import com.mygdx.spacechoppers.model.Joystick;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class ChopperView implements IView<ChopperModel>, Disposable {
-    private final Sprite sprite;
-    private int spriteIndex = 0;
-    private final List<Texture> textureList;
+    public static final List<Texture> textureList = AssetManager.INSTANCE.getHeliTextures();
+    static private int spriteIndex = 0;
+    static Texture currentTexture = textureList.get(spriteIndex);
+    public static Sprite sprite = new Sprite(currentTexture);
+    private ChopperModel model;
 
-    private final int SCALE_FACTOR = 1;
+    private static final int SCALE_FACTOR = 1;
 
-
-    public ChopperView() {
-        this.textureList = AssetManager.INSTANCE.getHeliTextures();
-        Texture currentTexture = textureList.get(spriteIndex);
-        this.sprite = new Sprite(currentTexture);
-
+    public ChopperView(ChopperModel model) {
+        this.model = model;
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
@@ -40,13 +39,11 @@ public class ChopperView implements IView<ChopperModel>, Disposable {
         }, 0, 0.1f);
     }
 
-
-    public void draw(SpriteBatch sb, ChopperModel model) {
+    public void draw(SpriteBatch sb) {
         Body chopperBody = model.getBody();
         Vector3 location = model.getLocation();
         float drawX = location.x - sprite.getTexture().getWidth() / 2.0f;
         float drawY = location.y - sprite.getTexture().getHeight() / 2.0f;
-
 
         float angle = model.getCurrentAngle();
         sb.draw(sprite, drawX, drawY,
@@ -54,7 +51,7 @@ public class ChopperView implements IView<ChopperModel>, Disposable {
                 sprite.getOriginY(),
                 sprite.getWidth(),
                 sprite.getHeight(),
-                (float) SCALE_FACTOR, (float) SCALE_FACTOR, angle-90);
+                (float) SCALE_FACTOR, (float) SCALE_FACTOR, angle - 90);
 
         // Convert pixels to meters
         float adjustedX = location.x * Const.PIXELS_TO_METERS;
@@ -63,17 +60,22 @@ public class ChopperView implements IView<ChopperModel>, Disposable {
     }
 
 
-
-    public Sprite getSprite(){
+    public Sprite getSprite() {
         return sprite;
     }
 
-    public Vector2 getTextureSize() {
-        float width = this.textureList.get(0).getWidth() * SCALE_FACTOR;
-        float height = this.textureList.get(0).getHeight() * SCALE_FACTOR;
+    public static Vector2 getTextureSize() {
+        float width = textureList.get(0).getWidth() * SCALE_FACTOR;
+        float height = textureList.get(0).getHeight() * SCALE_FACTOR;
         return new Vector2(width, height);
     }
 
     @Override
-    public void dispose() {}
+    public void dispose() {
+    }
+
+    @Override
+    public void setModel(ChopperModel model) {
+        this.model = model;
+    }
 }
