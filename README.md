@@ -1,6 +1,8 @@
 # SpaceChoppers Multiplayer Game
 
-Welcome to the SpaceChoppers multiplayer game for Android! Developed as part of the TDT4240 Software Architecture course in the spring semester of 2023 at the Norwegian University of Science and Technology (NTNU). In this game, you will be able to compete with friends to get the highest score traveling with your chopper through space. SpaceChoppers is developed using the LibGDX framework.
+Welcome to the Space Choppers multiplayer game for Android! Developed as part of the TDT4240 Software Architecture course in the spring semester of 2023 at the Norwegian University of Science and Technology (NTNU). In this game, you will be able to compete with friends to get the highest score traveling with your chopper through space. SpaceChoppers is developed using the LibGDX framework.
+
+![Space Choppers main menu](images/mainmenu.png) ![Space Choppers gameplay](images/gameplay.png)
 
 This README file will guide you through the process of running and building the SpaceChoppers game in Android Studio.
 
@@ -9,6 +11,7 @@ This README file will guide you through the process of running and building the 
 1. Prerequisites
 2. Running the App in Android Studio
 3. Building with Gradle
+4. Known Bugs
 
 ## 1. Prerequisites
 
@@ -24,10 +27,10 @@ Before you start, make sure you have the following software installed on your sy
 
 To run the app in Android Studio, follow these steps:
 
-1. Clone the SpaceChoppers repository to your local machine using Git:
+1. Clone the SpaceChoppers repository to your local machine using Git SSH:
 
 ```
-git clone https://github.com/yourusername/SpaceChoppers.git
+git clone git@github.com:oskarhlm/TDT4240-SpaceChoppers.git
 ```
 
 2. Open Android Studio and select "Open an existing Android Studio project" from the welcome screen.
@@ -55,10 +58,10 @@ To build the app using the command line, follow these steps:
 2. Run the following command to build the app:
 
 ```
-./gradlew assembleDebug
+./gradlew `filename`
 ```
 
-3. Wait for the build to complete. The generated APK file will be located in the `SpaceChoppers/app/build/outputs/apk/debug` directory.
+3. Wait for the build to complete. The generated APK file will be located in the `SpaceChoppers/android/build/outputs/apk/` directory.
 
 ### 3.2 Building with Android Studio
 
@@ -68,4 +71,9 @@ To build the app using Android Studio, follow these steps:
 
 2. Click "Build" in the menu bar and then click "Build Bundle(s) / APK(s)" > "Build APK(s)".
 
-3. Wait for the build to complete. The generated APK file will be located in the `SpaceChoppers/app/build/outputs/apk/debug` directory.
+3. Wait for the build to complete. The generated APK file will be located in the `SpaceChoppers/android/build/outputs/apk/` directory.
+
+## 4. Known Bugs
+
+- If our servers are down or you are somehow not able to establish a websocket connection, the game will not start.
+- If you pass an invalid lobby ID when trying to join a game, the game will provide an error.
