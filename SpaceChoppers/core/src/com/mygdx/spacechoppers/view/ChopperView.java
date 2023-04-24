@@ -15,7 +15,7 @@ import com.mygdx.spacechoppers.model.ChopperModel;
 
 import java.util.List;
 
-public class ChopperView implements IView<ChopperModel>, Disposable {
+public class ChopperView implements IView, Disposable {
     public static final List<Texture> textureList = AssetManager.INSTANCE.getHeliTextures();
     static private int spriteIndex = 0;
     static Texture currentTexture = textureList.get(spriteIndex);

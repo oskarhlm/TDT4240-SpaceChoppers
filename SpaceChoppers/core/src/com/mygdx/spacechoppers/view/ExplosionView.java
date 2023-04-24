@@ -10,7 +10,7 @@ import com.mygdx.spacechoppers.model.ExplosionModel;
 
 import org.jetbrains.annotations.NotNull;
 
-public class ExplosionView implements IView<ExplosionModel> {
+public class ExplosionView implements IView {
 
     private static final float FRAME_LENGTH = 0.2f;
     private final int FRAME_SIZE = 32;
