@@ -11,7 +11,7 @@ import com.mygdx.spacechoppers.model.HealthBarModel;
 
 import org.jetbrains.annotations.NotNull;
 
-public class HealthBarView implements IView<HealthBarModel> {
+public class HealthBarView implements IView {
 
     OrthographicCamera cam;
 

@@ -16,7 +16,7 @@ import com.mygdx.spacechoppers.model.LaserModel;
 
 import org.jetbrains.annotations.NotNull;
 
-public class LaserView implements IView<LaserModel>, Disposable {
+public class LaserView implements IView, Disposable {
 
     private final Texture texture;
     private final Sprite sprite;

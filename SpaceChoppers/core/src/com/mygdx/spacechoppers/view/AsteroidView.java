@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class AsteroidView implements IView<AsteroidModel>, Disposable {
+public class AsteroidView implements IView, Disposable {
 
     private final Random random;
     private final TextureRegion currentTexture;

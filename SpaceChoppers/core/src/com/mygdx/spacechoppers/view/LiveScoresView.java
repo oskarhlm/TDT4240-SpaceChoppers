@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class LiveScoresView implements IView<LiveScoresModel>, Disposable {
+public class LiveScoresView implements IView, Disposable {
 
     private final BitmapFont font;
     private final OrthographicCamera cam;
