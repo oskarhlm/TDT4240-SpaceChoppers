@@ -35,7 +35,7 @@ public class NetworkClient {
     // Method to measure latency and return the best server URI
     private URI getBestServerURI() throws URISyntaxException, InterruptedException {
         List<URI> serverURIs = Arrays.asList(
-                new URI("ws://sc.holter.tech:6968"),
+                new URI("ws://sc.holter.dev:6968"),
                 new URI("ws://sc.hjelmtvedt.io:6968")
         );
 
